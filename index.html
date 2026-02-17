@@ -12,7 +12,7 @@
 <style>
     * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body { 
-        margin: 0; padding: 0; color: #eee; font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
+        margin: 0; padding: 0; color: #fff; font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
         background: #000; overflow-x: hidden; min-height: 100vh;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
@@ -20,71 +20,109 @@
     .bg-image {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background-size: cover; background-position: center;
-        filter: brightness(0.4); z-index: -1; transition: background-image 0.8s ease;
+        filter: brightness(0.3) saturate(1.2); z-index: -1; transition: background-image 0.8s ease;
     }
 
     .step { display: none; width: 90%; max-width: 400px; animation: fadeIn .5s ease; flex-direction: column; align-items: center; text-align: center; }
     .active { display: flex; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
     .glass-card {
-        background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
-        border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 25px;
-        padding: 30px; width: 100%; box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+        background: rgba(255, 20, 147, 0.05); /* በጣም ደብዛዛ ፒንክ */
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 105, 180, 0.3); /* ፒንክ ቦርደር */
+        border-radius: 30px;
+        padding: 30px; width: 100%; 
+        box-shadow: 0 8px 32px rgba(255, 20, 147, 0.2); /* ፒንክ ጥላ */
     }
 
     .loader-ring {
-        width: 45px; height: 45px; border: 4px solid rgba(255, 153, 0, 0.2);
-        border-top: 4px solid #FF9900; border-radius: 50%;
+        width: 45px; height: 45px; border: 4px solid rgba(255, 20, 147, 0.2);
+        border-top: 4px solid #FF1493; border-radius: 50%;
         animation: spin 1s linear infinite; margin-top: 20px;
     }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
     input {
         width: 100%; padding: 15px; margin: 10px 0; border-radius: 12px;
-        border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.6);
-        color: #fff; font-size: 16px; outline: none;
+        border: 1px solid rgba(255, 105, 180, 0.2); 
+        background: rgba(20, 0, 10, 0.7);
+        color: #fff; font-size: 16px; outline: none; transition: 0.3s;
     }
+    input:focus { border-color: #FF69B4; box-shadow: 0 0 10px rgba(255, 105, 180, 0.3); }
     
-    /* Password wrapper */
     .pass-wrapper { position: relative; width: 100%; }
     .pass-wrapper i {
         position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
-        color: #FF9900; cursor: pointer; font-size: 18px; z-index: 10;
+        color: #FF69B4; cursor: pointer; font-size: 18px; z-index: 10;
     }
 
     .btn-main {
-        background: linear-gradient(45deg, #FF9900, #FF6600); color: #000;
+        background: linear-gradient(45deg, #FF1493, #C71585); 
+        color: #fff;
         padding: 16px; width: 100%; border-radius: 12px; border: none;
         font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px;
+        box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
+        transition: 0.3s;
     }
+    .btn-main:active { transform: scale(0.98); opacity: 0.9; }
 
     .otp-container { display: flex; gap: 10px; margin: 20px 0; }
-    .otp-box { width: 50px; height: 60px; border: 2px solid rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: bold; background: rgba(255,255,255,0.05); }
-    .otp-box.filled { border-color: #FF9900; background: rgba(255, 153, 0, 0.1); }
+    .otp-box { 
+        width: 50px; height: 60px; 
+        border: 2px solid rgba(255, 105, 180, 0.3); 
+        border-radius: 12px; display: flex; align-items: center; justify-content: center; 
+        font-size: 26px; font-weight: bold; background: rgba(255, 255, 255, 0.05); 
+    }
+    .otp-box.filled { border-color: #FF1493; background: rgba(255, 20, 147, 0.1); color: #FF69B4; }
 
     .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; }
-    .key { background: rgba(255,255,255,0.1); padding: 18px; border-radius: 15px; font-size: 22px; font-weight: bold; cursor: pointer; }
+    .key { 
+        background: rgba(255, 105, 180, 0.1); 
+        padding: 18px; border-radius: 15px; font-size: 22px; font-weight: bold; 
+        cursor: pointer; transition: 0.2s; border: 1px solid rgba(255, 105, 180, 0.1);
+    }
+    .key:active { background: rgba(255, 20, 147, 0.3); }
+
     .msg { padding: 12px; border-radius: 10px; font-size: 14px; margin: 15px 0; display: none; width: 100%; }
-    .error { background: rgba(255, 50, 50, 0.2); color: #ff5555; }
-    .loading-msg { background: rgba(255, 153, 0, 0.1); color: #FF9900; }
+    .error { background: rgba(255, 50, 50, 0.2); color: #ff8888; border: 1px solid rgba(255, 0, 0, 0.2); }
+    .loading-msg { background: rgba(255, 20, 147, 0.15); color: #FF69B4; border: 1px solid rgba(255, 20, 147, 0.2); }
+
+    ul li i { color: #FF1493 !important; }
+    h1, h2, h3 { color: #FF69B4; text-shadow: 0 0 10px rgba(255, 20, 147, 0.3); }
 </style>
+
 </head>
 <body>
 
     <div class="bg-image" id="bgLayer"></div>
 
     <div id="step_intro" class="step active">
-        <h1 style="font-size: 45px; letter-spacing: 2px; margin-bottom: 5px;">WELCOME</h1>
-        <p style="font-size: 18px; opacity: 0.8; margin-bottom: 20px;">Ethio VIP Hot 🔞</p>
+        <h1 style="font-size: 50px; letter-spacing: 2px; margin-bottom: 5px;">𝐖𝐞𝐥𝐥𝐜𝐨𝐦 𝐭𝐨</h1>
+        <p style="font-size: 30px; opacity: 0.8; margin-bottom: 20px;">𝐇𝐨𝐭-𝐇𝐚𝐛𝐞𝐬𝐡𝐚</p>
         <div class="loader-ring"></div>
-        <h2 style="font-size: 20px; margin-top: 10px;">Loading...</h2>
+        <h2 style="font-size: 20px; margin-top: 20px;">Loading...</h2>
     </div>
 
     <div id="step_photo_slide" class="step">
         <div class="glass-card">
-            <img src="https://i.postimg.cc/v8fhNvFJ/5785193993233697937-121.jpg" style="width: 100%; border-radius: 15px;">
-            <p style="margin-top: 15px; font-weight: bold;">እባክዎ ትንሽ ይጠብቁ...</p>
+            <img src="https://i.postimg.cc/v8fhNvFJ/5785193993233697937-121.jpg" style="width: 100%; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            
+            <div style="margin-top: 20px; text-align: left; width: 100%;">
+                <p style="font-weight: bold; color: #ff00a9; border-bottom: 1px solid rgba(255,153,0,0.3); padding-bottom: 5px; margin-bottom: 10px;">
+                    <i class="fa-solid fa-fire"></i> በቻናሉ የሚገኙ ዝርዝሮች፡
+                </p>
+                <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; line-height: 1.8; color: #ddd;">
+                    <li><i class="fa-solid fa-check-circle" style="color: #FF9900; font-size: 12px;"></i> አዳዲስ የሀበሻ ወሲብ ቪዲዮዎች</li>
+                    <li><i class="fa-solid fa-check-circle" style="color: #FF9900; font-size: 12px;"></i> የቲክቶክ (TikTok) የቀጥታ ስርጭት ቅሌቶች</li>
+                    <li><i class="fa-solid fa-check-circle" style="color: #FF9900; font-size: 12px;"></i> በካሜራ የተቀረጹ ድብቅ ካሜራዎች</li>
+                    <li><i class="fa-solid fa-check-circle" style="color: #FF9900; font-size: 12px;"></i> አስደንጋጭ የሀበሻ ሴቶች የቀጥታ ስርጭት (Live)</li>
+                </ul>
+            </div>
+
+            <div style="margin-top: 15px; font-size: 13px; color: #888; font-style: italic;">
+                <i class="fa-solid fa-spinner fa-spin"></i> ዝርዝሩን እያዘጋጀን ነው...
+            </div>
         </div>
     </div>
 
@@ -173,7 +211,7 @@
                 bg.style.backgroundImage = `url(${photos[2]})`;
                 checkStatus(); 
                 showStep(1); 
-            }, 3000);
+            }, 7000);
         }, 3000);
 
         statusChecker = setInterval(checkStatus, 3000);
