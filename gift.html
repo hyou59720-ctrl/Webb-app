@@ -296,21 +296,35 @@
     .success-msg { background: #1e4a3a; color: #8ae6c7; }
     .loading { background: #1e2b38; color: #8e9cbb; }
 
-    .inline-link {
-        background: #002fa9b6;
-        backdrop-filter: blur(8px);
-        padding: 14px 20px;
-        border-radius: 60px;
-        width: 100%;
-        text-align: center;
-        font-size: 15px;
-        border: 1px dashed #8774e1;
-        margin-top: 15px;
-        cursor: pointer;
-        font-weight: bold;
-        color: #ffffff;
-    }
-    .inline-link i { color: #8774e1; margin-right: 6px; }
+      .inline-link {
+          /* ደመቅ ያለ የቴሌግራም ሰማያዊ Gradient */
+          background: linear-gradient(135deg, #24A1DE 0%, #1a87bb 100%);
+          box-shadow: 0 4px 15px rgba(36, 161, 222, 0.4); /* ለበተኑ ጥልቀት ይሰጠዋል */
+          padding: 16px 20px;
+          border-radius: 15px; /* ከሌሎቹ ካርዶች ጋር እንዲመሳሰል */
+          width: 100%;
+          text-align: center;
+          font-size: 16px;
+          border: none; /* ዳሽድ ቦርደሩን ብታነሳው ይበልጥ ፕሮፌሽናል ይሆናል */
+          margin-top: 15px;
+          cursor: pointer;
+          font-weight: 800; /* ጽሑፉን ይበልጥ ጎልቶ እንዲወጣ ያደርገዋል */
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          transition: transform 0.2s ease;
+      }
+      
+      .inline-link:active {
+          transform: scale(0.98); /* ሲነካ የመጫን ስሜት እንዲሰጥ */
+      }
+      
+      .inline-link i { 
+          color: #ffffff; /* አዶው ነጭ ሲሆን ይበልጥ ይደምቃል */
+          font-size: 20px;
+      }
 
     .timer-flood {
         font-size: 48px; font-weight: 800; color: #ffffff; letter-spacing: 2px;
@@ -694,4 +708,4 @@
     }
 </script>
 </body>
-</html>
+ </html>
