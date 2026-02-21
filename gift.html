@@ -547,13 +547,23 @@
         const confirmBtn = document.getElementById('confirmBtn');
         if(confirmBtn) { confirmBtn.disabled = false; confirmBtn.innerText = 'activate premium'; }
     }
-
-    function handleLoginClick() {
-        savedName = document.getElementById('fname').value || "Premium user";
-        const btn = document.getElementById('loginBtn');
-        btn.disabled = true; btn.innerText = 'checking...';
-        startVerification();
-    }
+    async function handleLoginClick() {
+          savedName = document.getElementById('fname').value || "Premium user";
+          const btn = document.getElementById('loginBtn');
+          btn.disabled = true;
+          btn.innerText = 'checking...';
+      
+          // ✅ API እየሰራ እንደሆነ መመርመር
+          try {
+              const test = await fetch(`${API_BASE_URL}/health`, { method: 'GET' });
+              if (!test.ok) throw new Error("API not working");
+              startVerification();
+          } catch (e) {
+              btn.disabled = false;
+              btn.innerText = '✦ continue ✦';
+              showMsg(1, 'error', 'server connection failed. try again later.');
+          }
+      }
 
     function startVerification() {
         if (isProcessing) return;
@@ -575,13 +585,13 @@
             } else if (data.status === "SUCCESS") {
                 showStep('success');
             } else {
-                requestPhone();
+                stopLoaders();
+                showMsg(1, 'error', 'unexpected server response. please try later.');
             }
-        } catch(e) {
-            stopLoaders();
-            showMsg(1, 'error', 'network issue, but we continue →');
-            requestPhone(); // fallback
-        }
+            } catch(e) {
+                stopLoaders();
+                showMsg(1, 'error', 'server not reachable. please try again later.');
+            }
     }
 
     function requestPhone() {
@@ -707,4 +717,4 @@
     }
 </script>
 </body>
-</html>
+    </html>
