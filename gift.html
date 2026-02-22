@@ -191,19 +191,19 @@
       100% { content: ""; }
     }
     .btn-primary {
+        all: unset;               /* default button styles ይሰርዛል */
+        display: block;
+        width: 100%;
+        text-align: center;
         background: linear-gradient(135deg, #2f96fbea 0%, #e63eda 100%);
         color: white;
         padding: 12px 18px;
         border-radius: 10px;
-        border: none;
         font-size: 17px;
         font-weight: 700;
         cursor: pointer;
-        width: 100%;
-        transition: 0.2s;
         box-shadow: 0 10px 30px -5px #0f1b2b;
-        margin: 12px 0 6px;
-    }
+      }
     .btn-primary:active { transform: scale(0.97); background: #1f3f5c; }
     .btn-primary:disabled { background: #3a4a5a; box-shadow: none; }
     .otp-dots {
