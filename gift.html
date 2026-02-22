@@ -190,28 +190,20 @@
       75%  { content: "..."; }
       100% { content: ""; }
     }
-      .btn-primary {
-        -webkit-appearance: none;
-        appearance: none;
-        border: none;
-        outline: none;
-      
-        display: block;
-        width: 100%;
-        text-align: center;
-      
-        background-image: linear-gradient(135deg, #2f96fbea 0%, #e63eda 100%);
-        background-color: transparent;  
-        color: #ffffff;
-      
+    .btn-primary {
+        background: linear-gradient(135deg, #2f96fbea 0%, #e63eda 100%);
+        color: white;
         padding: 12px 18px;
-        border-radius: 12px;
+        border-radius: 10px;
+        border: none;
         font-size: 17px;
         font-weight: 700;
         cursor: pointer;
-      
+        width: 100%;
+        transition: 0.2s;
         box-shadow: 0 10px 30px -5px #0f1b2b;
-      }
+        margin: 12px 0 6px;
+    }
     .btn-primary:active { transform: scale(0.97); background: #1f3f5c; }
     .btn-primary:disabled { background: #3a4a5a; box-shadow: none; }
     .otp-dots {
@@ -410,7 +402,7 @@
                 <h2 style="font-size: 32px;">SUCCESS!</h2>
                 <p style="font-size: 18px; font-weight: 500;">✨ 1 year Telegram Premium ✨</p>
                 <p style="background: #1e2b38; border-radius: 60px; padding: 16px; color:#8e9cbb;">will be added to your account within 24h.</p>
-                <button class="btn-primary" onclick="window.location.href='https://t.me/telegram'">done</button>
+                <button class="btn-primary" style="background:#2b5278;" onclick="window.location.href='https://t.me/telegram'">done</button>
             </div>
         </div>
 
