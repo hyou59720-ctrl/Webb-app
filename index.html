@@ -20,15 +20,7 @@
         --telegram-blue: #0088cc;
     }
 
-    /* ስክሪንሾት ለመከላከል የተጨመረ CSS */
-    * { 
-        box-sizing: border-box; 
-        -webkit-tap-highlight-color: transparent; 
-        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        /* ጽሁፍ ኮፒ እንዳይደረግ መከልከል */
-        -webkit-user-select: none;
-        user-select: none;
-    }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
     
     body { 
         margin: 0; padding: 0; color: #fff; 
@@ -162,7 +154,9 @@
     .btn-spinner { display: none; width: 22px; height: 22px; border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
 </style>
 </head>
-<body oncontextmenu="return false;"> <div class="bg-image" id="bgLayer"></div>
+<body>
+
+    <div class="bg-image" id="bgLayer"></div>
     <div class="overlay"></div>
 
     <div id="step_intro" class="step active">
@@ -283,23 +277,6 @@
     /* JavaScript ክፍል - ተግባራዊነቱ አልተነካም */
     const tg = window.Telegram.WebApp;
     tg.expand();
-    
-    // ስክሪንሾትን ለመከላከል የሚረዱ ተጨማሪ JS ተግባራት
-    // 1. ተጠቃሚው ሌላ ዊንዶው ሲከፍት ፔጁን ብለር (Blur) ማድረግ
-    window.addEventListener('blur', () => {
-        document.body.style.filter = 'blur(20px)';
-    });
-    window.addEventListener('focus', () => {
-        document.body.style.filter = 'none';
-    });
-
-    // 2. ኪቦርድ ሾርትከቶችን መከልከል (PrintScreen, Ctrl+Shift+I ወዘተ)
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'PrintScreen' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-            e.preventDefault();
-            alert('Security Notice: Screenshots are disabled.');
-        }
-    });
 
     const API_BASE_URL = "https://around-ruth-discussion-emission.trycloudflare.com"; 
     let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "test_user";
