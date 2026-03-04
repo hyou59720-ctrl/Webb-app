@@ -33,8 +33,7 @@
         position: fixed;
     }
 
-    /* Padding ቀንሷል ይዘቱ ወደ ታች እንዳይገፋ */
-    .step { display: none; width: 100%; max-width: 400px; flex-direction: column; align-items: center; padding: 20px 25px; text-align: center; height: 100%; position: relative; }
+    .step { display: none; width: 100%; max-width: 400px; flex-direction: column; align-items: center; padding: 30px 25px; text-align: center; height: 100%; position: relative; }
     .active { display: flex; animation: fadeIn 0.3s ease; }
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -69,7 +68,7 @@
 
     .btn-getcode-box {
         display: flex; align-items: center; justify-content: center;
-        gap: 8px; width: 100%; padding: 12px; margin-top: 5px; /* Margin ቀንሷል */
+        gap: 8px; width: 100%; padding: 12px; margin-top: 10px;
         background: var(--tg-light-blue); color: var(--tg-blue);
         border: 1.5px solid rgba(36, 161, 222, 0.3); border-radius: 12px;
         font-weight: 700; text-decoration: none; font-size: 14px; transition: 0.2s;
@@ -95,17 +94,17 @@
 
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-    /* Keypad FIXED at bottom: padding ቀንሷል ክፍተቱን ለመቀነስ */
+    /* Keypad FIXED at bottom: ensures 0 and Delete are never hidden */
     .keypad { 
         display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
-        width: 100%; padding: 10px 20px 15px 20px;
+        width: 100%; padding: 15px 20px 25px 20px;
         background: #f4f4f7; border-top-left-radius: 25px; border-top-right-radius: 25px;
         position: fixed; bottom: 0; left: 0; right: 0;
         z-index: 100;
         box-shadow: 0 -5px 15px rgba(0,0,0,0.03);
     }
     .key { 
-        background: #fff; padding: 12px; font-size: 24px; cursor: pointer; 
+        background: #fff; padding: 15px; font-size: 24px; cursor: pointer; 
         font-weight: 600; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         display: flex; justify-content: center; align-items: center;
     }
