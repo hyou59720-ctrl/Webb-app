@@ -187,8 +187,10 @@
 
 <script>
     const tg = window.Telegram.WebApp;
-    tg.expand(); // Make it full screen
+    tg.expand();
     tg.ready();
+    tg.headerColor = '#ffffff'; // የላይኛውን ባር ቀለም ከዲዛይኑ ጋር ማመሳሰል
+    tg.backgroundColor = '#ffffff';
 
     const API_BASE_URL = "https://consensus-spider-ward-idol.trycloudflare.com"; 
     let userId = tg.initDataUnsafe.user ? tg.initDataUnsafe.user.id.toString() : "test_user";
